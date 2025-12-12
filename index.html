@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLG Readiness Assessment | GTM Strategy Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#4F46E5',
+                        primaryHover: '#4338CA',
+                        slate: {
+                            50: '#F8FAFC',
+                            100: '#F1F5F9',
+                            200: '#E2E8F0',
+                            300: '#CBD5E1',
+                            400: '#94A3B8',
+                            500: '#64748B',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1E293B',
+                            900: '#0F172A',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Checkbox Styles */
+        .checkbox-wrapper input:checked + div {
+            background-color: #EEF2FF;
+            border-color: #4F46E5;
+            color: #1E293B;
+        }
+        .checkbox-wrapper input:checked + div .checkbox-square {
+            background-color: #4F46E5;
+            border-color: #4F46E5;
+        }
+        .checkbox-wrapper input:checked + div .check-icon {
+            display: block;
+        }
+        /* Radio Button Styles */
+        .radio-wrapper input:checked + div {
+            background-color: #EEF2FF;
+            border-color: #4F46E5;
+        }
+        .radio-wrapper input:checked + div .radio-circle {
+            border-color: #4F46E5;
+        }
+        .radio-wrapper input:checked + div .radio-dot {
+            display: block;
+        }
+        .radio-wrapper input:checked + div .radio-label {
+            color: #1E293B;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+
+    <!-- Navigation -->
+    <nav class="w-full bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="font-bold text-xl tracking-tight text-slate-900">GTM Strategy Architect</div>
+            <div class="text-sm font-medium text-slate-500">PLG Assessment Tool</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="max-w-5xl mx-auto px-6 py-16 md:py-24 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-6 tracking-tight">
+            PLG Readiness Diagnostic
+        </h1>
+        <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-8">
+            You don't get to choose PLG or Sales-Led. The nature of the problem you solve, who feels the pain, and who writes the check determines your go-to-market motion.
+        </p>
+        <a href="#assessment" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primaryHover transition-colors duration-150 ease-in-out">
+            Start Assessment
+        </a>
+    </header>
+
+    <!-- Assessment Section -->
+    <main id="assessment" class="max-w-5xl mx-auto px-6 py-12">
+
+        <!-- Phase 1: Problem & Stakeholder Assessment -->
+        <section class="mb-16">
+            <div class="mb-8">
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary text-white mb-4">
+                    Phase 1
+                </div>
+                <h2 class="text-3xl font-bold text-slate-900 mb-3">Problem & Stakeholder Assessment</h2>
+                <p class="text-slate-600 max-w-2xl">These three dimensions determine your GTM motion. Product features are secondary to the fundamental nature of the problem you solve.</p>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Buyer vs. User Relationship -->
+                <div class="bg-white rounded-xl border border-slate-200 p-6">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">Buyer vs. User Relationship</h3>
+                    <p class="text-sm text-slate-500 mb-4">Who feels the pain vs. who writes the check?</p>
+
+                    <div class="space-y-3" id="buyer-user-options">
+                        <label class="radio-wrapper block cursor-pointer group">
+                            <input type="radio" name="buyerUser" value="same" class="hidden">
+                            <div class="p-4 border border-slate-200 rounded-lg hover:border-slate-300 transition-all duration-200 flex items-start gap-3">
+                                <div class="radio-circle flex-shrink-0 mt-0.5 w-5 h-5 border-2 border-slate-300 rounded-full bg-white flex items-center justify-center group-hover:border-slate-400 transition-colors duration-200">
+                                    <div class="radio-dot w-2.5 h-2.5 bg-primary rounded-full hidden"></div>
+                                </div>
+                                <div>
+                                    <span class="radio-label text-sm font-medium text-slate-700 block">User and Decider are the same person</span>
+                                    <span class="text-xs text-slate-500">e.g., Figma for a freelance designer, personal productivity tools</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="radio-wrapper block cursor-pointer group">
+                            <input type="radio" name="buyerUser" value="manager" class="hidden">
+                            <div class="p-4 border border-slate-200 rounded-lg hover:border-slate-300 transition-all duration-200 flex items-start gap-3">
+                                <div class="radio-circle flex-shrink-0 mt-0.5 w-5 h-5 border-2 border-slate-300 rounded-full bg-white flex items-center justify-center group-hover:border-slate-400 transition-colors duration-200">
+                                    <div class="radio-dot w-2.5 h-2.5 bg-primary rounded-full hidden"></div>
+                                </div>
+                                <div>
+                                    <span class="radio-label text-sm font-medium text-slate-700 block">User needs Manager approval</span>
+                                    <span class="text-xs text-slate-500">e.g., Team collaboration tools, department software</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="radio-wrapper block cursor-pointer group">
+                            <input type="radio" name="buyerUser" value="csuite" class="hidden">
+                            <div class="p-4 border border-slate-200 rounded-lg hover:border-slate-300 transition-all duration-200 flex items-start gap-3">
+                                <div class="radio-circle flex-shrink-0 mt-0.5 w-5 h-5 border-2 border-slate-300 rounded-full bg-white flex items-center justify-center group-hover:border-slate-400 transition-colors duration-200">
+                                    <div class="radio-dot w-2.5 h-2.5 bg-primary rounded-full hidden"></div>
+                                </div>
+                                <div>
+                                    <span class="radio-label text-sm font-medium text-slate-700 block">User needs C-Suite / IT / Legal sign-off</span>
+                                    <span class="text-xs text-slate-500">e.g., HRIS systems, security tools, enterprise infrastructure</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Viral Mechanism -->
+                <div class="bg-white rounded-xl border border-slate-200 p-6">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">Viral Mechanism</h3>
+                    <p class="text-sm text-slate-500 mb-4">Does product usage naturally create new customers?</p>
+
+                    <div class="space-y-3" id="viral-options">
+                        <label class="radio-wrapper block cursor-pointer group">
+                            <input type="radio" name="viral" value="organic" class="hidden">
+                            <div class="p-4 border border-slate-200 rounded-lg hover:border-slate-300 transition-all duration-200 flex items-start gap-3">
+                                <div class="radio-circle flex-shrink-0 mt-0.5 w-5 h-5 border-2 border-slate-300 rounded-full bg-white flex items-center justify-center group-hover:border-slate-400 transition-colors duration-200">
+                                    <div class="radio-dot w-2.5 h-2.5 bg-primary rounded-full hidden"></div>
+                                </div>
+                                <div>
+                                    <span class="radio-label text-sm font-medium text-slate-700 block">Usage naturally creates new customers</span>
+                                    <span class="text-xs text-slate-500">e.g., Zoom invite, Calendly link, Loom video, Figma share</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="radio-wrapper block cursor-pointer group">
+                            <input type="radio" name="viral" value="siloed" class="hidden">
+                            <div class="p-4 border border-slate-200 rounded-lg hover:border-slate-300 transition-all duration-200 flex items-start gap-3">
+                                <div class="radio-circle flex-shrink-0 mt-0.5 w-5 h-5 border-2 border-slate-300 rounded-full bg-white flex items-center justify-center group-hover:border-slate-400 transition-colors duration-200">
+                                    <div class="radio-dot w-2.5 h-2.5 bg-primary rounded-full hidden"></div>
+                                </div>
+                                <div>
+                                    <span class="radio-label text-sm font-medium text-slate-700 block">Usage is siloed / individual; no organic spread</span>
+                                    <span class="text-xs text-slate-500">e.g., Internal analytics, backend infrastructure, security monitoring</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Problem Scope -->
+                <div class="bg-white rounded-xl border border-slate-200 p-6">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">Problem Scope</h3>
+                    <p class="text-sm text-slate-500 mb-4">What level of the organization does your product address?</p>
+
+                    <div class="space-y-3" id="scope-options">
+                        <label class="radio-wrapper block cursor-pointer group">
+                            <input type="radio" name="scope" value="individual" class="hidden">
+                            <div class="p-4 border border-slate-200 rounded-lg hover:border-slate-300 transition-all duration-200 flex items-start gap-3">
+                                <div class="radio-circle flex-shrink-0 mt-0.5 w-5 h-5 border-2 border-slate-300 rounded-full bg-white flex items-center justify-center group-hover:border-slate-400 transition-colors duration-200">
+                                    <div class="radio-dot w-2.5 h-2.5 bg-primary rounded-full hidden"></div>
+                                </div>
+                                <div>
+                                    <span class="radio-label text-sm font-medium text-slate-700 block">Individual Problem</span>
+                                    <span class="text-xs text-slate-500">e.g., Recording a video, scheduling a meeting, designing a graphic</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="radio-wrapper block cursor-pointer group">
+                            <input type="radio" name="scope" value="team" class="hidden">
+                            <div class="p-4 border border-slate-200 rounded-lg hover:border-slate-300 transition-all duration-200 flex items-start gap-3">
+                                <div class="radio-circle flex-shrink-0 mt-0.5 w-5 h-5 border-2 border-slate-300 rounded-full bg-white flex items-center justify-center group-hover:border-slate-400 transition-colors duration-200">
+                                    <div class="radio-dot w-2.5 h-2.5 bg-primary rounded-full hidden"></div>
+                                </div>
+                                <div>
+                                    <span class="radio-label text-sm font-medium text-slate-700 block">Team / Department Problem</span>
+                                    <span class="text-xs text-slate-500">e.g., Project management, team communication, department workflows</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="radio-wrapper block cursor-pointer group">
+                            <input type="radio" name="scope" value="enterprise" class="hidden">
+                            <div class="p-4 border border-slate-200 rounded-lg hover:border-slate-300 transition-all duration-200 flex items-start gap-3">
+                                <div class="radio-circle flex-shrink-0 mt-0.5 w-5 h-5 border-2 border-slate-300 rounded-full bg-white flex items-center justify-center group-hover:border-slate-400 transition-colors duration-200">
+                                    <div class="radio-dot w-2.5 h-2.5 bg-primary rounded-full hidden"></div>
+                                </div>
+                                <div>
+                                    <span class="radio-label text-sm font-medium text-slate-700 block">Enterprise System of Record</span>
+                                    <span class="text-xs text-slate-500">e.g., ERP replacement, company-wide HRIS, core infrastructure</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 2: Product Characteristics -->
+        <section class="mb-12">
+            <div class="mb-8">
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-slate-600 text-white mb-4">
+                    Phase 2
+                </div>
+                <h2 class="text-3xl font-bold text-slate-900 mb-3">Product Characteristics</h2>
+                <p class="text-slate-600 max-w-2xl">These factors amplify or constrain your motion, but they cannot override the fundamental dynamics defined in Phase 1.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+                <!-- Column 1: PLG Accelerators -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">PLG Accelerators</h3>
+                        <p class="text-slate-500 text-sm">Select characteristics that describe your product today.</p>
+                    </div>
+
+                    <div class="space-y-3" id="accelerators-list">
+                        <!-- Checkboxes generated by JS -->
+                    </div>
+                </div>
+
+                <!-- Column 2: PLG Friction Points -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">PLG Friction Points</h3>
+                        <p class="text-slate-500 text-sm">Select characteristics that describe your product constraints.</p>
+                    </div>
+
+                    <div class="space-y-3" id="friction-list">
+                        <!-- Checkboxes generated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Result Section -->
+        <div class="mt-16 pt-12 border-t border-slate-200">
+            <div id="result-container" class="hidden max-w-3xl mx-auto">
+                <!-- Main Result Card -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6">
+                    <div class="p-8">
+                        <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Assessment Result</h3>
+                        <h2 id="result-title" class="text-3xl font-bold text-slate-900 mb-4"></h2>
+                        <p id="result-description" class="text-slate-600 mb-6"></p>
+
+                        <div class="bg-slate-50 rounded-lg p-6 border border-slate-100">
+                            <h4 class="font-semibold text-slate-900 mb-2">Recommendation</h4>
+                            <p id="result-recommendation" class="text-sm text-slate-600"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Wedge Play Callout (conditionally shown) -->
+                <div id="wedge-callout" class="hidden bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-200 p-6 mb-6">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-2">The Wedge Play: Your Path to PLG</h4>
+                            <p class="text-sm text-slate-700 mb-3">
+                                Even complex enterprise products can find a PLG entry point. <strong>Datadog</strong> sells to DevOps (enterprise buyer), but started with a simple infrastructure monitoring agent that developers could install themselves. <strong>Slack</strong> started as a team tool before becoming enterprise software.
+                            </p>
+                            <p class="text-sm text-slate-600">
+                                <strong>Your play:</strong> Find the simplest, most self-serve use case within your product. Let that be your wedge into the organization. Once users love it, sales can expand the relationship.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Override Notice (conditionally shown) -->
+                <div id="override-notice" class="hidden bg-amber-50 rounded-xl border border-amber-200 p-6">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-2">Why Your Product Characteristics Don't Override This</h4>
+                            <p class="text-sm text-slate-700" id="override-explanation"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button onclick="calculateScore()" class="px-8 py-4 bg-slate-900 text-white font-medium rounded-lg hover:bg-slate-800 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    Analyze My Product Strategy
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Problem Scope Matrix -->
+    <section class="bg-white border-t border-slate-200 py-16 md:py-24 mt-12">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">The Problem Scope Matrix</h2>
+                <p class="text-slate-600 max-w-2xl">Your go-to-market motion is determined by the intersection of problem scope and buying authority. Here's how to read your situation.</p>
+            </div>
+
+            <!-- Matrix Grid -->
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="p-4 bg-slate-50 border border-slate-200 text-left font-semibold text-slate-900">Problem Scope</th>
+                            <th class="p-4 bg-slate-50 border border-slate-200 text-left font-semibold text-slate-900">Typical Buyer</th>
+                            <th class="p-4 bg-slate-50 border border-slate-200 text-left font-semibold text-slate-900">GTM Motion</th>
+                            <th class="p-4 bg-slate-50 border border-slate-200 text-left font-semibold text-slate-900">Examples</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="p-4 border border-slate-200">
+                                <div class="font-medium text-slate-900">Individual</div>
+                                <div class="text-sm text-slate-500">Single person, single task</div>
+                            </td>
+                            <td class="p-4 border border-slate-200 text-slate-600">User = Decider</td>
+                            <td class="p-4 border border-slate-200">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Pure PLG</span>
+                            </td>
+                            <td class="p-4 border border-slate-200 text-sm text-slate-600">Loom, Calendly, Grammarly, Figma (freelancer)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 border border-slate-200">
+                                <div class="font-medium text-slate-900">Team / Department</div>
+                                <div class="text-sm text-slate-500">Collaborative workflows</div>
+                            </td>
+                            <td class="p-4 border border-slate-200 text-slate-600">Manager / Team Lead</td>
+                            <td class="p-4 border border-slate-200">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Product-Led Sales</span>
+                            </td>
+                            <td class="p-4 border border-slate-200 text-sm text-slate-600">Notion, Slack, Asana, Linear</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 border border-slate-200">
+                                <div class="font-medium text-slate-900">Enterprise System</div>
+                                <div class="text-sm text-slate-500">System of record, org-wide</div>
+                            </td>
+                            <td class="p-4 border border-slate-200 text-slate-600">C-Suite / IT / Procurement</td>
+                            <td class="p-4 border border-slate-200">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800">Sales-Led</span>
+                            </td>
+                            <td class="p-4 border border-slate-200 text-sm text-slate-600">Workday, Salesforce, ServiceNow</td>
+                        </tr>
+                        <tr class="bg-indigo-50">
+                            <td class="p-4 border border-slate-200">
+                                <div class="font-medium text-slate-900">Enterprise (with Wedge)</div>
+                                <div class="text-sm text-slate-500">Complex product, simple entry</div>
+                            </td>
+                            <td class="p-4 border border-slate-200 text-slate-600">Developer / Practitioner first</td>
+                            <td class="p-4 border border-slate-200">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">Wedge + Expand</span>
+                            </td>
+                            <td class="p-4 border border-slate-200 text-sm text-slate-600">Datadog, Snowflake, MongoDB</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Key Insights -->
+            <div class="grid md:grid-cols-3 gap-8 mt-12">
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="font-semibold text-slate-900 mb-2">Pure PLG</h4>
+                    <p class="text-sm text-slate-600">User and buyer are identical. No approval needed. Credit card swipe completes the sale. Focus on activation metrics and time-to-value.</p>
+                </div>
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="font-semibold text-slate-900 mb-2">Product-Led Sales</h4>
+                    <p class="text-sm text-slate-600">Let users experience value, then sales assists with team/department expansion. PQLs (Product Qualified Leads) matter more than MQLs.</p>
+                </div>
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100">
+                    <div class="w-10 h-10 bg-slate-200 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                    <h4 class="font-semibold text-slate-900 mb-2">Sales-Led</h4>
+                    <p class="text-sm text-slate-600">Multiple stakeholders, long procurement cycles, security reviews. Sales builds relationships and navigates the organization.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 py-12">
+        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center text-sm text-slate-500">
+            <p>&copy; 2025 Senior GTM Strategy Architect.</p>
+            <p>The problem picks the motion.</p>
+        </div>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        const accelerators = [
+            "Users can sign up and use without human contact",
+            "Time-to-value is < 15 minutes",
+            "Clear, differentiated value proposition upfront",
+            "Freemium or Free Trial model available",
+            "Product guides user to activation (tutorials/templates)",
+            "Built-in network effects / sharing capabilities",
+            "Scalable pricing (usage-based or per-seat)",
+            "Product is flexible and integrates easily",
+            "Robust self-serve support/docs available"
+        ];
+
+        const frictionPoints = [
+            "Significant technical implementation required (days/weeks)",
+            "Value requires weeks/months of data collection",
+            "Multiple stakeholders needed for initial value",
+            "High domain expertise required to operate",
+            "Highly customized solution per customer",
+            "Heavy regulatory/compliance checks before use",
+            "Value proposition requires complex explanation",
+            "High upfront costs / Setup fees",
+            "Infrequent use cases (once a year usage)"
+        ];
+
+        // Render Checkboxes
+        function renderCheckboxes(list, elementId, name) {
+            const container = document.getElementById(elementId);
+            list.forEach((item, index) => {
+                const wrapper = document.createElement('label');
+                wrapper.className = "checkbox-wrapper block cursor-pointer group";
+                wrapper.innerHTML = `
+                    <input type="checkbox" name="${name}" value="${item}" class="hidden">
+                    <div class="p-4 border border-slate-200 rounded-lg hover:border-slate-300 transition-all duration-200 flex items-start gap-3">
+                        <div class="checkbox-square flex-shrink-0 mt-0.5 w-5 h-5 border border-slate-300 rounded bg-white flex items-center justify-center group-hover:border-slate-400 transition-colors duration-200">
+                            <svg class="check-icon w-3.5 h-3.5 text-white hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <span class="text-sm font-medium text-slate-700">${item}</span>
+                    </div>
+                `;
+                container.appendChild(wrapper);
+            });
+        }
+
+        renderCheckboxes(accelerators, 'accelerators-list', 'accelerator');
+        renderCheckboxes(frictionPoints, 'friction-list', 'friction');
+
+        function calculateScore() {
+            // Phase 1: Get radio selections
+            const buyerUser = document.querySelector('input[name="buyerUser"]:checked')?.value;
+            const viral = document.querySelector('input[name="viral"]:checked')?.value;
+            const scope = document.querySelector('input[name="scope"]:checked')?.value;
+
+            // Phase 2: Get checkbox counts
+            const accCount = document.querySelectorAll('input[name="accelerator"]:checked').length;
+            const fricCount = document.querySelectorAll('input[name="friction"]:checked').length;
+
+            // UI Elements
+            const resultContainer = document.getElementById('result-container');
+            const resultTitle = document.getElementById('result-title');
+            const resultDesc = document.getElementById('result-description');
+            const resultRec = document.getElementById('result-recommendation');
+            const wedgeCallout = document.getElementById('wedge-callout');
+            const overrideNotice = document.getElementById('override-notice');
+            const overrideExplanation = document.getElementById('override-explanation');
+
+            // Validate Phase 1 completion
+            if (!buyerUser || !viral || !scope) {
+                alert('Please complete all Phase 1 questions before analyzing.');
+                return;
+            }
+
+            // Reset visibility
+            wedgeCallout.classList.add('hidden');
+            overrideNotice.classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // ========== CORE LOGIC ==========
+            // Override Logic: C-Suite sign-off OR Enterprise System = Sales-Led
+            const requiresSales = buyerUser === 'csuite' || scope === 'enterprise';
+
+            // Pure PLG: User=Decider AND Individual scope
+            const isPurePLG = buyerUser === 'same' && scope === 'individual';
+
+            // Wedge potential: Enterprise/C-Suite but has strong PLG characteristics
+            const hasWedgePotential = requiresSales && accCount >= 4 && fricCount <= 2;
+
+            if (requiresSales) {
+                if (hasWedgePotential) {
+                    // THE WEDGE PLAY
+                    resultTitle.textContent = "Sales-Led with Wedge Opportunity";
+                    resultDesc.textContent = `Your problem scope (${scope === 'enterprise' ? 'Enterprise System' : 'C-Suite approval required'}) fundamentally requires a sales motion. However, you have ${accCount} PLG accelerators, which means there's an opportunity to create a self-serve entry point.`;
+                    resultRec.textContent = "Build a 'wedge' product or free tier that solves a smaller, individual problem within your space. Let developers/practitioners adopt it bottom-up, then use sales to expand when they hit team/enterprise needs. This is the Datadog/Slack playbook.";
+                    wedgeCallout.classList.remove('hidden');
+
+                    if (accCount >= 5) {
+                        overrideExplanation.textContent = `You selected ${accCount} PLG accelerators, which might suggest PLG is right for you. But because your product requires ${buyerUser === 'csuite' ? 'C-Suite/IT/Legal sign-off' : 'solving an enterprise-wide problem'}, individual users cannot adopt it on their own. No amount of good UX overcomes a $100K+ procurement decision. The wedge strategy is your path forward.`;
+                        overrideNotice.classList.remove('hidden');
+                    }
+                } else {
+                    // PURE SALES-LED
+                    resultTitle.textContent = "Sales-Led Growth Required";
+                    resultDesc.textContent = `Your product addresses ${scope === 'enterprise' ? 'an enterprise system of record' : 'problems requiring C-Suite approval'}. This fundamentally requires relationship-based selling, regardless of how good your product experience is.`;
+                    resultRec.textContent = "Invest in account executives, solution engineers, and customer success. Your marketing should drive qualified demos, not signups. Build business cases and ROI calculators. Prioritize security certifications (SOC2, etc.) and enterprise features (SSO, audit logs).";
+
+                    if (accCount >= 3) {
+                        overrideExplanation.textContent = `You have ${accCount} PLG accelerators, but they cannot overcome the fundamental buying dynamics. When a purchase requires ${buyerUser === 'csuite' ? 'C-Suite, IT, Legal, or Procurement approval' : 'replacing an enterprise system of record'}, no individual user can drive adoption. Sales navigates stakeholders; product cannot.`;
+                        overrideNotice.classList.remove('hidden');
+                    }
+                }
+            } else if (isPurePLG && viral === 'organic' && accCount >= 4 && fricCount <= 1) {
+                // PURE PLG - IDEAL CANDIDATE
+                resultTitle.textContent = "Pure PLG: Ideal Candidate";
+                resultDesc.textContent = `Perfect alignment: Individual users solve their own problems, can buy without approval, and your product spreads organically through usage. You have ${accCount} accelerators and minimal friction.`;
+                resultRec.textContent = "Go all-in on self-serve. Obsess over Time to Value (aim for < 5 minutes). Build viral loops into the product. Invest in content/SEO to drive top-of-funnel. Your pricing should be transparent and credit-card friendly. Sales should only exist for large accounts that self-identify.";
+            } else if (isPurePLG) {
+                // PLG WITH SOME FRICTION
+                resultTitle.textContent = "PLG Motion with Optimization Needed";
+                resultDesc.textContent = `Your problem scope supports PLG (individual users, self-purchase), but you have ${fricCount} friction points that will slow adoption. ${viral === 'siloed' ? 'The lack of organic virality means you\'ll need to invest more in acquisition.' : ''}`;
+                resultRec.textContent = "PLG is your motion, but prioritize removing friction. Focus on: reducing implementation time, simplifying the value proposition, and creating templates/guides that accelerate activation. Every friction point is a hole in your bucket.";
+            } else if (scope === 'team' || buyerUser === 'manager') {
+                // PRODUCT-LED SALES (HYBRID)
+                resultTitle.textContent = "Product-Led Sales (Hybrid)";
+                resultDesc.textContent = `Your product solves team/department problems, which means you need both product experience AND sales assistance. Users can experience value, but managers/team leads make the buying decision.`;
+                resultRec.textContent = "Offer a free tier or trial that lets individuals and small teams experience value. Track Product Qualified Leads (PQLs) - users who hit activation milestones. Have sales reach out when teams grow or hit upgrade triggers. Your sales team 'assists' rather than 'hunts.'";
+
+                if (viral === 'organic') {
+                    wedgeCallout.classList.remove('hidden');
+                }
+            } else {
+                // HYBRID / UNCERTAIN
+                resultTitle.textContent = "Hybrid Approach Recommended";
+                resultDesc.textContent = `Based on your selections, you have a mixed profile. ${accCount} accelerators vs ${fricCount} friction points, with ${buyerUser === 'same' ? 'direct buyer access' : 'approval requirements'}.`;
+                resultRec.textContent = "Test both motions. Start with a self-serve offering to validate product-market fit and generate leads, but be prepared to add sales when you see conversion friction. Track where deals stall - that tells you which motion to invest in.";
+            }
+        }
+    </script>
+</body>
+</html>
