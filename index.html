@@ -442,27 +442,45 @@
     <!-- Logic Script -->
     <script>
         const accelerators = [
-            "Users can sign up and use without human contact",
-            "Time-to-value is < 15 minutes",
-            "Clear, differentiated value proposition upfront",
-            "Freemium or Free Trial model available",
-            "Product guides user to activation (tutorials/templates)",
-            "Built-in network effects / sharing capabilities",
-            "Scalable pricing (usage-based or per-seat)",
-            "Product is flexible and integrates easily",
-            "Robust self-serve support/docs available"
+            { label: "Users can sign up and use without human contact",
+              example: "e.g., Notion lets you build a workspace in minutes — no demo, no sales call required" },
+            { label: "Time-to-value is < 15 minutes",
+              example: "e.g., Loom records and shares your first video in under 2 minutes; Calendly sets up your booking link in under 5" },
+            { label: "Clear, differentiated value proposition upfront",
+              example: "e.g., Grammarly shows corrections before you sign up; Figma lets visitors open a design file without an account" },
+            { label: "Freemium or Free Trial model available",
+              example: "e.g., Slack's free tier lets any team get started; Dropbox's free storage hooked millions before asking for payment" },
+            { label: "Product guides user to activation (tutorials/templates)",
+              example: "e.g., Notion's template gallery reaches the 'aha moment' in one click; Webflow's onboarding builds your first page with you" },
+            { label: "Built-in network effects / sharing capabilities",
+              example: "e.g., Zoom creates a new potential customer every time a user sends a meeting invite; Figma converts viewers into users when a design is shared" },
+            { label: "Scalable pricing (usage-based or per-seat)",
+              example: "e.g., Twilio charges per API call — revenue grows as customers grow; Linear charges per seat as teams expand" },
+            { label: "Product is flexible and integrates easily",
+              example: "e.g., Zapier connects to 5,000+ apps so users embed it in existing workflows without IT; Segment plugs into whatever data stack customers already use" },
+            { label: "Robust self-serve support/docs available",
+              example: "e.g., Stripe's API docs are so good developers never call support; Postman's learning center handles 90% of questions without human intervention" },
         ];
 
         const frictionPoints = [
-            "Significant technical implementation required (days/weeks)",
-            "Value requires weeks/months of data collection",
-            "Multiple stakeholders needed for initial value",
-            "High domain expertise required to operate",
-            "Highly customized solution per customer",
-            "Heavy regulatory/compliance checks before use",
-            "Value proposition requires complex explanation",
-            "High upfront costs / Setup fees",
-            "Infrequent use cases (once a year usage)"
+            { label: "Significant technical implementation required (days/weeks)",
+              example: "e.g., deploying an on-premise security tool requires IT involvement and weeks of configuration before a single user logs in" },
+            { label: "Value requires weeks/months of data collection",
+              example: "e.g., a churn prediction tool needs months of usage data before surfacing insights; analytics platforms need traffic before showing meaningful trends" },
+            { label: "Multiple stakeholders needed for initial value",
+              example: "e.g., a contract management tool needs legal, sales, and finance aligned before a single workflow can run" },
+            { label: "High domain expertise required to operate",
+              example: "e.g., quantitative trading platforms require finance expertise to configure; industrial IoT tools require specialized engineers to deploy" },
+            { label: "Highly customized solution per customer",
+              example: "e.g., enterprise CPQ software requires months of configuration per deal; custom ERP implementations take teams of consultants" },
+            { label: "Heavy regulatory/compliance checks before use",
+              example: "e.g., healthcare data platforms require HIPAA BAAs and security reviews before any data flows; fintech infrastructure requires compliance sign-off from each bank partner" },
+            { label: "Value proposition requires complex explanation",
+              example: "e.g., 'AI-powered supply chain optimization' needs a whiteboard session before the problem even lands; multi-cloud cost arbitrage requires a 30-minute pitch" },
+            { label: "High upfront costs / Setup fees",
+              example: "e.g., Salesforce implementations often start at $50K+ in professional services before anyone logs in; enterprise data platforms charge six-figure setup fees" },
+            { label: "Infrequent use cases (once a year usage)",
+              example: "e.g., annual budget planning software gets used for 2 weeks a year; tax compliance tools are touched once a quarter at best" },
         ];
 
         // Render Checkboxes
@@ -472,14 +490,17 @@
                 const wrapper = document.createElement('label');
                 wrapper.className = "checkbox-wrapper block cursor-pointer group";
                 wrapper.innerHTML = `
-                    <input type="checkbox" name="${name}" value="${item}" class="hidden">
+                    <input type="checkbox" name="${name}" value="${item.label}" class="hidden">
                     <div class="p-4 border border-slate-200 rounded-lg hover:border-slate-300 transition-all duration-200 flex items-start gap-3">
                         <div class="checkbox-square flex-shrink-0 mt-0.5 w-5 h-5 border border-slate-300 rounded bg-white flex items-center justify-center group-hover:border-slate-400 transition-colors duration-200">
                             <svg class="check-icon w-3.5 h-3.5 text-white hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                             </svg>
                         </div>
-                        <span class="text-sm font-medium text-slate-700">${item}</span>
+                        <div>
+                            <span class="text-sm font-medium text-slate-700 block">${item.label}</span>
+                            <span class="text-xs text-slate-500">${item.example}</span>
+                        </div>
                     </div>
                 `;
                 container.appendChild(wrapper);
