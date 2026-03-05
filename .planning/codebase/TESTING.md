@@ -4,155 +4,116 @@
 
 ## Test Framework
 
-**Runner:** None configured
+**Runner:** None — no test framework is installed or configured.
 
-**Assertion Library:** None
+**Assertion Library:** None.
 
-**Run Commands:**
-```bash
-# No test commands exist
-# The project has no package.json, no test runner, no test files
-```
+**Config files:** None. No `jest.config.*`, `vitest.config.*`, `playwright.config.*`, or equivalent found.
+
+**Run Commands:** None defined. There is no `package.json`, so no npm scripts exist.
 
 ## Current Test Coverage
 
-**Coverage: 0%** — No automated tests exist in this repository.
+**Coverage:** 0% automated. No test files exist anywhere in the repository.
 
-No test files were found. No testing dependencies, configuration files, or test runners of any kind are present:
-- No `jest.config.*`, `vitest.config.*`, `playwright.config.*`, or `cypress.config.*`
-- No `*.test.*` or `*.spec.*` files
-- No `__tests__/` or `test/` or `tests/` directories
-- No `package.json` (and therefore no devDependencies, no `npm test` script)
+A search for test file patterns across the project confirms this:
+- No `*.test.*` files
+- No `*.spec.*` files
+- No `__tests__/` directories
+- No test runners, assertion libraries, or mocking utilities referenced
 
-## Architecture Context
+## Testing Approach
 
-This is a zero-dependency, zero-build static HTML file (`index.html`). All application logic lives in an inline `<script>` block at line 443. The structure that would need testing:
+All verification is currently **manual, browser-based**:
+- Open `index.html` directly in a browser, or serve with `python3 -m http.server 8080`
+- Interact with Phase 1 radios and Phase 2 checkboxes manually
+- Click "Analyze My Product Strategy" and observe result cards
 
-**Functions in `index.html`:**
-- `renderCheckboxes(list, elementId, name)` — DOM rendering function, lines 487–508
-- `calculateScore()` — core scoring logic, lines 513–602
+## What Would Need Testing
 
-**Data in `index.html`:**
-- `accelerators` array (9 items) — lines 444–463
-- `frictionPoints` array (9 items) — lines 465–484
+Given the application is a scoring/decision tool with a finite set of input combinations, the following areas are candidates for automated testing if a test framework were added:
 
-## What Should Be Tested
+**Scoring logic in `calculateScore()` (highest value):**
+- Hard override: `buyerUser === 'csuite'` should always produce Sales-Led regardless of Phase 2
+- Hard override: `scope === 'enterprise'` should always produce Sales-Led regardless of Phase 2
+- Wedge trigger: `requiresSales === true && accCount >= 4 && fricCount <= 2` → "Sales-Led with Wedge Opportunity"
+- Pure PLG ideal: `buyerUser === 'same' && scope === 'individual' && viral === 'organic' && accCount >= 4 && fricCount <= 1` → "Pure PLG: Ideal Candidate"
+- PLG with friction: `isPurePLG === true` but friction/viral conditions fail → "PLG Motion with Optimization Needed"
+- Hybrid: `scope === 'team' || buyerUser === 'manager'` → "Product-Led Sales (Hybrid)"
+- Fallback: unmatched combinations → "Hybrid Approach Recommended"
+- Incomplete Phase 1: missing any radio value → alert triggered, no result shown
+- Override notice threshold: `accCount >= 3` in Sales-Led context, `accCount >= 5` in Wedge context
 
-Given the scoring logic complexity in `calculateScore()`, these are the cases that matter most:
+**DOM rendering in `renderCheckboxes()` (medium value):**
+- Correct number of checkbox items rendered into `#accelerators-list` (9 items)
+- Correct number of checkbox items rendered into `#friction-list` (9 items)
+- Each rendered item has the correct `name` attribute (`accelerator` or `friction`)
+- Each rendered item's label text matches source array
 
-**Override logic (highest priority):**
-- `buyerUser === 'csuite'` always produces Sales-Led result regardless of Phase 2
-- `scope === 'enterprise'` always produces Sales-Led result regardless of Phase 2
-- Wedge trigger: Sales-Led required AND `accCount >= 4` AND `fricCount <= 2`
+**UI visibility state (lower value):**
+- `result-container` is hidden on page load
+- `wedge-callout` is hidden on page load
+- `override-notice` is hidden on page load
+- After `calculateScore()`, `result-container` is visible
+- Wedge-only cases show `wedge-callout`; others do not
+- Override notice appears only when threshold conditions are met
 
-**PLG paths:**
-- Pure PLG ideal: `buyerUser === 'same'` AND `scope === 'individual'` AND `viral === 'organic'` AND `accCount >= 4` AND `fricCount <= 1`
-- PLG with friction: `buyerUser === 'same'` AND `scope === 'individual'` but friction conditions not met
-- PLS hybrid: `scope === 'team'` OR `buyerUser === 'manager'`
+## Recommended Testing Approach (if tests are added)
 
-**Validation:**
-- Incomplete Phase 1 (any radio unanswered) should block scoring
+**Framework:** Vitest is the natural fit — no bundler required, browser environment simulation via jsdom, and simple configuration.
 
-**Edge cases:**
-- All accelerators checked (9) with Sales-Led scope — override notice threshold
-- Zero accelerators with PLG-viable scope — fallback "Hybrid" result
-- `fricCount` boundary at exactly 2 for wedge trigger
-
-## Recommended Test Approach (if tests are added)
-
-Since the project is a zero-build static HTML file, the simplest viable testing approach would be browser-based:
-
-**Option 1: Vitest with jsdom (low overhead)**
-```bash
-npm init -y
-npm install -D vitest jsdom
-```
-
-Extract scoring logic into a pure function module:
+**Setup pattern:**
 ```javascript
-// src/scoring.js
-export function calculateResult(buyerUser, viral, scope, accCount, fricCount) {
-    const requiresSales = buyerUser === 'csuite' || scope === 'enterprise';
-    const isPurePLG = buyerUser === 'same' && scope === 'individual';
-    const hasWedgePotential = requiresSales && accCount >= 4 && fricCount <= 2;
-    // ... return result object
-}
-```
+// Example: test/scoring.test.js
+import { describe, it, expect, beforeEach } from 'vitest'
 
-Test file pattern:
-```javascript
-// src/scoring.test.js
-import { describe, it, expect } from 'vitest';
-import { calculateResult } from './scoring.js';
+// scoring logic would need to be extracted from inline script
+// into a testable module: src/scoring.js
 
-describe('Sales-Led override', () => {
+describe('calculateScore', () => {
     it('forces Sales-Led when buyerUser is csuite', () => {
-        const result = calculateResult('csuite', 'organic', 'individual', 9, 0);
-        expect(result.title).toBe('Sales-Led Growth Required');
-    });
-
-    it('forces Sales-Led when scope is enterprise', () => {
-        const result = calculateResult('same', 'organic', 'enterprise', 9, 0);
-        expect(result.title).toBe('Sales-Led Growth Required');
-    });
-});
-
-describe('Wedge opportunity', () => {
-    it('triggers wedge when Sales-Led required and accCount >= 4 and fricCount <= 2', () => {
-        const result = calculateResult('csuite', 'organic', 'team', 4, 2);
-        expect(result.title).toBe('Sales-Led with Wedge Opportunity');
-    });
-
-    it('does not trigger wedge when accCount < 4', () => {
-        const result = calculateResult('csuite', 'organic', 'team', 3, 1);
-        expect(result.title).toBe('Sales-Led Growth Required');
-    });
-});
+        const result = getScoreResult({ buyerUser: 'csuite', viral: 'organic', scope: 'individual', accCount: 9, fricCount: 0 })
+        expect(result.title).toBe('Sales-Led Growth Required')
+    })
+})
 ```
 
-**Option 2: Playwright for end-to-end (current structure, no refactor)**
-```bash
-npm init -y
-npm install -D @playwright/test
-```
+**Prerequisite:** The scoring logic in `calculateScore()` (`index.html` lines 513-602) would need to be extracted into a separate importable module before unit testing is feasible. Currently it is tightly coupled to DOM access at the top of the function.
 
+**E2E option:** Playwright could test the full page without any refactoring:
 ```javascript
-// tests/assessment.spec.js
-import { test, expect } from '@playwright/test';
+// Example: e2e/assessment.spec.js
+import { test, expect } from '@playwright/test'
 
-test('Sales-Led result for enterprise scope', async ({ page }) => {
-    await page.goto('http://localhost:8080');
-    await page.click('input[name="scope"][value="enterprise"]');
-    await page.click('input[name="buyerUser"][value="same"]');
-    await page.click('input[name="viral"][value="organic"]');
-    await page.click('button[onclick="calculateScore()"]');
-    await expect(page.locator('#result-title')).toHaveText('Sales-Led Growth Required');
-});
+test('Sales-Led result for C-Suite buyer', async ({ page }) => {
+    await page.goto('http://localhost:8080')
+    await page.click('input[name="buyerUser"][value="csuite"]')
+    await page.click('input[name="viral"][value="organic"]')
+    await page.click('input[name="scope"][value="individual"]')
+    await page.click('button[onclick="calculateScore()"]')
+    await expect(page.locator('#result-title')).toHaveText('Sales-Led Growth Required')
+})
 ```
 
-## Test File Placement (if added)
+## Test Data / Fixtures
 
-```
-plg-readiness/
-├── index.html
-├── tests/              # E2E tests (Playwright)
-│   └── assessment.spec.js
-└── src/                # If logic is extracted
-    ├── scoring.js
-    └── scoring.test.js
-```
+No fixtures exist. The input space is small and enumerable:
+- `buyerUser`: 3 values (`same`, `manager`, `csuite`)
+- `viral`: 2 values (`organic`, `siloed`)
+- `scope`: 3 values (`individual`, `team`, `enterprise`)
+- `accCount`: 0–9 (integer)
+- `fricCount`: 0–9 (integer)
 
-## Current Risk Assessment
+Total Phase 1 combinations: 18. Key thresholds for Phase 2: 0, 1, 2, 3, 4, 5 for `accCount`; 0, 1, 2 for `fricCount`.
 
-**High-risk untested logic:**
-- `calculateScore()` has 6 distinct result branches with complex boolean conditions
-- The wedge trigger boundary (`accCount >= 4`, `fricCount <= 2`) has no guard
-- The override notice threshold (`accCount >= 3` for Sales-Led, `accCount >= 5` for Wedge) has no guard
-- `renderCheckboxes()` generates DOM from data arrays — any data shape change breaks the UI silently
+## Coverage Requirements
 
-**Lower risk (simpler to verify manually):**
-- `renderCheckboxes()` is called once at load with static data — breaks are immediately visible
-- Phase 1 validation uses `alert()` — easy to observe manually
+**Current:** None enforced.
+
+**Recommended minimum (if tests are added):**
+- 100% branch coverage of `calculateScore()` scoring logic — it is the core product behavior
+- All 6 result states must be reachable by at least one test case
+- Both override notice conditions must be covered
 
 ---
 

@@ -2,162 +2,158 @@
 
 **Analysis Date:** 2026-03-05
 
-## Overview
+## Project Context
 
-This is a single-file static web app (`index.html`). All conventions apply to HTML structure, inline CSS, Tailwind utility classes, and the inline `<script>` block at the bottom of the file.
+This is a single-file static web app. All code lives in `index.html`. There is no build system, no TypeScript, no module bundler, and no separate JS or CSS files. Conventions reflect a vanilla HTML/CSS/JS codebase with Tailwind CSS loaded from CDN.
 
 ## Naming Patterns
 
 **HTML IDs:**
-- Use kebab-case: `result-container`, `result-title`, `result-description`, `result-recommendation`, `wedge-callout`, `override-notice`, `override-explanation`, `accelerators-list`, `friction-list`
-- IDs are the primary JS-to-DOM interface — every element JS manipulates has an explicit ID
+- kebab-case: `result-container`, `result-title`, `result-description`, `result-recommendation`, `wedge-callout`, `override-notice`, `override-explanation`, `accelerators-list`, `friction-list`
+- IDs identify unique DOM elements that JS reads or mutates; every interactive target has one
 
-**HTML Names (form inputs):**
-- Use camelCase for radio group names: `buyerUser`, `viral`, `scope`
-- Use lowercase for checkbox group names: `accelerator`, `friction`
-- Radio values use descriptive lowercase strings: `same`, `manager`, `csuite`, `organic`, `siloed`, `individual`, `team`, `enterprise`
+**HTML name attributes (form inputs):**
+- camelCase for radio groups: `buyerUser`, `viral`, `scope`
+- camelCase for checkbox groups: `accelerator`, `friction`
 
-**JavaScript Variables:**
-- Use camelCase: `buyerUser`, `viral`, `scope`, `accCount`, `fricCount`, `resultContainer`, `resultTitle`, `resultDesc`, `resultRec`, `wedgeCallout`, `overrideNotice`, `overrideExplanation`
-- Boolean flags use descriptive names: `requiresSales`, `isPurePLG`, `hasWedgePotential`
-- Data arrays use camelCase plural nouns: `accelerators`, `frictionPoints`
+**JavaScript variables:**
+- camelCase for all locals: `buyerUser`, `viral`, `scope`, `accCount`, `fricCount`, `resultContainer`, `resultTitle`, `resultDesc`, `resultRec`, `wedgeCallout`, `overrideNotice`, `overrideExplanation`
+- camelCase for booleans prefixed with verb: `requiresSales`, `isPurePLG`, `hasWedgePotential`
+- Short abbreviations used for counts: `accCount`, `fricCount`
 
-**JavaScript Functions:**
-- Use camelCase verbs: `renderCheckboxes()`, `calculateScore()`
+**JavaScript functions:**
+- camelCase: `renderCheckboxes()`, `calculateScore()`
+- Function names are imperative verbs describing the action
 
-**CSS Classes (custom):**
-- Use kebab-case for custom classes: `.checkbox-wrapper`, `.checkbox-square`, `.check-icon`, `.radio-wrapper`, `.radio-circle`, `.radio-dot`, `.radio-label`
+**JavaScript constants (data arrays):**
+- camelCase plural nouns: `accelerators`, `frictionPoints`
 
-**Tailwind Classes:**
-- Follow Tailwind conventions as defined — the inline `tailwind.config` block extends colors with camelCase keys: `primary`, `primaryHover`
+**CSS classes:**
+- Tailwind utility classes only for layout and visual styling
+- Custom CSS class names use kebab-case: `checkbox-wrapper`, `radio-wrapper`, `checkbox-square`, `radio-circle`, `radio-dot`, `radio-label`, `check-icon`
+- Custom classes are semantic (describe the component role, not the style)
 
 ## Code Style
 
 **Formatting:**
-- No formatter configured (no `.prettierrc`, `.eslintrc`, or `biome.json`)
-- HTML uses 4-space indentation consistently throughout the file
-- JavaScript uses 4-space indentation
-- CSS inside `<style>` uses 4-space indentation
+- No linting or formatting tools configured (no `.eslintrc`, no `.prettierrc`, no `biome.json`)
+- 4-space indentation throughout HTML and JavaScript (consistent)
+- Single quotes used for HTML attribute values; template literals use backtick with `${}` interpolation
+- Opening braces on same line as control structures
 
-**Linting:**
-- No linting tooling configured
-- No `package.json` or devDependencies exist — this is a zero-build project
+**JavaScript style:**
+- `const` preferred over `let` or `var` for all variable declarations in `calculateScore()`
+- Arrow function syntax used in `forEach`: `list.forEach((item, index) => { ... })`
+- Optional chaining (`?.`) used for safe DOM queries: `document.querySelector('input[name="buyerUser"]:checked')?.value`
+- Template literals used for DOM construction in `renderCheckboxes()` — multi-line strings with `\`` backticks
+- No semicolons omitted — all statements end with semicolons
 
-## HTML Structure Conventions
-
-**Section organization inside `index.html`:**
-1. `<head>`: Tailwind CDN script, Google Fonts link, Tailwind config block, custom `<style>` block
-2. `<nav>`: Sticky navigation bar
-3. `<header>`: Hero section
-4. `<main id="assessment">`: Assessment form sections (Phase 1 and Phase 2)
-5. Result container (inside `<main>`) — always present in DOM, shown/hidden via Tailwind `hidden` class
-6. `<section>`: Problem Scope Matrix reference table and key insight cards
-7. `<footer>`: Footer
-8. `<script>`: All application logic at end of `<body>`
-
-**Card/section pattern:**
-```html
-<div class="bg-white rounded-xl border border-slate-200 p-6">
-    <h3 class="text-lg font-semibold text-slate-900 mb-2">Title</h3>
-    <p class="text-sm text-slate-500 mb-4">Subtitle</p>
-    <!-- content -->
-</div>
-```
-
-**Show/hide pattern — use Tailwind `hidden` class:**
-- Result elements start with `hidden` class in HTML
-- JS removes `hidden` to show: `element.classList.remove('hidden')`
-- JS adds `hidden` to hide: `element.classList.add('hidden')`
-- Never use `display: none` inline style or `element.style.display`
+**HTML structure:**
+- Semantic elements: `<nav>`, `<header>`, `<main>`, `<section>`, `<footer>`, `<table>`, `<thead>`, `<tbody>`
+- Comments mark each major section: `<!-- Navigation -->`, `<!-- Hero Section -->`, `<!-- Phase 1: ... -->`, `<!-- Logic Script -->`
+- Section comments use `<!-- ===== HEADER ===== -->` style dividers inside the `<script>` block: `// ========== CORE LOGIC ==========`
 
 ## Import Organization
 
-**No module imports.** The project has no build system. Dependencies are loaded via CDN in `<head>`:
-1. Tailwind CSS CDN script
+No import/module system. All dependencies loaded in `<head>` in this order:
+1. Tailwind CDN script
 2. Google Fonts link
+3. Inline `<script>` for Tailwind config
+4. Inline `<style>` for custom CSS overrides
+
+Application logic lives in a single inline `<script>` tag at the bottom of `<body>`, after all HTML.
+
+**Path Aliases:** Not applicable (no module system).
+
+## Data Structures
+
+**Content arrays** — data items are plain objects with exactly two keys:
+```javascript
+{ label: "...", example: "e.g., ..." }
+```
+Labels are full declarative sentences. Examples use the `e.g.,` prefix pattern and always reference real company/product names.
+
+**Scoring variables** — boolean flags derived from Phase 1 radio values:
+```javascript
+const requiresSales = buyerUser === 'csuite' || scope === 'enterprise';
+const isPurePLG = buyerUser === 'same' && scope === 'individual';
+const hasWedgePotential = requiresSales && accCount >= 4 && fricCount <= 2;
+```
 
 ## Error Handling
 
 **User input validation:**
-- Phase 1 radio completeness is validated before `calculateScore()` proceeds
-- Uses native `alert()` for validation errors: `alert('Please complete all Phase 1 questions before analyzing.')`
-- Optional chaining used on radio selectors to safely handle no-selection state: `document.querySelector('input[name="buyerUser"]:checked')?.value`
+- Phase 1 completeness checked before scoring: if any radio unanswered, `alert()` is called and `return` exits early
+- No try/catch in the main application script (DOM operations are trusted)
+- Optional chaining (`?.value`) used to safely read radio values without throwing
 
-**No try/catch blocks.** The app has no async operations, no API calls, and no external data dependencies — no error handling beyond form validation is needed.
+**No silent failures:**
+- The `alert()` call provides explicit user feedback for incomplete form submission
 
-## JavaScript Patterns
+## DOM Manipulation Pattern
 
-**Data definition:**
-- Data arrays (`accelerators`, `frictionPoints`) are defined as array-of-objects at the top of the script block, before functions
-- Each object has consistent shape: `{ label: string, example: string }`
-
-**DOM manipulation:**
-- Query elements once at the start of `calculateScore()` and assign to local `const` variables before use
-- Use `document.getElementById()` for stable ID-based lookups
-- Use `document.querySelector()` with attribute selectors for radio/checkbox state
-- Use `document.querySelectorAll()` + `.length` to count checked checkboxes
-
-**Dynamic HTML generation:**
-- `renderCheckboxes()` uses `document.createElement()` and `.innerHTML` template string assignment
-- Template strings used for multi-line HTML snippets within `renderCheckboxes()`
-- `container.appendChild(wrapper)` used to insert generated elements
-
-**Scoring logic:**
-- Scoring uses boolean derived variables (`requiresSales`, `isPurePLG`, `hasWedgePotential`) declared as `const` before the if/else chain
-- The if/else chain reads top-to-bottom from most restrictive to least: Sales-Led override first, then Pure PLG ideal, then PLG with friction, then PLS hybrid, then fallback
-- Result text is set directly on element `.textContent` for plain text, or `.textContent` string interpolation for dynamic values
-
-**Inline event handlers:**
-- The calculate button uses `onclick="calculateScore()"` inline attribute — the function is defined globally in the script block
-
-## Tailwind Configuration
-
-The Tailwind config block in `<head>` extends the default theme:
+**Show/hide pattern** — result sections start with Tailwind's `hidden` class in HTML; JS removes or adds `hidden` to control visibility:
 ```javascript
-tailwind.config = {
-    theme: {
-        extend: {
-            fontFamily: { sans: ['Inter', 'sans-serif'] },
-            colors: {
-                primary: '#4F46E5',
-                primaryHover: '#4338CA',
-                slate: { 50..900 } // Full slate scale redefined
-            }
-        }
-    }
+resultContainer.classList.remove('hidden');
+wedgeCallout.classList.add('hidden');
+overrideNotice.classList.remove('hidden');
+```
+
+**Dynamic rendering pattern** — `renderCheckboxes()` uses `createElement` + `innerHTML` assignment + `appendChild`:
+```javascript
+function renderCheckboxes(list, elementId, name) {
+    const container = document.getElementById(elementId);
+    list.forEach((item, index) => {
+        const wrapper = document.createElement('label');
+        wrapper.className = "...";
+        wrapper.innerHTML = `...template string...`;
+        container.appendChild(wrapper);
+    });
 }
 ```
-Use `bg-primary`, `text-primary`, `hover:bg-primaryHover` — not raw hex values in Tailwind classes.
 
-## Visual / Design Conventions
+**Text content pattern** — result text is set via `.textContent` (not `.innerHTML`) to prevent XSS:
+```javascript
+resultTitle.textContent = "Sales-Led Growth Required";
+```
+Exception: `resultDesc.textContent` uses template literals with interpolated trusted variables only.
 
-Defined in `docs/design/Modern-Web-UI-Design-Guidelines.md`. Key rules that apply to code:
+## Tailwind CSS Usage
 
-**Spacing scale:** Use Tailwind spacing utilities that map to 4/8/16/24/32px — `p-4`, `p-6`, `p-8`, `gap-4`, `mb-6`, `py-12`, `py-16`
+**Config extension** — Tailwind config is inlined in `<head>` and extends the default theme:
+- Custom colors: `primary` (`#4F46E5`), `primaryHover` (`#4338CA`)
+- Font family override: `sans` → Inter
+- Slate palette explicitly defined (does not rely on Tailwind defaults for slate)
 
-**Color palette:**
-- Background: `bg-slate-50`
-- Cards: `bg-white` with `border border-slate-200`
-- Primary accent: `#4F46E5` via `bg-primary` / `text-primary`
-- Body text: `text-slate-800`, secondary: `text-slate-600`, muted: `text-slate-500`
+**Custom CSS overrides** — CSS sibling selector pattern (`input:checked + div`) handles interactive state for hidden `<input>` elements. This is the only custom CSS in the file and should not be replaced with JS.
 
-**Radius:** `rounded-xl` for cards and large containers; `rounded-lg` for inputs and buttons; `rounded-full` for pills/badges
+**Spacing scale:** 4/8/16/24/32px via Tailwind utilities (`p-4`, `p-6`, `p-8`, `gap-3`, `gap-4`, `gap-8`, `mb-2`, `mb-4`, `mb-6`, `mb-8`, `mb-12`, `mb-16`).
 
-**Shadows:** Avoid heavy shadows. Use `shadow-sm` at most; prefer borders for card definition.
+## Logging
 
-**Typography:**
-- Headings: `font-bold` + `tracking-tight`
-- Body: default Inter weight
-- Labels: `text-sm font-medium text-slate-700`
-- Captions/examples: `text-xs text-slate-500`
+No logging framework. No `console.log` in production code. Debug output is not present in the application script.
 
 ## Comments
 
-**HTML comments:** Used to label major sections: `<!-- Navigation -->`, `<!-- Hero Section -->`, `<!-- Assessment Section -->`, `<!-- Phase 1: Problem & Stakeholder Assessment -->`, `<!-- Phase 2: Product Characteristics -->`, `<!-- Result Section -->`, `<!-- Logic Script -->`
+**When to comment:**
+- Section headers use all-caps comment dividers: `// ========== CORE LOGIC ==========`
+- Inline comments explain non-obvious logic gates: `// Override Logic: C-Suite sign-off OR Enterprise System = Sales-Led`
+- HTML comments label every major section block
+- No JSDoc — functions are short and self-documenting
 
-**CSS comments:** Used to label groups: `/* Checkbox Styles */`, `/* Radio Button Styles */`
+## Function Design
 
-**JavaScript comments:** Used sparingly to mark major sections: `// Render Checkboxes`, `// Phase 1: Get radio selections`, `// Phase 2: Get checkbox counts`, `// UI Elements`, `// Validate Phase 1 completion`, `// Reset visibility`, `// ========== CORE LOGIC ==========`, `// Override Logic:`, `// Pure PLG:`, `// Wedge potential:`
+**Size:** Functions are short and single-purpose. `renderCheckboxes()` is ~15 lines. `calculateScore()` is ~90 lines (the largest function) handling all scoring logic in one place.
+
+**Parameters:** `renderCheckboxes(list, elementId, name)` — positional parameters, no options objects.
+
+**Return values:** `renderCheckboxes()` returns nothing (side effect only). `calculateScore()` returns nothing (all effects are DOM mutations).
+
+## Module Design
+
+No modules. No exports. All code is global-scope within the inline `<script>` block. Global names used: `accelerators`, `frictionPoints`, `renderCheckboxes`, `calculateScore`.
+
+`renderCheckboxes` is called immediately after definition (at script parse time). `calculateScore` is called only via the button's `onclick` attribute.
 
 ---
 

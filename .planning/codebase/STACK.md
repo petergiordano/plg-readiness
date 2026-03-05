@@ -5,71 +5,70 @@
 ## Languages
 
 **Primary:**
-- HTML5 - Application structure and markup (`index.html`)
-- CSS3 (inline + Tailwind utility classes) - All styling (`index.html`, `<style>` block and class attributes)
-- JavaScript (ES2020+) - All application logic (`index.html`, inline `<script>` block)
+- HTML5 - Entire application structure and markup (`index.html`)
+- CSS3 - Styling via Tailwind utility classes and inline `<style>` block (`index.html` lines 36–69)
+- JavaScript (ES2020+) - All application logic in inline `<script>` block (`index.html` lines 443–603)
 
 **Secondary:**
-- None - single-file application with no secondary language files
+- None
 
 ## Runtime
 
 **Environment:**
-- Browser (any modern browser supporting ES2020+)
-- No server-side runtime required
-- Static file serving only — open `index.html` directly or via any HTTP server
+- Browser (static file, no server required)
+- Development: any static file server or direct `file://` open
+- No Node.js, Python, or server runtime required
 
 **Package Manager:**
-- None - no package manager used
-- Lockfile: Not applicable
+- None — no package manifest (`package.json`, `requirements.txt`, etc.)
+- No lockfile
 
 ## Frameworks
 
 **Core:**
 - Tailwind CSS (CDN, latest v3 via `https://cdn.tailwindcss.com`) - Utility-first CSS framework for all styling
-  - Configured inline in `index.html` with a custom theme extension block (`tailwind.config` object)
-  - Extends: `fontFamily.sans` (Inter), `colors.primary` (#4F46E5), `colors.primaryHover` (#4338CA), full `colors.slate` palette override
+  - Config block at `index.html` line 9–34 extends default palette with `primary`, `primaryHover`, and custom `slate` shades
+  - Loaded via `<script src="https://cdn.tailwindcss.com">` — NOT installed locally
 
 **Testing:**
-- None - no testing framework present
+- None
 
 **Build/Dev:**
-- None - no build step; no bundler, transpiler, or dev server required
-- Development: `python3 -m http.server 8080` (documented in `CLAUDE.md`)
+- None — no build system, bundler, or transpiler
+- Development server option: `python3 -m http.server 8080` (documented in `CLAUDE.md`)
 
 ## Key Dependencies
 
 **Critical:**
-- `https://cdn.tailwindcss.com` — Tailwind CSS play CDN; required for all layout, spacing, and color rendering; loaded in `<head>` of `index.html`
-- `https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap` — Inter typeface; required for typography; loaded as `<link>` in `<head>` of `index.html`
-
-Both dependencies are external CDN resources. The application will partially degrade without network access (no styling, fallback system fonts).
+- Tailwind CSS (CDN) — all visual layout and spacing relies on Tailwind utility classes; removing CDN breaks all styling
+- Inter (Google Fonts CDN) — `https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap`; fallback is generic `sans-serif`
 
 **Infrastructure:**
-- None — no server, no database, no backend
+- None (no backend, no database, no server dependencies)
 
 ## Configuration
 
 **Environment:**
-- No environment variables used
-- No `.env` files present or required
-- All configuration is hardcoded inside `index.html`
+- No environment variables
+- No `.env` files
+- No secrets or API keys required
 
 **Build:**
-- No build config files (no `vite.config`, `webpack.config`, `tsconfig`, etc.)
-- Tailwind configuration is an inline `tailwind.config` object in `<head>` of `index.html` (lines 10–34)
-- Custom CSS overrides in `<style>` block in `<head>` of `index.html` (lines 36–69) — defines checkbox and radio visual states using CSS sibling selectors
+- No build config files
+- Tailwind config is inline in `index.html` at lines 9–34 (not a separate `tailwind.config.js`)
+- VS Code workspace file: `plg-readiness.code-workspace` (minimal, just sets root folder)
 
 ## Platform Requirements
 
 **Development:**
-- Any OS with a modern browser
-- Optional: Python 3 for local HTTP serving
+- Any modern browser to open `index.html` directly
+- Optional: Python 3 for `python3 -m http.server 8080`
+- No Node.js, no package installs, no build step
 
 **Production:**
-- Any static file host (GitHub Pages, Netlify, S3, Vercel, etc.)
-- No server-side requirements
-- Single file deployment: `index.html`
+- Any static file host (GitHub Pages, Netlify, Vercel, S3, etc.)
+- Single file deployment: `index.html` is the entire application
+- Requires outbound internet access at runtime for CDN resources (Tailwind CSS and Google Fonts)
 
 ---
 

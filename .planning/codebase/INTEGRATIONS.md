@@ -4,19 +4,17 @@
 
 ## APIs & External Services
 
-**Font Delivery:**
-- Google Fonts - Serves the Inter typeface (weights 300–700)
-  - URL: `https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap`
-  - Auth: None required
-  - Loaded as: `<link rel="stylesheet">` in `<head>` of `index.html`
+**CSS Framework (CDN):**
+- Tailwind CSS — utility CSS loaded at runtime from `https://cdn.tailwindcss.com`
+  - SDK/Client: browser `<script>` tag (`index.html` line 7)
+  - Auth: none required
 
-**CSS Framework CDN:**
-- Tailwind CSS Play CDN - Delivers Tailwind runtime for browser-side utility class generation
-  - URL: `https://cdn.tailwindcss.com`
-  - Auth: None required
-  - Loaded as: `<script src="...">` in `<head>` of `index.html`
+**Typography (CDN):**
+- Google Fonts (Inter) — font loaded from `https://fonts.googleapis.com`
+  - SDK/Client: browser `<link>` tag (`index.html` line 8)
+  - Auth: none required
 
-No other external services, APIs, or SDKs are used.
+No other external APIs or services are used.
 
 ## Data Storage
 
@@ -24,15 +22,15 @@ No other external services, APIs, or SDKs are used.
 - None — no database of any kind
 
 **File Storage:**
-- None — no file storage; the application is entirely stateless
+- Local filesystem only — the app is a single static `index.html` file with no file read/write operations
 
 **Caching:**
-- None — browser cache only (standard HTTP caching for CDN assets)
+- None — browser default caching applies to CDN resources
 
 ## Authentication & Identity
 
 **Auth Provider:**
-- None — no authentication; the application is fully public and anonymous
+- None — the application has no user accounts, login, or sessions
 
 ## Monitoring & Observability
 
@@ -40,16 +38,16 @@ No other external services, APIs, or SDKs are used.
 - None
 
 **Logs:**
-- None — browser `console` is not used for logging in production code
+- None — no logging framework or analytics instrumentation present
 
 ## CI/CD & Deployment
 
 **Hosting:**
-- Not defined in codebase — no deployment config files present (no `netlify.toml`, `vercel.json`, `.github/workflows/`, etc.)
-- Compatible with any static host; deployment is a single file copy of `index.html`
+- Not configured in the repository (no deployment config files present)
+- Suitable for any static host: GitHub Pages, Netlify, Vercel, S3 + CloudFront, etc.
 
 **CI Pipeline:**
-- None
+- None — no CI config (no `.github/workflows/`, no `Jenkinsfile`, no `netlify.toml`, etc.)
 
 ## Environment Configuration
 
@@ -57,7 +55,7 @@ No other external services, APIs, or SDKs are used.
 - None
 
 **Secrets location:**
-- None — no secrets of any kind
+- Not applicable — no secrets of any kind
 
 ## Webhooks & Callbacks
 
@@ -67,16 +65,16 @@ No other external services, APIs, or SDKs are used.
 **Outgoing:**
 - None
 
-## Network Dependency Summary
+## Runtime Network Dependencies
 
-The application has exactly two external network dependencies, both loaded at page load:
+The app is fully client-side and static, but requires two external CDN requests at page load:
 
-| Resource | URL | Purpose | Failure Impact |
-|---|---|---|---|
-| Tailwind CSS | `https://cdn.tailwindcss.com` | All layout and styling | Page renders unstyled; fully functional |
-| Inter font | `https://fonts.googleapis.com` | Typography | Falls back to system sans-serif |
+| Resource | URL | Failure Impact |
+|----------|-----|----------------|
+| Tailwind CSS | `https://cdn.tailwindcss.com` | All styling breaks; app is functional but unstyled |
+| Inter font | `https://fonts.googleapis.com` | Falls back to system `sans-serif`; negligible impact |
 
-All application logic (scoring, rendering, DOM manipulation) runs entirely client-side with no outbound network calls after initial page load.
+These CDN dependencies mean the app does not work fully offline or in environments blocking external scripts.
 
 ---
 

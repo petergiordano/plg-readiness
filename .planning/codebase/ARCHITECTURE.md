@@ -4,131 +4,145 @@
 
 ## Pattern Overview
 
-**Overall:** Single-file static web application — no build system, no server, no framework.
+**Overall:** Single-File Static Web Application
 
 **Key Characteristics:**
-- All HTML, CSS, and JavaScript live in `index.html`
-- No module system; all code executes in browser global scope
-- State is held entirely in DOM input elements (no JS state object)
-- CDN-loaded dependencies only (Tailwind CSS, Inter font)
+- Entire application lives in one file: `index.html`
+- No build system, no compilation, no server-side logic
+- CDN-delivered dependencies only (Tailwind CSS, Google Fonts)
+- Inline JavaScript handles all app state and scoring logic
+- No persistence layer — all state is ephemeral (exists only in DOM during the session)
 
 ## Layers
 
-**Presentation Layer:**
-- Purpose: HTML structure and visual layout
-- Location: `index.html` lines 71–441 (body HTML sections)
-- Contains: Semantic HTML sections (nav, header, main, section, footer), Tailwind utility classes
-- Depends on: Tailwind CSS (CDN), custom CSS styles defined in `<head>`
+**Presentation Layer (HTML structure):**
+- Purpose: Defines the visual skeleton and all static content
+- Location: `index.html` lines 71–441
+- Contains: Nav, hero, Phase 1 radio questions, Phase 2 checkbox containers, result container, matrix reference table, footer
+- Depends on: CSS styles in `<head>`, JavaScript at bottom of `<body>`
 - Used by: Browser rendering engine
 
-**Style Layer:**
-- Purpose: Visual appearance and interactive checkbox/radio states
-- Location: `index.html` lines 9–69 (`<head>` — Tailwind config block + `<style>` tag)
-- Contains: Tailwind config extending color palette; CSS sibling-selector rules for hidden `<input>` + visible adjacent `<div>` pattern
-- Depends on: Tailwind CSS CDN (`https://cdn.tailwindcss.com`)
-- Used by: Presentation layer
+**Style Layer (CSS):**
+- Purpose: Defines visual appearance and interactive states
+- Location: `index.html` lines 9–69 (Tailwind config block + `<style>` block)
+- Contains: Tailwind CDN config with custom palette, CSS sibling selectors for checkbox/radio visual states
+- Depends on: `https://cdn.tailwindcss.com`, Google Fonts CDN
+- Used by: HTML elements via utility class names and CSS selector rules
 
-**Data Layer:**
-- Purpose: Static content definitions for Phase 2 checkboxes
-- Location: `index.html` lines 444–484 (top of inline `<script>`)
-- Contains: `accelerators` array (9 items), `frictionPoints` array (9 items), each with `label` and `example` fields
+**Data Layer (JS arrays):**
+- Purpose: Stores all checkbox content as structured data
+- Location: `index.html` lines 444–484
+- Contains: `accelerators` array (9 items) and `frictionPoints` array (9 items), each with `label` and `example` fields
 - Depends on: Nothing
-- Used by: Application logic (`renderCheckboxes`)
+- Used by: `renderCheckboxes()` function
 
-**Application Logic Layer:**
-- Purpose: DOM rendering, user input collection, scoring calculation, result display
-- Location: `index.html` lines 443–603 (inline `<script>` at bottom of `<body>`)
-- Contains: `renderCheckboxes()`, `calculateScore()`
-- Depends on: DOM elements by ID, data arrays
-- Used by: User interactions (button click, page load)
+**Rendering Layer (JS function):**
+- Purpose: Dynamically generates Phase 2 checkbox DOM elements from data arrays
+- Location: `index.html` lines 487–511, `renderCheckboxes()` function
+- Contains: DOM creation logic that builds `<label>` + `<input>` + `<div>` structures
+- Depends on: `accelerators`, `frictionPoints` arrays; `#accelerators-list` and `#friction-list` DOM elements
+- Used by: Runs on page load (lines 510–511)
+
+**Scoring/Logic Layer (JS function):**
+- Purpose: Reads user selections, applies scoring rules, updates result DOM
+- Location: `index.html` lines 513–602, `calculateScore()` function
+- Contains: Input reading, validation, scoring decision tree, DOM manipulation for results
+- Depends on: All Phase 1 radio inputs and Phase 2 checkbox inputs; result DOM elements
+- Used by: "Analyze My Product Strategy" button `onclick` handler (line 325)
 
 ## Data Flow
 
-**Checkbox Rendering (page load):**
+**Assessment Flow:**
 
-1. Browser parses `index.html` and reaches the `<script>` block
-2. `accelerators` and `frictionPoints` arrays are defined
-3. `renderCheckboxes(accelerators, 'accelerators-list', 'accelerator')` is called immediately
-4. `renderCheckboxes(frictionPoints, 'friction-list', 'friction')` is called immediately
-5. Each call iterates the array, creates `<label>` elements with hidden `<input>` checkboxes, and appends them to the target container ID
-
-**Scoring (button click):**
-
-1. User clicks "Analyze My Product Strategy" button, which calls `calculateScore()` inline via `onclick`
-2. Phase 1 radio values read from DOM: `buyerUser`, `viral`, `scope` via `querySelector`
-3. Phase 2 counts read from DOM: `accCount` (checked accelerators), `fricCount` (checked friction points) via `querySelectorAll(...).length`
-4. Validation: If any Phase 1 radio is unselected, `alert()` fires and function returns
-5. All result containers reset to `hidden`; `result-container` made visible
-6. Scoring logic evaluates conditionals and sets `textContent` on result DOM elements
-7. Result container scrolls into view via `scrollIntoView`
+1. Page loads — `renderCheckboxes()` executes immediately, injecting 9 accelerator and 9 friction checkbox elements into `#accelerators-list` and `#friction-list`
+2. User selects Phase 1 radio answers (buyerUser, viral, scope) — native browser radio behavior, no JS involved
+3. User selects Phase 2 checkboxes — native browser checkbox behavior, no JS involved
+4. User clicks "Analyze My Product Strategy" button — triggers `calculateScore()`
+5. `calculateScore()` reads all selected inputs via `document.querySelector()` / `document.querySelectorAll()`
+6. Validation check: if any Phase 1 radio is unselected, `alert()` is fired and function exits
+7. Scoring decision tree runs (see Scoring Logic section)
+8. `result-container` `hidden` class is removed; result text nodes are populated
+9. Conditionally, `wedge-callout` and/or `override-notice` `hidden` classes are removed
+10. `scrollIntoView()` scrolls user to result
 
 **State Management:**
-- No JavaScript state object exists
-- All user selections live in browser DOM input state (checked/unchecked radio and checkbox inputs)
-- Result display state controlled by adding/removing Tailwind `hidden` class on DOM elements
+- No state object — state lives entirely in DOM input elements
+- Result is computed fresh every time the button is clicked
+- Previous result is overridden (not appended) on recalculation
 
 ## Key Abstractions
 
-**Input Controls (CSS Pattern):**
-- Purpose: Visually styled radio buttons and checkboxes that use native browser input behavior
-- Pattern: Hidden `<input>` element followed by a styled `<div>`; CSS sibling selector (`:checked + div`) applies active styles
-- Defined at: `index.html` lines 42–68
-- Used by: All Phase 1 radio groups (hardcoded HTML) and all Phase 2 checkboxes (rendered by JS)
+**Result States (6 named outcomes):**
+- Purpose: Maps scoring logic branches to human-readable GTM recommendations
+- Values: `"Pure PLG: Ideal Candidate"`, `"PLG Motion with Optimization Needed"`, `"Product-Led Sales (Hybrid)"`, `"Sales-Led with Wedge Opportunity"`, `"Sales-Led Growth Required"`, `"Hybrid Approach Recommended"`
+- Pattern: Not an enum — result title/description/recommendation are set directly on DOM text nodes
 
-**Checkbox Data Arrays:**
-- Purpose: Single source of truth for Phase 2 content
-- Examples: `accelerators` (line 444), `frictionPoints` (line 465)
-- Pattern: Array of `{ label: string, example: string }` objects consumed by `renderCheckboxes()`
+**Phase 1 Radio Inputs (3 questions, hard override signals):**
+- `buyerUser`: `"same"` | `"manager"` | `"csuite"`
+- `viral`: `"organic"` | `"siloed"`
+- `scope`: `"individual"` | `"team"` | `"enterprise"`
 
-**Result Cards:**
-- Purpose: Pre-rendered but hidden UI shells that JS populates and reveals
-- Elements: `#result-container`, `#result-title`, `#result-description`, `#result-recommendation`, `#wedge-callout`, `#override-notice`, `#override-explanation`
-- Pattern: All in DOM at load time; shown/hidden by adding/removing `hidden` class
+**Phase 2 Checkbox Counts (numeric signals, secondary modifiers):**
+- `accCount`: integer 0–9, count of checked PLG accelerators
+- `fricCount`: integer 0–9, count of checked friction points
+
+**Checkbox Item Schema:**
+```javascript
+{ label: String, example: String }
+```
 
 ## Entry Points
 
 **Page Load:**
-- Location: `index.html` — inline `<script>` block (lines 443–603) executes immediately at parse time
-- Triggers: Browser parsing the bottom-of-body script tag
-- Responsibilities: Defines data arrays, calls `renderCheckboxes()` twice to populate Phase 2 UI
+- Location: `index.html` lines 510–511, inline script at bottom of `<body>`
+- Triggers: Browser `DOMContentLoaded` (implicit — scripts at bottom of body)
+- Responsibilities: Renders Phase 2 checkboxes into DOM before user interaction
 
-**User Assessment Submission:**
-- Location: `index.html` line 325 — `<button onclick="calculateScore()">`
-- Triggers: User clicking "Analyze My Product Strategy"
-- Responsibilities: Validates Phase 1 completion, computes GTM recommendation, updates result DOM
+**User-Triggered Calculation:**
+- Location: `index.html` line 325, button `onclick="calculateScore()"`
+- Triggers: User clicks "Analyze My Product Strategy" button
+- Responsibilities: Validate inputs, compute GTM recommendation, display result
 
 ## Scoring Logic
 
-**Hard Overrides (Phase 1 determines result regardless of Phase 2):**
-- `buyerUser === 'csuite'` OR `scope === 'enterprise'` → forces Sales-Led path
-- `buyerUser === 'same'` AND `scope === 'individual'` → Pure PLG path
+**Override Logic (hard gates):**
+```
+requiresSales = (buyerUser === 'csuite') OR (scope === 'enterprise')
+```
+When `requiresSales` is true, result is always Sales-Led (or Sales-Led with Wedge). Phase 2 counts cannot override this.
 
-**Wedge Trigger:**
-- Condition: `requiresSales === true` AND `accCount >= 4` AND `fricCount <= 2`
-- Result: "Sales-Led with Wedge Opportunity" + `#wedge-callout` shown
+**Wedge Potential (modifier within Sales-Led):**
+```
+hasWedgePotential = requiresSales AND accCount >= 4 AND fricCount <= 2
+```
 
-**Result States (6 total):**
-1. `"Pure PLG: Ideal Candidate"` — isPurePLG + viral=organic + accCount≥4 + fricCount≤1
-2. `"PLG Motion with Optimization Needed"` — isPurePLG but friction present
-3. `"Product-Led Sales (Hybrid)"` — scope=team or buyerUser=manager
-4. `"Sales-Led with Wedge Opportunity"` — requiresSales + hasWedgePotential
-5. `"Sales-Led Growth Required"` — requiresSales without wedge potential
-6. `"Hybrid Approach Recommended"` — all other cases
+**Pure PLG Ideal (strongest PLG signal):**
+```
+isPurePLG = (buyerUser === 'same') AND (scope === 'individual')
+isPurePLG AND viral === 'organic' AND accCount >= 4 AND fricCount <= 1
+→ "Pure PLG: Ideal Candidate"
+```
+
+**Decision Tree Priority (highest to lowest):**
+1. `requiresSales` → Sales-Led branch (with or without wedge)
+2. `isPurePLG` + strong signals → Pure PLG Ideal
+3. `isPurePLG` + weaker signals → PLG with Optimization
+4. `scope === 'team'` OR `buyerUser === 'manager'` → Product-Led Sales
+5. Default → Hybrid Approach
 
 ## Error Handling
 
-**Strategy:** Minimal — single `alert()` for incomplete Phase 1; no other error handling.
+**Strategy:** Minimal — single validation with `alert()` dialog
 
 **Patterns:**
-- Phase 1 validation: `if (!buyerUser || !viral || !scope)` → `alert()` + early return
-- Phase 2 checkboxes: No validation; zero selections are valid (count defaults to 0)
-- No try/catch blocks anywhere
+- Incomplete Phase 1: `alert('Please complete all Phase 1 questions before analyzing.')` then early `return`
+- No error handling on DOM queries — silently fails if elements not found (not expected in practice since HTML is static)
 
 ## Cross-Cutting Concerns
 
-**Logging:** None — no `console.log` statements.
-**Validation:** Phase 1 completeness check only; no input sanitization (inputs are constrained radio/checkbox controls with no free text).
-**Authentication:** Not applicable — fully static, no user accounts.
+**Logging:** None — no console logging or analytics
+**Validation:** Phase 1 completeness only — Phase 2 has no minimum requirement
+**Authentication:** None — fully public, no auth layer
 
 ---
 

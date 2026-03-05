@@ -8,7 +8,7 @@
 plg-readiness/
 ├── index.html                        # Entire application (HTML + CSS + JS)
 ├── CLAUDE.md                         # Project instructions for Claude Code
-├── plg-readiness.code-workspace      # VS Code workspace file
+├── plg-readiness.code-workspace      # VS Code workspace config
 ├── .claude/
 │   ├── agents/                       # Specialized Claude agent definitions
 │   │   ├── cli-developer.md
@@ -22,136 +22,124 @@ plg-readiness/
 │   │   ├── qa-expert.md
 │   │   └── ui-designer.md
 │   └── skills/
-│       └── frontend-design/          # Frontend design skill files
-├── .planning/
-│   └── codebase/                     # GSD codebase analysis documents
-│       ├── ARCHITECTURE.md
-│       └── STRUCTURE.md
+│       └── frontend-design/
+│           └── SKILL.md              # Frontend design skill reference
 ├── docs/
 │   └── design/
-│       └── Modern-Web-UI-Design-Guidelines.md   # UI design reference
-└── reference/
-    └── cli-tool-template.py          # Python CLI structural reference
+│       └── Modern-Web-UI-Design-Guidelines.md  # UI design reference
+├── reference/
+│   └── cli-tool-template.py          # Python CLI structural reference
+└── .planning/
+    └── codebase/                     # GSD codebase analysis documents
 ```
 
 ## Directory Purposes
 
 **Root (`/`):**
-- Purpose: Project root; the application itself is a single file
-- Contains: `index.html` (the entire app), workspace config, project instructions
-- Key files: `index.html` — this IS the application
+- Purpose: Holds the application and project-level config
+- Contains: `index.html` (the entire app), workspace config, CLAUDE.md instructions
+- Key files: `index.html`
 
 **`.claude/agents/`:**
-- Purpose: Claude Code agent persona definitions for specialized tasks
-- Contains: Markdown files defining agent behavior for specific domains
-- Key files: `frontend-developer.md`, `ui-designer.md` (most relevant to this project)
+- Purpose: Specialized Claude Code agent definitions for domain-specific tasks
+- Contains: Markdown files defining agent behavior for CLI, code review, frontend, etc.
+- Key files: `frontend-developer.md`, `ui-designer.md` (most relevant for this project)
 
 **`.claude/skills/frontend-design/`:**
-- Purpose: Skill reference files for frontend design patterns
-- Contains: Design pattern guidance
-
-**`.planning/codebase/`:**
-- Purpose: GSD codebase analysis documents consumed by planning/execution commands
-- Contains: ARCHITECTURE.md, STRUCTURE.md, and other analysis docs
-- Generated: Yes (by `gsd:map-codebase`)
-- Committed: Yes
+- Purpose: Frontend design skill reference for Claude agents
+- Contains: `SKILL.md` with frontend design patterns and guidelines
 
 **`docs/design/`:**
-- Purpose: Design system reference documentation
-- Contains: `Modern-Web-UI-Design-Guidelines.md` — authoritative UI rules
-- Key files: Read this before making any visual changes
+- Purpose: Human-readable design reference documentation
+- Contains: UI design guidelines that govern visual decisions in `index.html`
+- Key files: `Modern-Web-UI-Design-Guidelines.md` — **must be read before making UI changes**
 
 **`reference/`:**
-- Purpose: Code pattern references (not used by the app at runtime)
-- Contains: `cli-tool-template.py` — Python CLI structural reference
-- Generated: No
+- Purpose: Structural reference code (not for direct copying)
+- Contains: `cli-tool-template.py` — Python CLI pattern with argparse, .env loading, batch processing
+
+**`.planning/codebase/`:**
+- Purpose: GSD codebase analysis documents for AI-assisted planning
+- Contains: ARCHITECTURE.md, STRUCTURE.md, and other analysis docs
+- Generated: Yes (by GSD map-codebase)
 - Committed: Yes
 
 ## Key File Locations
 
-**Entry Points:**
-- `index.html`: The entire application — open directly in browser or serve via `python3 -m http.server 8080`
+**Entry Point / Entire Application:**
+- `index.html`: Complete app — HTML structure, CSS config, inline styles, JavaScript logic
 
-**Configuration:**
-- `index.html` lines 9–34: Tailwind CSS config (color palette, font family extension)
-- `CLAUDE.md`: Project-level instructions for Claude Code agents
-- `plg-readiness.code-workspace`: VS Code workspace settings
+**Design Reference (read before UI changes):**
+- `docs/design/Modern-Web-UI-Design-Guidelines.md`: Color palette, spacing scale, typography rules
 
-**Core Logic:**
-- `index.html` lines 443–603: All JavaScript — data arrays, `renderCheckboxes()`, `calculateScore()`
-
-**Styles:**
-- `index.html` lines 9–34: Tailwind CDN + config
-- `index.html` lines 36–69: Custom CSS (checkbox/radio sibling-selector states)
-- `docs/design/Modern-Web-UI-Design-Guidelines.md`: Design system rules
-
-**Testing:**
-- None — no test files exist in this project
+**Agent Definitions:**
+- `.claude/agents/frontend-developer.md`: Frontend code conventions agent
+- `.claude/agents/ui-designer.md`: UI design decisions agent
 
 ## Naming Conventions
 
 **Files:**
-- Single lowercase with hyphens: `index.html`, `cli-tool-template.py`
-- Agent/doc files: kebab-case with `.md` extension
+- Application file: lowercase with hyphens (`index.html`)
+- Documentation: Title-Case-With-Hyphens (`Modern-Web-UI-Design-Guidelines.md`)
+- Agent files: lowercase with hyphens (`frontend-developer.md`, `code-reviewer.md`)
 
-**HTML IDs (used by JavaScript):**
-- Section containers: `assessment`, `accelerators-list`, `friction-list`
-- Result elements: `result-container`, `result-title`, `result-description`, `result-recommendation`
-- Conditional elements: `wedge-callout`, `override-notice`, `override-explanation`
-
-**HTML names (form inputs):**
-- Radio groups: `buyerUser`, `viral`, `scope`
-- Checkbox groups: `accelerator`, `friction`
-
-**CSS classes (custom):**
-- Component wrappers: `checkbox-wrapper`, `radio-wrapper`
-- Inner elements: `checkbox-square`, `check-icon`, `radio-circle`, `radio-dot`, `radio-label`
+**HTML IDs (in `index.html`):**
+- Kebab-case: `result-container`, `result-title`, `result-description`, `result-recommendation`
+- Kebab-case: `accelerators-list`, `friction-list`, `wedge-callout`, `override-notice`
+- Kebab-case: `buyer-user-options`, `viral-options`, `scope-options`
 
 **JavaScript:**
-- Functions: camelCase — `renderCheckboxes()`, `calculateScore()`
-- Variables: camelCase — `accCount`, `fricCount`, `buyerUser`, `requiresSales`, `isPurePLG`, `hasWedgePotential`
-- Data arrays: camelCase — `accelerators`, `frictionPoints`
+- Functions: camelCase (`calculateScore`, `renderCheckboxes`)
+- Variables: camelCase (`buyerUser`, `accCount`, `fricCount`, `resultContainer`)
+- Data arrays: camelCase (`accelerators`, `frictionPoints`)
+- Boolean flags: camelCase with descriptive prefix (`requiresSales`, `isPurePLG`, `hasWedgePotential`)
+
+**CSS Classes:**
+- Tailwind utilities everywhere
+- Custom component classes use kebab-case: `checkbox-wrapper`, `checkbox-square`, `check-icon`, `radio-wrapper`, `radio-circle`, `radio-dot`, `radio-label`
+
+**Radio Input Values:**
+- Short, lowercase, no hyphens: `"same"`, `"manager"`, `"csuite"`, `"organic"`, `"siloed"`, `"individual"`, `"team"`, `"enterprise"`
 
 ## Where to Add New Code
 
-**New assessment question (Phase 1 radio group):**
-- Add HTML radio group inside `<section class="mb-16">` following the existing `radio-wrapper` pattern
-- Add new `const questionName = document.querySelector(...)?.value` in `calculateScore()`
-- Update scoring conditionals in `calculateScore()`
+**New UI Section (e.g., Phase 3 questions):**
+- Add HTML inside `<main id="assessment">` in `index.html`
+- Follow existing section pattern: phase badge → `<h2>` → `<p>` description → question cards
+- Add corresponding JS logic within or after `calculateScore()`
 
-**New Phase 2 checkbox item:**
-- Add `{ label: "...", example: "e.g., ..." }` object to `accelerators` or `frictionPoints` array at `index.html` lines 444–484
-- No other changes needed — `renderCheckboxes()` handles rendering automatically
+**New Checkbox Data:**
+- Add items to `accelerators` or `frictionPoints` arrays in `index.html` inline script
+- Each item must have `{ label: String, example: String }` — `renderCheckboxes()` handles the rest
 
-**New result state:**
-- Add new `else if` branch in `calculateScore()` (lines 554–601)
-- Reuse existing DOM elements: set `resultTitle.textContent`, `resultDesc.textContent`, `resultRec.textContent`
-- Show/hide `wedgeCallout` and `overrideNotice` as needed
+**New Result State:**
+- Add a new `else if` branch in `calculateScore()` before the final `else` fallback
+- Set `resultTitle.textContent`, `resultDesc.textContent`, `resultRec.textContent`
+- Optionally show `wedgeCallout` or `overrideNotice` by removing `hidden` class
 
-**New static content section:**
-- Add HTML section inside `<body>` following existing card/section patterns
-- Use `max-w-5xl mx-auto px-6` container class for consistent width
-- Reference `docs/design/Modern-Web-UI-Design-Guidelines.md` for spacing and color rules
+**New Static Reference Section:**
+- Add after `</main>` and before `<footer>` in `index.html`
+- Follow the Problem Scope Matrix section pattern: `<section class="bg-white border-t border-slate-200 ...">` with `max-w-5xl mx-auto px-6` container
 
-**New styles:**
-- Extend Tailwind config in `index.html` lines 10–34 for new design tokens
-- Add custom CSS in `<style>` block (lines 36–69) only for patterns Tailwind cannot handle (e.g., sibling selectors)
+**New Styling:**
+- Prefer Tailwind utility classes directly on elements
+- Custom CSS states (e.g., `:checked` sibling selectors) go in the `<style>` block in `<head>` (lines 36–69)
+- New colors must be added to `tailwind.config` theme extension (lines 10–34)
+
+**New Agent Definition:**
+- Add `.md` file to `.claude/agents/` following existing agent format
+- Reference in `CLAUDE.md` agents table
 
 ## Special Directories
 
+**`.git/`:**
+- Purpose: Git version control metadata
+- Generated: Yes
+- Committed: No
+
 **`.planning/`:**
-- Purpose: GSD planning artifacts — codebase maps, phase plans
-- Generated: Yes, by GSD commands
-- Committed: Yes
-
-**`.claude/`:**
-- Purpose: Claude Code configuration — agents and skills
-- Generated: No (manually authored)
-- Committed: Yes
-
-**`reference/`:**
-- Purpose: Structural code templates for Claude to reference
-- Generated: No
+- Purpose: GSD planning artifacts and codebase analysis
+- Generated: Yes (by GSD commands)
 - Committed: Yes
 
 ---
