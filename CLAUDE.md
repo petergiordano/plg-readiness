@@ -21,30 +21,47 @@ Everything lives in `index.html`. There is no build system, no package manager, 
 
 **Dependencies (CDN only):**
 - Tailwind CSS — loaded via CDN with an inline config block at the top of `<head>`
-- Inter font — loaded from Google Fonts
+- Fraunces (display/headings), Plus Jakarta Sans (body), JetBrains Mono (labels/overlines) — Google Fonts
 
 **Structure inside `index.html`:**
-1. Tailwind config + custom CSS (top of `<head>`) — extends the color palette and defines checkbox/radio visual states using CSS sibling selectors (hidden `<input>` + styled adjacent `<div>`)
-2. HTML sections — nav, hero, Phase 1 (radio questions), Phase 2 (checkbox lists rendered by JS), result container, matrix reference table, footer
-3. Inline `<script>` at bottom — all application logic
+1. Tailwind config + custom CSS (`<head>`) — extends palette, defines `.slide` transition states, `.answer-card` / `.check-card` selection styles, and result reveal animations
+2. Fixed UI chrome — 3px progress bar (top), back button + step counter overlay (`#quiz-chrome`)
+3. Six slides (`#slide-0` through `#slide-5`) — `position: fixed; inset: 0` with `s-active / s-above / s-below` state classes driving translateY transitions
+4. `#results-page` — hidden `div` that becomes a normal scroll page after the quiz; contains result cards, wedge callout, override notice, reference matrix, footer
+5. Inline `<script>` at bottom — all state and logic
+
+**Slide flow:**
+- Slide 0: Welcome / CTA
+- Slides 1–3: One radio question each (auto-advance on selection after 380ms delay)
+- Slides 4–5: Multi-select checkboxes in a 2-column grid; fixed question header + scrollable list + sticky Continue/See Result button
+- After slide 5: `showResults()` fades out slides, reveals `#results-page` as normal scroll
+
+**Navigation system:**
+- `currentSlide` integer tracks position; `goTo(n)` applies state classes to all slides
+- `goNext()` / `goPrev()` call `goTo`; `updateChrome()` syncs progress bar, back button, step counter
+- Keyboard: `A`/`B`/`C` select radio options on slides 1–3; `Enter` advances any slide
+- `selectAnswer(btn, autoAdvance)` deselects siblings, marks selected, triggers auto-advance
+- `restartQuiz()` resets all state, re-shows slides, calls `goTo(0)`
 
 **Scoring logic** (`calculateScore()` function):
-- Phase 1 radio answers act as hard overrides. `buyerUser === 'csuite'` or `scope === 'enterprise'` forces Sales-Led regardless of Phase 2.
-- Phase 2 checkboxes (`accCount` / `fricCount`) only modify results within PLG-viable cases.
-- Wedge potential triggers when Sales-Led is required but `accCount >= 4` and `fricCount <= 2`.
+- Phase 1 radio answers (`answers.buyerUser`, `answers.viral`, `answers.scope`) stored in `answers` object
+- `buyerUser === 'csuite'` or `scope === 'enterprise'` forces Sales-Led regardless of Phase 2
+- Phase 2 checkbox counts (`accCount` / `fricCount`) only modify results within PLG-viable cases
+- Wedge potential triggers when Sales-Led is required but `accCount >= 4` and `fricCount <= 2`
 - Result states: "Pure PLG: Ideal Candidate", "PLG Motion with Optimization Needed", "Product-Led Sales (Hybrid)", "Sales-Led with Wedge Opportunity", "Sales-Led Growth Required", "Hybrid Approach Recommended"
 
-**Phase 2 checkbox rendering** — `accelerators` and `frictionPoints` arrays are defined in JS and rendered dynamically into `#accelerators-list` and `#friction-list` via `renderCheckboxes()`.
+**Phase 2 checkbox rendering** — `accelerators` and `frictionPoints` arrays defined in JS, rendered into `#accelerators-list` / `#friction-list` via `renderCheckboxes()`. Each card is a `<button>` with a hidden `<input type="checkbox">` inside; toggled via `.selected` class + `card.checked`.
 
-**Result display** — result cards, the wedge callout, and the override notice are all in the DOM but hidden via Tailwind's `hidden` class; JS removes/adds `hidden` to show them.
+**Result display** — `#result-container`, `#wedge-callout`, `#override-notice` start hidden; `calculateScore()` populates text content and removes `hidden` as needed.
 
 ## Design Guidelines
 
 See `docs/design/Modern-Web-UI-Design-Guidelines.md` before making UI changes. Key rules:
 - Slate color palette with `#4F46E5` (primary indigo) as the single accent
-- Clean cards with subtle borders, no heavy shadows or gradients
+- Clean cards with `1.5px` borders, no heavy shadows or gradients; selected state uses `#EEF2FF` bg + indigo border
 - Spacing follows 4/8/16/24/32px scale via Tailwind utilities
-- Typography: Inter, large headings, 16-18px body text
+- Typography: Fraunces for display headings, Plus Jakarta Sans for body, JetBrains Mono for overlines/labels/keyboard hints
+- Slide background: `#FAFAF8` (`surface-warm`); results hero uses `#0F172A` (`surface-dark`)
 
 ## Agents
 
