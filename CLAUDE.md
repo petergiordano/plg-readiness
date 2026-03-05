@@ -45,3 +45,26 @@ See `docs/design/Modern-Web-UI-Design-Guidelines.md` before making UI changes. K
 - Clean cards with subtle borders, no heavy shadows or gradients
 - Spacing follows 4/8/16/24/32px scale via Tailwind utilities
 - Typography: Inter, large headings, 16-18px body text
+
+## Agents
+
+Specialized agents in `.claude/agents/`. Read the relevant agent
+before starting work that matches its domain.
+
+- **cli-developer** -- CLI UX: argument naming, progress output, error messages, help text, shell completions
+- **code-reviewer** -- Code review: best practices, anti-patterns, security, performance, readability
+- **data-analyst** -- Data analysis: data exploration, visualization, statistical methods, insights
+- **data-engineer** -- Data engineering: pipelines, ETL, data modeling, storage, performance
+- **debugger** -- Debugging: root cause analysis, error tracing, hypothesis testing, fix verification
+- **documentation-engineer** -- Documentation: API docs, README quality, user guides, code comments
+- **frontend-developer** -- Frontend code: HTML/CSS/JS structure, responsive layouts, component patterns
+- **python-pro** -- Python code patterns: type hints, error handling, Pythonic idioms, async, testing
+- **qa-expert** -- Quality assurance: test strategy, edge cases, acceptance criteria, regression testing
+- **ui-designer** -- UI design: visual hierarchy, spacing, color, typography, interaction patterns
+
+
+## Reference Code
+
+`reference/cli-tool-template.py` is a working Python CLI pattern
+with .env loading, argparse, batch processing, and progress reporting.
+Use as structural reference -- do not copy wholesale.
