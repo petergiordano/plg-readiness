@@ -1,0 +1,84 @@
+# ROADMAP — Rebrand + Multi-Client Theming
+
+**Milestone:** Rebrand + Multi-Client Theming
+**Granularity:** standard
+**Coverage:** 3/3 v1 requirements mapped
+
+## Phases
+
+- [ ] **Phase 1: Theming Architecture Foundation** — Scaffold the CSS-variable contract, Tailwind wiring, and theme switch mechanism in `index.html`.
+- [ ] **Phase 2: Overdrive Default Theme Migration** — Convert the existing app end-to-end to the new theming architecture with Overdrive as the default identity.
+- [ ] **Phase 3: Second Theme Stub & Pluggability Proof** — Add one stub second theme to prove the system supports per-client rebrand without touching markup.
+
+## Phase Details
+
+### Phase 1: Theming Architecture Foundation
+**Goal**: A theming contract exists in `index.html` — a single `:root` block of brandable tokens, Tailwind utilities that resolve through those tokens, and a working theme switch mechanism — with the app still rendering its current identity unchanged.
+**Depends on**: Nothing (first phase)
+**Requirements**: REQ-build-theming-architecture
+**Success Criteria** (what must be TRUE):
+  1. A developer can open `index.html` and find every brandable token defined in one `:root` block at the top of the file (no scattered hex values in markup).
+  2. The inline Tailwind config resolves utility classes through CSS vars — changing a token value in `:root` updates the rendered output without editing any markup or any other CSS rule.
+  3. A theme switch mechanism is wired and demonstrable — flipping the `data-theme` attribute on `<html>` (and/or visiting with `?client=` per the discuss-phase decision) causes the active token set to switch.
+  4. The app, with no `data-theme` set, still renders the existing indigo / slate / Fraunces identity exactly as it did before this phase (no visual regressions while the contract is being built).
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 2: Overdrive Default Theme Migration
+**Goal**: The app's default visual identity is Overdrive end-to-end — every slide, the results page, callouts, and the reference matrix render coherently with no half-old / half-new state, and no dark backgrounds.
+**Depends on**: Phase 1
+**Requirements**: REQ-overdrive-default-theme
+**Success Criteria** (what must be TRUE):
+  1. A user opening `index.html` with no theme override sees the Overdrive identity — Space Grotesk display headings, Plus Jakarta Sans body, JetBrains Mono labels, Overdrive accent colors and surface tokens — across all six slides and the results page.
+  2. The dark results hero (`#0F172A`) is gone; the results page uses warm off-white surfaces with orange-as-structure (divider bars, orange-backed callouts) for contrast.
+  3. The entire app is internally coherent — no surface, control, badge, or card still carries the old indigo / slate / Fraunces identity.
+  4. The quiz still behaves exactly as before: same six slides, same scoring, same result strings, same wedge-callout and override-notice logic. A scoring-regression check passes against the existing decision tree.
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 3: Second Theme Stub & Pluggability Proof
+**Goal**: A second client theme exists as a small override block, and switching to it produces a visibly distinct, internally coherent rendering — proving that a future client rebrand requires only a new theme block, not markup edits.
+**Depends on**: Phase 2
+**Requirements**: REQ-stub-second-theme
+**Success Criteria** (what must be TRUE):
+  1. A second theme (e.g. Alchemist) exists as an override block on `data-theme="<client>"` with placeholder token values that are visibly distinct from Overdrive defaults.
+  2. Activating the second theme (via attribute and/or URL param per the Phase 1 decision) re-skins all six slides + results + reference matrix coherently — no element falls back to Overdrive defaults mid-page.
+  3. Switching back to default cleanly restores the Overdrive identity with no residual state (no stuck colors, no flash of unstyled content).
+  4. No markup was edited to add the second theme — the entire change is contained in token overrides at the top of `index.html`.
+**Plans**: TBD
+**UI hint**: yes
+
+## Progress
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 1. Theming Architecture Foundation | 0/0 | Not started | - |
+| 2. Overdrive Default Theme Migration | 0/0 | Not started | - |
+| 3. Second Theme Stub & Pluggability Proof | 0/0 | Not started | - |
+
+## Project-Wide Constraints
+
+These are NOT phases — they are architectural rules that govern every phase. Full text in `PROJECT.md` under "Constraints":
+
+- REQ-single-file-no-build — stay single-file, no build step
+- REQ-no-dark-backgrounds — no dark backgrounds, orange-as-structure on warm off-white
+- REQ-theme-contract-css-vars — theme contract = CSS custom properties
+- REQ-tailwind-points-at-vars — Tailwind utilities resolve through CSS vars
+- REQ-structure-skin-separation — all brand tokens at top of file, in one place
+- REQ-theming-visual-only — scoring logic and copy are shared, not themed
+
+## Open Questions (for `/gsd-discuss-phase 1`)
+
+These are intentionally NOT requirements. They are flagged for resolution during discuss-phase on Phase 1 (since they all shape the theming contract itself). Promote answers into Phase 1's `CONTEXT.md` before planning.
+
+1. **Theme switch mechanism** — `data-theme` attribute, `?client=` URL param, or both. (If both, which is canonical and which is a shortcut?)
+2. **Where the active theme is selected** — hardcoded default, URL only, build-time, host-based.
+3. **Warm-gray treatment** — remap the ~101 `slate-*` utility usages to a warm-neutral scale, or tokenize them as part of the theme contract.
+4. **How client themes are stored / documented** — so non-engineers can add one later (inline block at top of `index.html` vs. some lightweight registry pattern).
+5. **Minimum viable brandable token set** — colors only, or also fonts / radii / spacing.
+
+## Out of Scope (carried from `PROJECT.md`)
+
+- EXCL-real-client-themes — only the stub second theme is in scope
+- EXCL-per-client-copy — theming is visual only
+- EXCL-scoring-or-flow-changes — no changes to `calculateScore()`, slide structure, or answer model
