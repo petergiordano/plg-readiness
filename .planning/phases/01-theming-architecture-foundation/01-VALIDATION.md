@@ -39,7 +39,7 @@ created: 2026-05-15
 
 | Test | Plan Hook | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Verification Command / Steps | File Exists | Status |
 |------|-----------|------|-------------|------------|-----------------|-----------|------------------------------|-------------|--------|
-| V-1 Single `:root` block at top of file | Token contract `<style>` task | 1 | REQ-build-theming-architecture (crit. 1) | — | N/A | manual-grep | `grep -nE '^:root \{' index.html` returns exactly one line, in the new theme `<style>` near top of `<head>` | ✅ shell | ⬜ pending |
+| V-1 Single `:root` block at top of file | Token contract `<style>` task | 1 | REQ-build-theming-architecture (crit. 1) | — | N/A | manual-grep | `grep -nE '^\s*:root \{' index.html` returns exactly one line, in the new theme `<style>` near top of `<head>` (regex permits the 8-space indent used inside the `<style>` block) | ✅ shell | ⬜ pending |
 | V-2 Tailwind resolves through vars | Tailwind config rewrite task | 1 | REQ-build-theming-architecture (crit. 2) | — | N/A | manual-browser | Open `index.html`, in DevTools console run `document.documentElement.style.setProperty('--accent-rgb', '255 0 0')`; verify any `bg-accent` element renders red without reload | ✅ DevTools | ⬜ pending |
 | V-3 Switch mechanism wired (FOUC script) | Inline FOUC `<script>` task | 1 | REQ-build-theming-architecture (crit. 3) | — | N/A | manual-browser | Open `index.html?client=test`, DevTools console: `document.documentElement.getAttribute('data-theme')` returns `'test'` | ✅ DevTools | ⬜ pending |
 | V-4 Zero visual regression (no override) | All Phase 1 tasks (gate) | final | REQ-build-theming-architecture (crit. 4) | — | N/A | manual-visual | Open `main` and `rebrand-theming` HEAD in adjacent tabs at `/`, walk §7 visual sweep checklist (six slides + results page + reference matrix) | ✅ checklist | ⬜ pending |
@@ -67,7 +67,7 @@ All seven rows above are manual. Justification per row:
 
 | Behavior | Requirement | Why Manual | Test Instructions |
 |----------|-------------|------------|-------------------|
-| Token contract structure (V-1) | REQ-build-theming-architecture (crit. 1) | No build step → no static analysis tooling; grep is the cheapest correctness check | `grep -nE '^:root \{' index.html` |
+| Token contract structure (V-1) | REQ-build-theming-architecture (crit. 1) | No build step → no static analysis tooling; grep is the cheapest correctness check | `grep -nE '^\s*:root \{' index.html` |
 | Tailwind→var resolution (V-2) | REQ-build-theming-architecture (crit. 2) | Requires live browser to test CSS-var → Tailwind utility chain end-to-end | DevTools `setProperty` on `:root`, observe re-render |
 | Switch mechanism (V-3) | REQ-build-theming-architecture (crit. 3) | Requires page load with URL param to exercise FOUC `<script>` | Visit `?client=test`, read attribute |
 | Zero visual regression (V-4) | REQ-build-theming-architecture (crit. 4) | No screenshot baseline in this repo; visual diff is the load-bearing acceptance gate (D-08) | Side-by-side tab compare against `main` |
