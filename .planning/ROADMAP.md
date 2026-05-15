@@ -6,7 +6,7 @@
 
 ## Phases
 
-- [ ] **Phase 1: Theming Architecture Foundation** — Scaffold the CSS-variable contract, Tailwind wiring, and theme switch mechanism in `index.html`.
+- [x] **Phase 1: Theming Architecture Foundation** — Scaffold the CSS-variable contract, Tailwind wiring, and theme switch mechanism in `index.html`. (completed 2026-05-15)
 - [ ] **Phase 2: Overdrive Default Theme Migration** — Convert the existing app end-to-end to the new theming architecture with Overdrive as the default identity.
 - [ ] **Phase 3: Second Theme Stub & Pluggability Proof** — Add one stub second theme to prove the system supports per-client rebrand without touching markup.
 
@@ -22,7 +22,7 @@
   3. A theme switch mechanism is wired and demonstrable — flipping the `data-theme` attribute on `<html>` (and/or visiting with `?client=` per the discuss-phase decision) causes the active token set to switch.
   4. The app, with no `data-theme` set, still renders the existing indigo / slate / Fraunces identity exactly as it did before this phase (no visual regressions while the contract is being built).
 **Plans**: 1 plan
-- [ ] 01-01-PLAN.md — Establish theme contract in `<head>`: token `<style>` (`:root` defaults), Tailwind config rewrite (RGB-triplet + `<alpha-value>`), FOUC `<script>` for `?client=` switch, zero-visual-regression sweep.
+- [x] 01-01-PLAN.md — Establish theme contract in `<head>`: token `<style>` (`:root` defaults), Tailwind config rewrite (RGB-triplet + `<alpha-value>`), FOUC `<script>` for `?client=` switch, zero-visual-regression sweep.
 **UI hint**: yes
 
 ### Phase 2: Overdrive Default Theme Migration
@@ -53,7 +53,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Theming Architecture Foundation | 0/1 | Plan drafted | - |
+| 1. Theming Architecture Foundation | 1/1 | Complete   | 2026-05-15 |
 | 2. Overdrive Default Theme Migration | 0/0 | Not started | - |
 | 3. Second Theme Stub & Pluggability Proof | 0/0 | Not started | - |
 
