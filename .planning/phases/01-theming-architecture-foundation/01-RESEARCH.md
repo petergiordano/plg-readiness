@@ -186,15 +186,19 @@ index.html (single file — no other files touched)
 │   ├── meta tags                              [unchanged]
 │   ├── <title>                                [unchanged]
 │   ├── <script> FOUC                          [NEW — first child of <head>, 6 lines]
-│   ├── <script> Tailwind config (modified)    [MOVED here if not already; was line 9]
 │   ├── <style> token contract                 [NEW — recipe comment + :root + theme blocks]
-│   ├── <script src="cdn.tailwindcss.com">     [MOVED to after token <style>; was line 7]
-│   ├── <link> Google Fonts                    [unchanged; current line 8]
-│   └── <style> component CSS                  [unchanged; current lines 47–194]
+│   ├── <script src="cdn.tailwindcss.com">     [unchanged content; new position after token <style>]
+│   ├── <script> Tailwind config (modified)    [REWRITTEN in place; must follow CDN — see Pitfall 2b]
+│   ├── <link> Google Fonts                    [unchanged content; position shifts after Phase 1]
+│   └── <style> component CSS                  [unchanged; line numbers shift +~80 due to new <head> inserts]
 └── <body>                                     [unchanged]
 ```
 
-Note: in the current `index.html` the CDN `<script>` is at line 7 (before the inline config at lines 9–46). That ordering works because the CDN script is `defer`-equivalent in practice — it reads `window.tailwind.config` when it executes, which is after the inline config script has set it. But the safer, explicit pattern is FOUC → inline config → token `<style>` → CDN script, which is what D-10 specifies ("after the inline Tailwind config script, before the Tailwind CDN `<script>`"). The planner should move the CDN `<script>` to its new position as part of this phase.
+**[CORRECTED 2026-05-15 — see Phase 1 SUMMARY § "Research-level correction"]** The CDN `<script src="https://cdn.tailwindcss.com">` is a plain synchronous script (NOT defer-equivalent) — it loads and executes in document order. Its IIFE defines `window.tailwind` as a side effect, then schedules a `process()` call asynchronously after reading `tailwind.config`. The asynchronous `process()` is why CDN-before-config works (config gets set by the inline script before `process()` fires). But the reverse — inline config BEFORE CDN — does NOT work: the inline `tailwind.config = {...}` throws `ReferenceError: tailwind is not defined` because the CDN's IIFE hasn't run yet to create the global. Two constraints, both load-bearing:
+- **Token `<style>` must precede CDN** so `:root` vars are in the cascade when Tailwind injects utility CSS at first paint (Pitfall 2).
+- **CDN must precede inline `tailwind.config` assignment** so `window.tailwind` exists when the assignment runs (Pitfall 2b — surfaced during Phase 1 V-4 verification).
+
+The canonical Phase 1 ordering is therefore: FOUC → token `<style>` → CDN `<script>` → inline Tailwind config `<script>` → Google Fonts `<link>` → existing component `<style>`. D-10's original wording ("after the inline Tailwind config script, before the Tailwind CDN `<script>`") read for the token `<style>` is structurally incorrect for this reason and is also corrected post-Phase-1. The pre-Phase-1 `main`-branch ordering (CDN → fonts → inline config → component style) implicitly satisfied the JS dependency by having CDN first; Phase 1 preserves that, only inserting FOUC and the new token `<style>` before the CDN.
 
 ### Pattern 1: RGB-triplet CSS var + Tailwind `<alpha-value>` placeholder
 **What:** Color tokens are declared as space-separated R/G/B integer triplets (not hex), and the Tailwind config resolves them as `rgb(var(--token-rgb) / <alpha-value>)`. Tailwind's runtime substitutes `<alpha-value>` with `1` for solid utilities and with the modifier value for opacity utilities (`/50` → `0.5`).
@@ -669,6 +673,13 @@ See the dedicated `## Validation Architecture` section below.
 **Why it happens:** the CDN `<script>` is currently at line 7 (before the inline config). Easy to leave it there.
 **How to avoid:** explicitly move it to *after* the new token `<style>` block. The order in §5 above is the canonical one.
 **Warning signs:** first-paint shows the page with no color on `bg-accent` / `bg-slate-200` elements; colors snap in milliseconds later.
+
+### Pitfall 2b: Inline Tailwind config BEFORE CDN script
+**[ADDED 2026-05-15 — surfaced during Phase 1 V-4 verification.]**
+**What goes wrong:** Inline `<script>tailwind.config = {...}</script>` placed BEFORE `<script src="https://cdn.tailwindcss.com">` in document order. The inline script's `tailwind.config = ...` runs while `window.tailwind` is still undefined (CDN's IIFE hasn't executed yet) → `Uncaught ReferenceError: tailwind is not defined` → inline script aborts → CDN later loads with its default config (no `accent`, no Fraunces, no slate overrides).
+**Why it happens:** A "safer" ordering instinct says "set config before the runtime reads it." False for the Tailwind CDN — the CDN ISN'T a passive consumer of a pre-existing global; its IIFE is what CREATES the global. The inline config must run AFTER the CDN.
+**How to avoid:** CDN `<script>` MUST come before any inline `tailwind.config` assignment. Combined with Pitfall 2, the canonical ordering is FOUC → token `<style>` → CDN → inline config → fonts → component `<style>`.
+**Warning signs:** browser console shows `Uncaught ReferenceError: tailwind is not defined`; page renders with default-browser sans-serif (no Fraunces) and no `bg-accent` (CTAs invisible). Verify with `python3 -m http.server` + DevTools console — this failure mode is NOT catchable by grep ordering assertions.
 
 ### Pitfall 3: Editing markup to add `data-theme` somewhere
 **What goes wrong:** instinct says "I should also add `data-theme="overdrive"` to `<html>` to make the default explicit." Doing so means CSS keys on `[data-theme="overdrive"]` instead of `:root`, breaking the cascade-fallback policy (D-15) — a client override that omits a token now falls back to *nothing*, not to Overdrive defaults.
