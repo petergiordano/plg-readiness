@@ -1,3 +1,17 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: Ready to plan Phase 1
+last_updated: "2026-05-15T00:00:00.000Z"
+progress:
+  total_phases: 3
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
+---
+
 # STATE — PLG Readiness Diagnostic
 
 ## Project Reference
@@ -5,13 +19,13 @@
 - **Project:** PLG Readiness Diagnostic
 - **Core value:** Show B2B SaaS founders which GTM motion their problem actually permits (Pure PLG, Product-Led Sales, Sales-Led, or Wedge) — six questions, one recommendation, reasoning shown.
 - **Current milestone:** Rebrand + Multi-Client Theming
-- **Current focus:** Bootstrapping `.planning/` from `plan.md` ingest. Phase 1 (Theming Architecture Foundation) ready to discuss.
+- **Current focus:** Phase 1 (Theming Architecture Foundation) context locked — 16 implementation decisions captured across 8 gray areas. Ready to plan.
 
 ## Current Position
 
-- **Phase:** Pre-Phase 1 (planning bootstrapped, no plan yet)
+- **Phase:** 1 — Theming Architecture Foundation (context gathered, no plan yet)
 - **Plan:** None
-- **Status:** Ready to discuss Phase 1
+- **Status:** Ready to plan Phase 1
 - **Progress:** [____________________] 0/3 phases complete
 
 ## Performance Metrics
@@ -22,7 +36,7 @@
 | Phases | 3 |
 | Coverage | 3/3 |
 | Plans complete | 0 |
-| Open questions | 5 (queued for Phase 1 discuss-phase) |
+| Open questions | 0 (all 5 resolved in Phase 1 CONTEXT.md, plus 3 additional gray areas locked) |
 
 ## Accumulated Context
 
@@ -37,15 +51,9 @@ Architectural rules — apply to every phase. Full text in `PROJECT.md`:
 - Structure / skin separation — all brand tokens live in one place at the top of the file
 - Theming is visual only — scoring logic and copy are shared
 
-### Open questions (for Phase 1 discuss-phase)
+### Open questions
 
-These shape the theming contract itself, so they all land in Phase 1's `CONTEXT.md` before planning:
-
-1. Theme switch mechanism — `data-theme`, `?client=`, or both
-2. Where the active theme is selected — hardcoded default, URL, build-time, host-based
-3. Warm-gray treatment — remap `slate-*` usages or tokenize them
-4. How client themes are stored / documented for non-engineers
-5. Minimum viable brandable token set — colors only, or fonts / radii / spacing too
+All resolved. See `.planning/phases/01-theming-architecture-foundation/01-CONTEXT.md` `<decisions>` (D-01 through D-16).
 
 ### Blockers
 
@@ -53,21 +61,20 @@ None.
 
 ### Todos
 
-- Get user approval on `.planning/` bootstrap (PROJECT, REQUIREMENTS, ROADMAP, STATE).
-- Run `/gsd-discuss-phase 1` to resolve the 5 open questions and produce Phase 1 `CONTEXT.md`.
-- Then `/gsd-plan-phase 1` to produce Phase 1's plan.
+- Run `/gsd-plan-phase 1` to produce Phase 1's plan from the locked decisions.
+- (Optional ahead-of-plan) `/gsd-ui-phase 1` — Phase 1 carries the `UI hint: yes` annotation; a UI-SPEC.md could lock visual contract details before planning.
 
 ## Session Continuity
 
 ### Last session
 
 - Bootstrapped `.planning/` from `plan.md` single-PRD ingest on branch `rebrand-theming` (worktree off `main`).
-- Wrote PROJECT.md, REQUIREMENTS.md, ROADMAP.md, STATE.md.
+- Ran `/gsd-discuss-phase 1` — 8 gray areas, 16 decisions captured in `01-CONTEXT.md`.
 - Working directory: `/Users/petergiordano/Documents/GitHub/plg-readiness-rebrand`.
 
 ### Next entry point
 
-`/gsd-discuss-phase 1` — Phase 1 has no `CONTEXT.md` yet and carries 5 open questions that must be resolved before planning.
+`/gsd-plan-phase 1` — Phase 1 context is locked. Plan should consume `01-CONTEXT.md` + project-wide constraints in `PROJECT.md`.
 
 ### Read-only references
 
