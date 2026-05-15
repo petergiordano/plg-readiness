@@ -21,7 +21,8 @@
   2. The inline Tailwind config resolves utility classes through CSS vars — changing a token value in `:root` updates the rendered output without editing any markup or any other CSS rule.
   3. A theme switch mechanism is wired and demonstrable — flipping the `data-theme` attribute on `<html>` (and/or visiting with `?client=` per the discuss-phase decision) causes the active token set to switch.
   4. The app, with no `data-theme` set, still renders the existing indigo / slate / Fraunces identity exactly as it did before this phase (no visual regressions while the contract is being built).
-**Plans**: TBD
+**Plans**: 1 plan
+- [ ] 01-01-PLAN.md — Establish theme contract in `<head>`: token `<style>` (`:root` defaults), Tailwind config rewrite (RGB-triplet + `<alpha-value>`), FOUC `<script>` for `?client=` switch, zero-visual-regression sweep.
 **UI hint**: yes
 
 ### Phase 2: Overdrive Default Theme Migration
@@ -52,7 +53,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Theming Architecture Foundation | 0/0 | Not started | - |
+| 1. Theming Architecture Foundation | 0/1 | Plan drafted | - |
 | 2. Overdrive Default Theme Migration | 0/0 | Not started | - |
 | 3. Second Theme Stub & Pluggability Proof | 0/0 | Not started | - |
 
