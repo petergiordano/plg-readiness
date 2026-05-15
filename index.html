@@ -11,33 +11,33 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans:    ['Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Fraunces', 'serif'],
-                        mono:    ['JetBrains Mono', 'monospace'],
+                        sans:    ['var(--font-body)',    'sans-serif'],
+                        display: ['var(--font-display)', 'serif'],
+                        mono:    ['var(--font-mono)',    'monospace'],
                     },
                     colors: {
                         accent: {
-                            DEFAULT: '#4F46E5',
-                            hover:   '#4338CA',
-                            muted:   '#EEF2FF',
+                            DEFAULT: 'rgb(var(--accent-rgb)       / <alpha-value>)',
+                            hover:   'rgb(var(--accent-hover-rgb) / <alpha-value>)',
+                            muted:   'rgb(var(--accent-muted-rgb) / <alpha-value>)',
                         },
                         surface: {
-                            warm:        '#FAFAF8',
-                            dark:        '#0F172A',
-                            'dark-card': '#1E293B',
+                            warm:        'rgb(var(--surface-rgb)           / <alpha-value>)',
+                            dark:        'rgb(var(--surface-dark-rgb)      / <alpha-value>)',
+                            'dark-card': 'rgb(var(--surface-dark-card-rgb) / <alpha-value>)',
                         },
-                        ink: '#1A1A2E',
+                        ink: 'rgb(var(--text-rgb) / <alpha-value>)',
                         slate: {
-                            50:  '#F8FAFC',
-                            100: '#F1F5F9',
-                            200: '#E2E8F0',
-                            300: '#CBD5E1',
-                            400: '#94A3B8',
-                            500: '#64748B',
-                            600: '#475569',
-                            700: '#334155',
-                            800: '#1E293B',
-                            900: '#0F172A',
+                            50:  'rgb(var(--neutral-50-rgb)  / <alpha-value>)',
+                            100: 'rgb(var(--neutral-100-rgb) / <alpha-value>)',
+                            200: 'rgb(var(--neutral-200-rgb) / <alpha-value>)',
+                            300: 'rgb(var(--neutral-300-rgb) / <alpha-value>)',
+                            400: 'rgb(var(--neutral-400-rgb) / <alpha-value>)',
+                            500: 'rgb(var(--neutral-500-rgb) / <alpha-value>)',
+                            600: 'rgb(var(--neutral-600-rgb) / <alpha-value>)',
+                            700: 'rgb(var(--neutral-700-rgb) / <alpha-value>)',
+                            800: 'rgb(var(--neutral-800-rgb) / <alpha-value>)',
+                            900: 'rgb(var(--neutral-900-rgb) / <alpha-value>)',
                         }
                     }
                 }
