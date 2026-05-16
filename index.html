@@ -91,7 +91,7 @@
                 extend: {
                     fontFamily: {
                         sans:    ['var(--font-body)',    'sans-serif'],
-                        display: ['var(--font-display)', 'serif'],
+                        display: ['var(--font-display)', 'sans-serif'],
                         mono:    ['var(--font-mono)',    'monospace'],
                     },
                     colors: {
@@ -101,9 +101,8 @@
                             muted:   'rgb(var(--accent-muted-rgb) / <alpha-value>)',
                         },
                         surface: {
-                            warm:        'rgb(var(--surface-rgb)           / <alpha-value>)',
-                            dark:        'rgb(var(--surface-dark-rgb)      / <alpha-value>)',
-                            'dark-card': 'rgb(var(--surface-dark-card-rgb) / <alpha-value>)',
+                            warm: 'rgb(var(--surface-rgb)      / <alpha-value>)',
+                            elev: 'rgb(var(--surface-elev-rgb) / <alpha-value>)',
                         },
                         ink: 'rgb(var(--text-rgb) / <alpha-value>)',
                         slate: {
@@ -117,6 +116,10 @@
                             700: 'rgb(var(--neutral-700-rgb) / <alpha-value>)',
                             800: 'rgb(var(--neutral-800-rgb) / <alpha-value>)',
                             900: 'rgb(var(--neutral-900-rgb) / <alpha-value>)',
+                        },
+                        yellow: {
+                            100: 'rgb(var(--brand-soft-rgb)      / <alpha-value>)',
+                            400: 'rgb(var(--brand-secondary-rgb) / <alpha-value>)',
                         }
                     }
                 }
