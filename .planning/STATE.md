@@ -6,10 +6,10 @@ status: verifying
 last_updated: "2026-05-16T15:42:21.726Z"
 progress:
   total_phases: 3
-  completed_phases: 2
+  completed_phases: 1
   total_plans: 7
   completed_plans: 7
-  percent: 67
+  percent: 33
 ---
 
 # STATE — PLG Readiness Diagnostic
@@ -19,17 +19,17 @@ progress:
 - **Project:** PLG Readiness Diagnostic
 - **Core value:** Show B2B SaaS founders which GTM motion their problem actually permits (Pure PLG, Product-Led Sales, Sales-Led, or Wedge) — six questions, one recommendation, reasoning shown.
 - **Current milestone:** Rebrand + Multi-Client Theming
-- **Current focus:** Phase 2 — overdrive-default-theme-migration: all 5 plans executed; verification returned `gaps_found` (BL-01 — `--neutral-50-rgb` and `--surface-rgb` collide on `#FFF8F0`, collapsing 7 `bg-slate-50` surfaces into their `bg-surface-warm` parents). Next: `/gsd-plan-phase 2 --gaps` (gap closure cycle).
+- **Current focus:** Phase 2 — overdrive-default-theme-migration: all 6 plans executed (02-01..05 original waves + 02-06 BL-01 gap closure). Source-level proof of BL-01 closure is green (all 7 grep assertions pass; `--neutral-50-rgb` re-anchored to `250 243 233`; `--surface-rgb` unchanged at `255 248 240`). V-11 surface-differentiation rig added to 02-VALIDATION.md. Awaiting re-run of 02-VERIFICATION.md to flip SC #1 from PARTIAL-FAIL → VERIFIED.
 
 ## Current Position
 
-Phase: 2 (overdrive-default-theme-migration) — VERIFICATION GAPS_FOUND
-Plan: 5 of 5 executed; awaiting gap-closure replan
+Phase: 2 (overdrive-default-theme-migration) — ALL PLANS EXECUTED; VERIFICATION RE-RUN PENDING
+Plan: 6 of 6 executed (02-01..05 + 02-06 gap closure)
 
-- **Phase:** 2 — Overdrive Default Theme Migration (all 5 plans landed; verification gaps_found)
-- **Next action:** `/gsd-plan-phase 2 --gaps` to create gap-closure plan(s) addressing BL-01 (see 02-VERIFICATION.md + 02-REVIEW.md)
-- **Status:** Phase complete — ready for verification
-- **Progress:** [██████████] 100%
+- **Phase:** 2 — Overdrive Default Theme Migration (all 6 plans landed including 02-06 BL-01 gap closure)
+- **Next action:** Re-run 02-VERIFICATION.md to confirm BL-01 closure (SC #1 PARTIAL-FAIL → VERIFIED). V-11 surface-differentiation rig requires browser DevTools — see 02-VALIDATION.md §V-11 + 02-06-SUMMARY.md "Deferred runtime check".
+- **Status:** All plans complete — ready for phase verification
+- **Progress:** [██████████] 100% of Phase 2 plans (verification re-run pending)
 
 ## Performance Metrics
 
@@ -64,11 +64,11 @@ None.
 
 ### Todos
 
-- Run `/gsd-execute-phase 2` to execute the 5 planned Phase 2 waves (recommend `/clear` first). Plans are committed at b4898df + 331fb6a; VALIDATION.md V-1 already PASSED orchestrator-side (c620eb3). D-14 V-2 sub-rows are encoded as acceptance criteria on every `<head>`-touching task — executor must run them after each wave's commit, not as a single end-of-phase sweep.
-- **Surface to user:** plan-checker WARNING-3 — Plan 04 Task 3 implements R-2 PLS-badge contrast override (`bg-yellow-100 text-ink` instead of D-09 literal `text-yellow-400`). Restores ~9.1:1 WCAG AA contrast (literal D-09 was ~1.3:1, below AA). Documented as planner-discretion within D-09 spirit; surfaced here for awareness.
-- **Surface to user:** plan-checker WARNING-1 — Plan 04 is the largest plan (3 tasks, ~30 line edits in results-page region). Plan 04 already splits into 3 atomic commits; flagged for execution discipline (avoid bundling mid-wave fixes).
-- **Future VALIDATION refinement (INFO-1, non-blocking):** V-1(e) wording should be hardened from `document.fonts.check('1em "Space Grotesk")` to `document.fonts.check('1em "Space Grotesk")` after probe triggers Space Grotesk render. (V-1 already PASSED with this caveat noted; slide-0 h1 demands the font naturally on page entry so this is a synthetic-assertion fragility, not a real-world regression.)
-- Push 13-ahead-vs-origin commits when convenient (not blocking).
+- **Next workflow step:** Re-run 02-VERIFICATION.md. The new V-11 rig requires browser DevTools (`getComputedStyle(...).backgroundColor` strict inequality between `bg-slate-50` consumer and its `bg-surface-warm` parent). V-1..V-10 can be re-run by gsd-verifier source-level + grep-driven; V-11 needs a live page.
+- **Manual V-11 check (deferred from 02-06 Task 1 acceptance criterion #8):** Run `python3 -m http.server 8080`, load `http://localhost:8080/`, complete the quiz to reach the results page, open DevTools console, assert `getComputedStyle(document.documentElement).getPropertyValue('--neutral-50-rgb').trim() === '250 243 233'` returns `true`, then run the V-11 selector-based delta assertion against the first 3-up grid card at line 671.
+- **Side-effect to confirm visually (no source action needed):** the `bg-slate-50` recommendation panel at index.html line 548 sits inside a `bg-surface-elev` (white) parent; after the flip it reads as a subtle warm tint (`rgb(250, 243, 233)` against white). Plan's `<interfaces>` note marked this expected and acceptable; user should eyeball-confirm during the V-11 browser pass.
+- **WR-01..06 deferred** (per locked scope decision on 02-06): warm-card fills, neutral-400/500 reanchors, border-rgb reanchor, sticky-footer gradients, override-notice icon. Candidates for a future gap-closure plan or Phase 3 if user wants them addressed.
+- Push 16-ahead-vs-origin commits when convenient (not blocking).
 
 ## Session Continuity
 
@@ -88,15 +88,14 @@ None.
 
 ### Next entry point
 
-`/gsd-execute-phase 2` — Phase 2 (Overdrive Default Theme Migration). 5 sequential waves. Each wave's task carries V-2 sub-row acceptance criteria per D-14 execute-phase clause — executor MUST browser-verify after every `<head>`-touching commit, not as a single end-of-phase sweep. Plan sequence:
+**`/gsd-verify-work 2`** — Re-run Phase 2 verification now that 02-06 has closed BL-01 at the source level. The verifier will re-run V-1..V-10 source-level + grep-driven assertions; V-11 (new surface-differentiation rig) is browser-DevTools manual and will be flagged as pending. Expected outcome: SC #1 flips PARTIAL-FAIL → VERIFIED; STATE `status: verifying` → `verified` once V-11 manual check confirms in browser.
 
-- **Wave 1 / 02-01:** Token contract value flips (Block 2, fires V-2a) + Tailwind config rewires (Block 3, fires V-2b). Includes R-1 `--accent-hover-rgb: 230 130 0` to close the frankenstein-hover bug on CTAs (324/479/515).
-- **Wave 2 / 02-02:** Google Fonts `<link>` swap Fraunces → Space Grotesk (Block 4, fires V-2c + V-7). No preconnect (R-4 documented).
-- **Wave 3 / 02-03:** 18 Cat B literal sites in component `<style>` (Block 5, fires V-2d + V-6). Q-3 rewires lines 192 + 262 inline `background: white` to `--surface-elev-rgb`.
-- **Wave 4 / 02-04:** Results page markup migration (Block 6, fires V-3 partial + V-4 + V-5 + V-8 + V-10). Q-5 `<section>` replaces line 533 dark hero `<div>`. R-2 PLS badge uses `bg-yellow-100 text-ink`.
-- **Wave 5 / 02-05:** Conditional D-13 typography (Block 7, autonomous=false, R-3 decision-rule) + V-9 6-path scoring regression + V-3 / V-7 phase-end re-check.
+Three open follow-ups after verification:
+1. Manual V-11 DevTools check (see Todos).
+2. Confirm acceptable warm-tint side-effect at index.html line 548 visually.
+3. If verification passes, mark `completed_phases: 2` and progress to 67%; advance to Phase 3.
 
-Recommend `/clear` first for a fresh execution context.
+History: Phase 2 ran 6 waves (01-05 original + 06 BL-01 gap closure). First verification round returned `gaps_found` (BL-01). Code review (REVIEW.md) proposed Option A single-line token re-anchor + V-11 rig addition; planner created 02-06; executor landed it in 3 commits (36e0c29 token flip, c0dbe64 V-11 rig, daa1407 SUMMARY + state). All 7 source-level grep assertions in 02-06-PLAN.md `<verification>` block pass independently.
 
 ### Read-only references
 
