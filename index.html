@@ -44,40 +44,42 @@
            That is the whole system. There is nothing else to learn.
            ============================================================= */
 
-        /* ========== :ROOT DEFAULTS (Overdrive — current Phase 1 values) ========== */
+        /* ========== :ROOT DEFAULTS (Overdrive — Phase 2 production values) ========== */
         :root {
-            /* Accent colors (current indigo) */
-            --accent-rgb:        79 70 229;        /* #4F46E5 */
-            --accent-hover-rgb:  67 56 202;        /* #4338CA */
-            --accent-muted-rgb:  238 242 255;      /* #EEF2FF */
+            /* Accent colors (Overdrive orange) */
+            --accent-rgb:        255 144 0;        /* #FF9000 Overdrive Orange */
+            --accent-hover-rgb:  230 130 0;        /* #E68200 ~10% darker (R-1 — closes frankenstein-hover bug on CTAs at 324/479/515) */
+            --accent-muted-rgb:  255 241 224;      /* #FFF1E0 soft-orange tint (Claude's-Discretion per CONTEXT D-decisions) */
 
-            /* Surfaces (current warm off-white + dark hero — dark tokens retire in Phase 2) */
-            --surface-rgb:           250 250 248;  /* #FAFAF8 */
-            --surface-elev-rgb:      255 255 255;  /* white — implicit on .answer-card / .check-card */
-            --surface-dark-rgb:      15 23 42;     /* #0F172A — retired Phase 2 */
-            --surface-dark-card-rgb: 30 41 59;     /* #1E293B — retired Phase 2 */
+            /* Surfaces (warm off-white + elevated white card; dark surfaces retired per D-01) */
+            --surface-rgb:           255 248 240;  /* #FFF8F0 warm off-white */
+            --surface-elev-rgb:      255 255 255;  /* #FFFFFF white — consumed by bg-surface-elev (D-02) */
 
-            /* Text (current ink + dominant slate-500) */
-            --text-rgb:        26 26 46;     /* #1A1A2E */
-            --text-muted-rgb:  100 116 139;  /* #64748B */
+            /* Text (Overdrive Dark Gray + Gray 2) */
+            --text-rgb:        67 67 67;      /* #434343 Overdrive Dark Gray (D-06 anchor) */
+            --text-muted-rgb:  138 138 138;   /* #8A8A8A Overdrive Gray 2 (D-06 anchor) */
 
             /* Border (dominant slate-200) */
-            --border-rgb: 226 232 240;  /* #E2E8F0 */
+            --border-rgb: 229 229 229;  /* #E5E5E5 Overdrive Border Light (D-06 anchor) */
 
             /* Neutral ramp (Tailwind v3 slate defaults) */
-            --neutral-50-rgb:  248 250 252;   /* #F8FAFC */
-            --neutral-100-rgb: 241 245 249;   /* #F1F5F9 */
-            --neutral-200-rgb: 226 232 240;   /* #E2E8F0 */
-            --neutral-300-rgb: 203 213 225;   /* #CBD5E1 */
-            --neutral-400-rgb: 148 163 184;   /* #94A3B8 */
-            --neutral-500-rgb: 100 116 139;   /* #64748B */
-            --neutral-600-rgb: 71 85 105;     /* #475569 */
-            --neutral-700-rgb: 51 65 85;      /* #334155 */
-            --neutral-800-rgb: 30 41 59;      /* #1E293B */
-            --neutral-900-rgb: 15 23 42;      /* #0F172A */
+            --neutral-50-rgb:  255 248 240;   /* #FFF8F0 surface anchor */
+            --neutral-100-rgb: 245 240 232;   /* #F5F0E8 warm-50 step */
+            --neutral-200-rgb: 229 229 229;   /* #E5E5E5 Border Light anchor */
+            --neutral-300-rgb: 209 209 209;   /* #D1D1D1 warm-300 step */
+            --neutral-400-rgb: 168 168 168;   /* #A8A8A8 warm-400 step */
+            --neutral-500-rgb: 138 138 138;   /* #8A8A8A Gray 2 anchor */
+            --neutral-600-rgb: 102 102 102;   /* #666666 Gray 1 anchor */
+            --neutral-700-rgb: 67 67 67;      /* #434343 Dark Gray anchor */
+            --neutral-800-rgb: 51 51 51;      /* #333333 extrapolation */
+            --neutral-900-rgb: 26 26 26;      /* #1A1A1A extrapolation (no current Tailwind consumer; declared per D-07 brandable-ramp) */
 
-            /* Fonts (current identity — Phase 2 swaps Fraunces -> Space Grotesk) */
-            --font-display: 'Fraunces', serif;
+            /* ========== Secondary palette ========== */
+            --brand-soft-rgb:      255 229 153;  /* #FFE599 Light Yellow (D-12) */
+            --brand-secondary-rgb: 241 194 50;   /* #F1C232 Golden Yellow (D-12) */
+
+            /* Fonts (Overdrive — Space Grotesk display) */
+            --font-display: 'Space Grotesk', sans-serif;
             --font-body:    'Plus Jakarta Sans', sans-serif;
             --font-mono:    'JetBrains Mono', monospace;
         }
@@ -89,7 +91,7 @@
                 extend: {
                     fontFamily: {
                         sans:    ['var(--font-body)',    'sans-serif'],
-                        display: ['var(--font-display)', 'serif'],
+                        display: ['var(--font-display)', 'sans-serif'],
                         mono:    ['var(--font-mono)',    'monospace'],
                     },
                     colors: {
@@ -99,9 +101,8 @@
                             muted:   'rgb(var(--accent-muted-rgb) / <alpha-value>)',
                         },
                         surface: {
-                            warm:        'rgb(var(--surface-rgb)           / <alpha-value>)',
-                            dark:        'rgb(var(--surface-dark-rgb)      / <alpha-value>)',
-                            'dark-card': 'rgb(var(--surface-dark-card-rgb) / <alpha-value>)',
+                            warm: 'rgb(var(--surface-rgb)      / <alpha-value>)',
+                            elev: 'rgb(var(--surface-elev-rgb) / <alpha-value>)',
                         },
                         ink: 'rgb(var(--text-rgb) / <alpha-value>)',
                         slate: {
@@ -115,6 +116,10 @@
                             700: 'rgb(var(--neutral-700-rgb) / <alpha-value>)',
                             800: 'rgb(var(--neutral-800-rgb) / <alpha-value>)',
                             900: 'rgb(var(--neutral-900-rgb) / <alpha-value>)',
+                        },
+                        yellow: {
+                            100: 'rgb(var(--brand-soft-rgb)      / <alpha-value>)',
+                            400: 'rgb(var(--brand-secondary-rgb) / <alpha-value>)',
                         }
                     }
                 }
