@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-last_updated: "2026-05-16T15:42:21.726Z"
+status: verified
+last_updated: "2026-05-16T18:00:00Z"
 progress:
   total_phases: 3
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 7
   completed_plans: 7
-  percent: 33
+  percent: 67
 ---
 
 # STATE — PLG Readiness Diagnostic
@@ -19,17 +19,17 @@ progress:
 - **Project:** PLG Readiness Diagnostic
 - **Core value:** Show B2B SaaS founders which GTM motion their problem actually permits (Pure PLG, Product-Led Sales, Sales-Led, or Wedge) — six questions, one recommendation, reasoning shown.
 - **Current milestone:** Rebrand + Multi-Client Theming
-- **Current focus:** Phase 2 — overdrive-default-theme-migration: all 6 plans executed (02-01..05 original waves + 02-06 BL-01 gap closure). Source-level proof of BL-01 closure is green (all 7 grep assertions pass; `--neutral-50-rgb` re-anchored to `250 243 233`; `--surface-rgb` unchanged at `255 248 240`). V-11 surface-differentiation rig added to 02-VALIDATION.md. Awaiting re-run of 02-VERIFICATION.md to flip SC #1 from PARTIAL-FAIL → VERIFIED.
+- **Current focus:** Phase 3 — Second Theme Stub & Pluggability Proof (Phase 2 verified 2026-05-16; all 4 SCs confirmed; BL-01 closed; V-11 rig confirms strict inequality `rgb(250, 243, 233)` != `rgb(255, 248, 240)`)
 
 ## Current Position
 
-Phase: 2 (overdrive-default-theme-migration) — ALL PLANS EXECUTED; VERIFICATION RE-RUN PENDING
-Plan: 6 of 6 executed (02-01..05 + 02-06 gap closure)
+Phase: 3 (second-theme-stub-pluggability-proof) — READY TO PLAN
+Plan: 0 of TBD
 
-- **Phase:** 2 — Overdrive Default Theme Migration (all 6 plans landed including 02-06 BL-01 gap closure)
-- **Next action:** Re-run 02-VERIFICATION.md to confirm BL-01 closure (SC #1 PARTIAL-FAIL → VERIFIED). V-11 surface-differentiation rig requires browser DevTools — see 02-VALIDATION.md §V-11 + 02-06-SUMMARY.md "Deferred runtime check".
-- **Status:** All plans complete — ready for phase verification
-- **Progress:** [██████████] 100% of Phase 2 plans (verification re-run pending)
+- **Phase:** 3 — Second Theme Stub & Pluggability Proof
+- **Next action:** `/gsd-discuss-phase 3` (no CONTEXT.md exists yet for Phase 3)
+- **Status:** Phase 2 complete and verified; Phase 3 not yet planned
+- **Progress:** [██████████] 100% of Phase 2 (6/6 plans + verification PASS)
 
 ## Performance Metrics
 
@@ -38,8 +38,8 @@ Plan: 6 of 6 executed (02-01..05 + 02-06 gap closure)
 | v1 requirements | 3 |
 | Phases | 3 |
 | Coverage | 3/3 |
-| Plans complete | 1/1 for Phase 1 — phase complete, V-1 through V-7 all green (V-4 verified via side-by-side manual sweep against `main` on 2026-05-15) |
-| Open questions | 0 (all 5 PRD-level resolved + 16 decisions locked in Phase 1 CONTEXT.md) |
+| Plans complete | Phase 1: 1/1 complete; Phase 2: 6/6 complete; Phase 3: TBD |
+| Open questions | 0 (all 5 PRD-level resolved + 16 decisions locked in Phase 1 CONTEXT.md + 14 decisions locked in Phase 2 CONTEXT.md) |
 
 ## Accumulated Context
 
@@ -56,7 +56,7 @@ Architectural rules — apply to every phase. Full text in `PROJECT.md`:
 
 ### Open questions
 
-All resolved. See `.planning/phases/01-theming-architecture-foundation/01-CONTEXT.md` `<decisions>` (D-01 through D-16).
+All resolved. See `.planning/phases/01-theming-architecture-foundation/01-CONTEXT.md` `<decisions>` (D-01 through D-16) and `.planning/phases/02-overdrive-default-theme-migration/02-CONTEXT.md` `<decisions>` (D-01 through D-14).
 
 ### Blockers
 
@@ -64,15 +64,16 @@ None.
 
 ### Todos
 
-- **Next workflow step:** Re-run 02-VERIFICATION.md. The new V-11 rig requires browser DevTools (`getComputedStyle(...).backgroundColor` strict inequality between `bg-slate-50` consumer and its `bg-surface-warm` parent). V-1..V-10 can be re-run by gsd-verifier source-level + grep-driven; V-11 needs a live page.
-- **Manual V-11 check (deferred from 02-06 Task 1 acceptance criterion #8):** Run `python3 -m http.server 8080`, load `http://localhost:8080/`, complete the quiz to reach the results page, open DevTools console, assert `getComputedStyle(document.documentElement).getPropertyValue('--neutral-50-rgb').trim() === '250 243 233'` returns `true`, then run the V-11 selector-based delta assertion against the first 3-up grid card at line 671.
-- **Side-effect to confirm visually (no source action needed):** the `bg-slate-50` recommendation panel at index.html line 548 sits inside a `bg-surface-elev` (white) parent; after the flip it reads as a subtle warm tint (`rgb(250, 243, 233)` against white). Plan's `<interfaces>` note marked this expected and acceptable; user should eyeball-confirm during the V-11 browser pass.
-- **WR-01..06 deferred** (per locked scope decision on 02-06): warm-card fills, neutral-400/500 reanchors, border-rgb reanchor, sticky-footer gradients, override-notice icon. Candidates for a future gap-closure plan or Phase 3 if user wants them addressed.
-- Push 16-ahead-vs-origin commits when convenient (not blocking).
+- **Next workflow step:** `/gsd-discuss-phase 3` — no CONTEXT.md exists yet for Phase 3; discuss-phase must run before plan-phase.
+- **WR-01..06 deferred** (per locked scope decision on 02-06): warm-card fills (`background: white` hardcoded on `.answer-card` / `.check-card`), neutral-400/500 reanchors (WCAG AA contrast regressions), border-rgb reanchor, sticky-footer gradients, override-notice icon contrast. Candidates for a Phase 3 pre-planning decision or future gap-closure plan.
+- **Line 548 warm-tint (optional visual confirm):** The `bg-slate-50` recommendation panel at index.html line 548 sits inside `bg-surface-elev` (white); after the 02-06 flip it renders `rgb(250, 243, 233)` against white. Documented acceptable in 02-06 plan and SUMMARY. No source action needed.
+- Push branch commits to origin when convenient (not blocking).
 
 ## Session Continuity
 
 ### Last resumed
+
+- **2026-05-16 (verification round 2):** Re-ran Phase 2 verification after 02-06 BL-01 gap closure. All 4 SCs now VERIFIED. V-11 runtime evidence (orchestrator Chrome MCP): card `rgb(250, 243, 233)` strictly not-equal-to parent `rgb(255, 248, 240)`. 02-VERIFICATION.md updated to `status: verified`. STATE.md updated to `completed_phases: 2`, `percent: 67`. ROADMAP.md Phase 2 header updated to reflect verified status.
 
 - **2026-05-16 (planning):** `/gsd-plan-phase 2` end-to-end completed in this resume session. Sequence: research (ac384b4) → VALIDATION.md (60b6efe) → V-1 orchestrator-run + PASS (c620eb3) → pattern-map (e52230a) → planner produced 5 plans + ROADMAP update (b4898df) → plan-checker (0 BLOCKERS, 4 WARNINGS, 1 INFO) → orchestrator applied 2 plan-checker WARNINGs as edits (331fb6a). Branch ahead 13 vs origin. Worktree on `rebrand-theming` at `/Users/petergiordano/Documents/GitHub/plg-readiness-rebrand`. Peer worktree on `main` at `/Users/petergiordano/Documents/GitHub/plg-readiness`.
 
@@ -80,35 +81,31 @@ None.
 
 ### Last session
 
-- Phase 2 discuss complete. 4 gray areas covered (dark hero replacement & orange-as-structure, warm-neutral ramp, Cat D + hover-state literals, display-font swap depth). 14 decisions captured (D-01..D-14) in `02-CONTEXT.md`.
-- Key decisions: continuous warm off-white surface (D-01), 3px orange left-border on white result card (D-02), 4–6px orange top-strip on callouts (D-03), warm bg + orange top rule footer (D-04), three orange section dividers on results page (D-05), warm-gray 10-stop neutral ramp (D-06), keep slate-* utility name (D-08), Light Yellow + Golden Yellow secondary palette (D-09), Golden Yellow warning icon (D-10), hovers derive from --accent-rgb via alpha (D-11), +2 yellow tokens (D-12), Space Grotesk family swap + minimum-viable adjustments (D-13), strict browser-verify cadence before plan locks AND after every <head>-touching execute task (D-14).
-- Net contract growth: +2 tokens (--brand-soft-rgb, --brand-secondary-rgb). Retires --surface-dark-rgb + --surface-dark-card-rgb. Wires --surface-elev-rgb (Phase 1 declared, no consumer until now).
-- Three off-by-one line-range errors caught and corrected in CONTEXT.md before commit (token contract was 13–84 not 13–83; CDN at line 85 not 84; Tailwind config was 86–123 not 85–119). Lesson captured: re-grep both start AND end of every cited line range at write-time, never extrapolate endpoints.
-- Branch `rebrand-theming` (clean, ahead 2 commits vs origin: d21fcd1 + 75f8836). Worktree on `rebrand-theming` at `/Users/petergiordano/Documents/GitHub/plg-readiness-rebrand`.
+- Phase 2 re-verification complete. BL-01 closed by commit 36e0c29 (re-anchor `--neutral-50-rgb` from `255 248 240` to `250 243 233`). V-11 rig added (commit c0dbe64). Runtime proof gathered by orchestrator via Chrome MCP: card `rgb(250, 243, 233)` != parent `rgb(255, 248, 240)` — strict inequality confirmed.
+- Phase 2 SC #1 flipped PARTIAL-FAIL → VERIFIED. All 4 SCs now VERIFIED. No gaps remaining.
+- Phase 2 complete and verified. Ready to plan Phase 3.
 
 ### Next entry point
 
-**`/gsd-verify-work 2`** — Re-run Phase 2 verification now that 02-06 has closed BL-01 at the source level. The verifier will re-run V-1..V-10 source-level + grep-driven assertions; V-11 (new surface-differentiation rig) is browser-DevTools manual and will be flagged as pending. Expected outcome: SC #1 flips PARTIAL-FAIL → VERIFIED; STATE `status: verifying` → `verified` once V-11 manual check confirms in browser.
+**`/gsd-discuss-phase 3`** — Phase 3 has no CONTEXT.md yet. Run discuss-phase before planning.
 
-Three open follow-ups after verification:
-1. Manual V-11 DevTools check (see Todos).
-2. Confirm acceptable warm-tint side-effect at index.html line 548 visually.
-3. If verification passes, mark `completed_phases: 2` and progress to 67%; advance to Phase 3.
+Phase 3 goal: A second client theme exists as a small override block, and switching to it produces a visibly distinct, internally coherent rendering — proving that a future client rebrand requires only a new theme block, not markup edits.
 
-History: Phase 2 ran 6 waves (01-05 original + 06 BL-01 gap closure). First verification round returned `gaps_found` (BL-01). Code review (REVIEW.md) proposed Option A single-line token re-anchor + V-11 rig addition; planner created 02-06; executor landed it in 3 commits (36e0c29 token flip, c0dbe64 V-11 rig, daa1407 SUMMARY + state). All 7 source-level grep assertions in 02-06-PLAN.md `<verification>` block pass independently.
+Phase 3 success criteria (from ROADMAP.md):
+1. A second theme (e.g. Alchemist) exists as an override block on `data-theme="<client>"` with placeholder token values that are visibly distinct from Overdrive defaults.
+2. Activating the second theme re-skins all six slides + results + reference matrix coherently — no element falls back to Overdrive defaults mid-page.
+3. Switching back to default cleanly restores the Overdrive identity with no residual state.
+4. No markup was edited to add the second theme — the entire change is contained in token overrides at the top of `index.html`.
+
+Known Phase 3 input: WR-01 (`.answer-card` / `.check-card` hardcoded `background: white`) is a pre-existing D-02 contract violation that WILL surface as a real regression under a second theme — worth surfacing in discuss-phase.
 
 ### Read-only references
 
-- `.planning/phases/02-overdrive-default-theme-migration/02-CONTEXT.md` — 14 locked decisions (D-01..D-14) + canonical refs + code context + deferred ideas
-- `.planning/phases/02-overdrive-default-theme-migration/02-DISCUSSION-LOG.md` — Phase 2 discuss audit trail (alternatives considered per question; do NOT feed to executor)
-- `.planning/phases/02-overdrive-default-theme-migration/02-RESEARCH.md` — 551-line research with Implementation Approach (Blocks 1-8), BV-1/BV-2/BV-3/BV-4 browser-verify enumeration, V-1..V-10 validation dimensions, R-1..R-6 risks, Q-1..Q-6 open-questions-resolved-in-PLAN
-- `.planning/phases/02-overdrive-default-theme-migration/02-PATTERNS.md` — In-file Phase 1 analogs: P-1 RGB-triplet tokens, P-2 Tailwind alpha-value template, P-3a-e Cat B 5 sub-patterns, P-4 NEW inline-style var pattern, P-5 markup utility swap
-- `.planning/phases/02-overdrive-default-theme-migration/02-VALIDATION.md` — V-1 PASSED orchestrator-side; V-1 Orchestrator Run Log captured run + caveats; V-2 sub-rows MUST appear as per-task acceptance criteria
-- `.planning/phases/02-overdrive-default-theme-migration/02-{01..05}-PLAN.md` — 5 PLAN.md files (5 sequential waves)
-- `.planning/phases/02-overdrive-default-theme-migration/.continue-here.md` — pause-work narrative from pre-plan-phase pause (still in place; can delete after Phase 2 ships if desired)
-- `.planning/phases/01-theming-architecture-foundation/` — full Phase 1 artifact set (CONTEXT, RESEARCH, PATTERNS, VALIDATION, PLAN, DISCUSSION-LOG, SUMMARY) — Hand-off section in SUMMARY is load-bearing for Phase 2
+- `.planning/phases/02-overdrive-default-theme-migration/02-CONTEXT.md` — 14 locked decisions (D-01..D-14)
+- `.planning/phases/02-overdrive-default-theme-migration/02-VERIFICATION.md` — round 2 VERIFIED; full V-1..V-11 status table
+- `.planning/phases/02-overdrive-default-theme-migration/02-VALIDATION.md` — V-11 rig (surface-differentiation guard) now load-bearing for future `--neutral-50-rgb` / `--surface-rgb` changes
+- `.planning/phases/02-overdrive-default-theme-migration/02-REVIEW.md` — WR-01..06 deferred warnings; candidates for Phase 3 pre-planning
+- `.planning/phases/01-theming-architecture-foundation/` — full Phase 1 artifact set
 - `.planning/intel/` — synthesized ingest intel (requirements, decisions, constraints, context)
-- `.planning/codebase/` — codebase mapping from `/gsd-map-codebase` (NOTE: dated 2026-03-05, pre-Phase-1; references stale `primary`/`primaryHover` and Inter — re-grep `index.html` directly; PATTERNS.md S-5 is the live ground truth)
 - `plan.md` — source PRD for this milestone
-- `README.md`, `HOW_IT_WORKS.md` — product framing and current architecture (on `main`; HOW_IT_WORKS.md flagged stale by SessionStart hook — regenerate via `/how-it-works` after Phase 2 ships)
-- `docs/design/design-system-alpha-overdrive.md` — Overdrive design system. Critical sections for Phase 2: §3 Color Palette, §4 Typography, §5 Layout, §9 Brand Personality / Signature Move
+- `docs/design/design-system-alpha-overdrive.md` — Overdrive design system

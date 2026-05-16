@@ -7,7 +7,7 @@
 ## Phases
 
 - [x] **Phase 1: Theming Architecture Foundation** — Scaffold the CSS-variable contract, Tailwind wiring, and theme switch mechanism in `index.html`. (completed 2026-05-15)
-- [x] **Phase 2: Overdrive Default Theme Migration** — Convert the existing app end-to-end to the new theming architecture with Overdrive as the default identity. (verification gaps_found 2026-05-16 — see 02-VERIFICATION.md BL-01) (completed 2026-05-16)
+- [x] **Phase 2: Overdrive Default Theme Migration** — Convert the existing app end-to-end to the new theming architecture with Overdrive as the default identity. (verified 2026-05-16 — BL-01 closed; all 4 SCs VERIFIED)
 - [ ] **Phase 3: Second Theme Stub & Pluggability Proof** — Add one stub second theme to prove the system supports per-client rebrand without touching markup.
 
 ## Phase Details
@@ -60,7 +60,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Theming Architecture Foundation | 1/1 | Complete   | 2026-05-15 |
-| 2. Overdrive Default Theme Migration | 6/6 | Complete   | 2026-05-16 |
+| 2. Overdrive Default Theme Migration | 6/6 | Verified   | 2026-05-16 |
 | 3. Second Theme Stub & Pluggability Proof | 0/0 | Not started | - |
 
 ## Project-Wide Constraints
