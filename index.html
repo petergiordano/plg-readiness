@@ -179,8 +179,8 @@
             text-align: left;
             background: white;
         }
-        .answer-card:hover             { border-color: #A5B4FC; background: #F8F7FF; }
-        .answer-card.selected          { border-color: #4F46E5; background: #EEF2FF; }
+        .answer-card:hover             { border-color: rgb(var(--accent-rgb) / 0.4); background: rgb(var(--accent-rgb) / 0.06); }
+        .answer-card.selected          { border-color: rgb(var(--accent-rgb)); background: rgb(var(--accent-muted-rgb)); }
         .key-badge {
             flex-shrink: 0;
             width: 26px; height: 26px;
@@ -192,9 +192,9 @@
             margin-top: 1px;
             transition: border-color 0.14s, color 0.14s, background 0.14s;
         }
-        .answer-card:hover .key-badge  { border-color: #818CF8; color: #818CF8; }
+        .answer-card:hover .key-badge  { border-color: rgb(var(--accent-rgb) / 0.4); color: rgb(var(--accent-rgb) / 0.4); }
         .answer-card.selected .key-badge {
-            border-color: #4F46E5; color: #4F46E5; background: white;
+            border-color: rgb(var(--accent-rgb)); color: rgb(var(--accent-rgb)); background: rgb(var(--surface-elev-rgb));
         }
 
         /* ── Check cards (multi-select) ───────────────── */
@@ -212,8 +212,8 @@
             text-align: left;
             height: 100%;
         }
-        .check-card:hover     { border-color: #A5B4FC; background: #F8F7FF; }
-        .check-card.selected  { border-color: #4F46E5; background: #EEF2FF; }
+        .check-card:hover     { border-color: rgb(var(--accent-rgb) / 0.4); background: rgb(var(--accent-rgb) / 0.06); }
+        .check-card.selected  { border-color: rgb(var(--accent-rgb)); background: rgb(var(--accent-muted-rgb)); }
         .check-box {
             flex-shrink: 0;
             width: 18px; height: 18px;
@@ -223,7 +223,7 @@
             margin-top: 2px;
             transition: border-color 0.14s, background 0.14s;
         }
-        .check-card.selected .check-box { border-color: #4F46E5; background: #4F46E5; }
+        .check-card.selected .check-box { border-color: rgb(var(--accent-rgb)); background: rgb(var(--accent-rgb)); }
         .check-icon-svg { display: none; }
         .check-card.selected .check-icon-svg { display: block; }
 
@@ -264,8 +264,8 @@
             display: flex; align-items: center; gap: 4px;
         }
         .kbd-hint span {
-            border: 1px solid #CBD5E1; border-radius: 3px;
-            padding: 1px 5px; background: white;
+            border: 1px solid rgb(var(--neutral-300-rgb)); border-radius: 3px;
+            padding: 1px 5px; background: rgb(var(--surface-elev-rgb));
         }
 
         @media (prefers-reduced-motion: reduce) {
