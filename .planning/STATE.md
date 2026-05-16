@@ -68,6 +68,10 @@ None.
 
 ## Session Continuity
 
+### Last resumed
+
+- **2026-05-16:** `/gsd-resume-work` → user routed to `/gsd-plan-phase 2` (chose `/clear` first for fresh planning context). HANDOFF.json consumed and deleted (one-shot artifact per resume-project.md). `02-CONTEXT.md` + `02-DISCUSSION-LOG.md` + this STATE.md are the canonical inputs for the planner. Branch ahead 4 vs origin (d21fcd1, 75f8836, b2dd7e1, b1af5f7) — push when convenient, not blocking.
+
 ### Last session
 
 - Phase 2 discuss complete. 4 gray areas covered (dark hero replacement & orange-as-structure, warm-neutral ramp, Cat D + hover-state literals, display-font swap depth). 14 decisions captured (D-01..D-14) in `02-CONTEXT.md`.
