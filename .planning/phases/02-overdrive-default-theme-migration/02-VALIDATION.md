@@ -48,6 +48,7 @@ created: 2026-05-16
 | Block 6: Results page markup migration | TBD | REQ-overdrive-default-theme + REQ-no-dark-backgrounds | T-2-05 (no behavior change) | All result-state strings render; wedge-callout + override-notice show/hide unchanged | DevTools + manual walk | V-3 + V-9 + V-10 | ⬜ pending |
 | Block 7 (conditional): D-13 typography adjustments | TBD | REQ-overdrive-default-theme | — | Space Grotesk legibility matches Fraunces baseline | DevTools eye-check | V-3 sub-criterion (c) | ⬜ conditional |
 | Block 8: Phase-end sweep | TBD | All phase requirements | — | Acceptance criteria #1, #2, #3, #4 all pass | Manual + DevTools | V-1 through V-10 | ⬜ pending |
+| Block 9: BL-01 closure (Phase 2 gap-closure plan 02-06) | Plan Wave 6 | REQ-overdrive-default-theme | — | `bg-slate-50` consumers inside `bg-surface-warm` parents carry a visually distinct computed color from their parent | DevTools | V-11 (new) | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -147,7 +148,21 @@ All dimensions sourced from `02-RESEARCH.md` `## Validation Architecture`. Each 
 - **Pass criteria:** All four samples return `rgb(255, 248, 240)`.
 - **Gate:** After Block 6.
 
-### V-11 (optional) — `VM338:1 Uncaught SyntaxError` noise diagnosis
+### V-11 — Surface-differentiation guard for `bg-slate-50` inside `bg-surface-warm`
+
+- **Behavior:** Surfaces declared as `bg-slate-50` inside a `bg-surface-warm` parent MUST render a different computed color than that parent. This is the inverse of V-10's continuity assertion and is the load-bearing test that would have caught BL-01. If `--neutral-50-rgb` and `--surface-rgb` ever converge to the same RGB triplet again, the reference-matrix cards and table headers collapse visually into their parent canvas — the regression that caused Phase 2 SC #1 to fail during the first verification round (see 02-VERIFICATION.md BL-01).
+- **Command:** `python3 -m http.server 8080`, load `http://localhost:8080/`, complete the quiz via any answer path to reach the results page, scroll to the reference matrix section, open DevTools console. Then run:
+  ```js
+  const card = document.querySelector('section.bg-surface-warm .grid .bg-slate-50');
+  const parent = card.closest('.bg-surface-warm');
+  const cardBg = getComputedStyle(card).backgroundColor;
+  const parentBg = getComputedStyle(parent).backgroundColor;
+  console.log('card:', cardBg, '| parent:', parentBg, '| different:', cardBg !== parentBg);
+  ```
+- **Pass criteria:** `cardBg !== parentBg` returns `true`. Specifically: after the BL-01 fix, `card` returns `rgb(250, 243, 233)` and `parent` returns `rgb(255, 248, 240)` — strict inequality. The pass condition is strict `!==` inequality between the two `backgroundColor` strings (not a tolerance check). If both values are identical (e.g., both `rgb(255, 248, 240)`) the test FAILS regardless of how close they are. Sample point is the first 3-up grid card (index.html line 671 — `document.querySelector('section.bg-surface-warm .grid .bg-slate-50')` resolves to that element).
+- **Gate:** After every commit that touches `--neutral-50-rgb` OR `--surface-rgb` OR the Tailwind `slate.50` / `surface.warm` config entries, AND as part of every Phase-end full sweep going forward.
+
+### V-12 (optional) — `VM338:1 Uncaught SyntaxError` noise diagnosis
 
 - **Behavior:** If the Phase 1 V-4 one-off `VM338:1` console line reproduces deterministically during any V-2 verify, diagnose via DevTools → Sources → `cdn.tailwindcss.com`.
 - **Gate:** Optional, not blocking unless visible rendering fails.
@@ -171,6 +186,7 @@ None. This phase has no new test framework, fixture, or harness to set up. Exist
 | V-7 (font-load + fallback) | Acceptance #1 | DevTools Network throttling required | See V-7 above. After Block 4. |
 | V-9 (scoring regression) | Acceptance #4 + EXCL-scoring-or-flow-changes | Quiz walk requires user clicks; no automated test harness | See V-9 above. Phase-end. |
 | V-10 (continuous-surface coherence) | D-01 | Scroll-position-dependent assertions require live browser | See V-10 above. After Block 6. |
+| V-11 (surface-differentiation guard — `bg-slate-50` vs `bg-surface-warm`) | REQ-overdrive-default-theme + BL-01 regression prevention | DevTools `getComputedStyle` assertions require live browser runtime | See V-11 above. After every `--neutral-50-rgb` or `--surface-rgb` change AND Phase-end. |
 
 V-4, V-5, V-8 (grep-based) ARE automated and run via `Bash` tool at the indicated gates.
 
