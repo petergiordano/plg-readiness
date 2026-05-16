@@ -534,27 +534,27 @@
     ═══════════════════════════════════════ -->
     <div id="results-page">
 
-        <!-- Dark results hero -->
-        <div class="bg-surface-dark pt-20 pb-16 md:pb-24">
+        <!-- Results hero (D-05a orange top-rule divider above main card) -->
+        <section class="bg-surface-warm pt-20 pb-16 md:pb-24 border-t-[4px] border-accent">
             <div class="max-w-[680px] mx-auto px-6">
 
                 <!-- Main result card -->
                 <div class="result-reveal mb-5">
-                    <div class="bg-surface-dark-card rounded-xl border border-slate-700 overflow-hidden" style="border-left: 3px solid #4F46E5;">
+                    <div class="bg-surface-elev rounded-xl border border-slate-200 overflow-hidden" style="border-left: 3px solid rgb(var(--accent-rgb));">
                         <div class="p-8">
                             <span class="result-overline">Assessment Result</span>
-                            <h2 id="result-title" class="font-display text-3xl font-bold text-slate-100 mb-4 leading-tight"></h2>
-                            <p id="result-description" class="text-slate-400 mb-6 leading-relaxed"></p>
-                            <div class="rounded-lg p-5 border border-slate-700" style="background:rgba(15,23,42,0.5);">
-                                <h4 class="font-semibold text-slate-300 mb-2 text-sm">Recommendation</h4>
-                                <p id="result-recommendation" class="text-sm text-slate-400 leading-relaxed"></p>
+                            <h2 id="result-title" class="font-display text-3xl font-bold text-ink mb-4 leading-tight"></h2>
+                            <p id="result-description" class="text-slate-500 mb-6 leading-relaxed"></p>
+                            <div class="rounded-lg p-5 border border-slate-200 bg-slate-50">
+                                <h4 class="font-semibold text-ink mb-2 text-sm">Recommendation</h4>
+                                <p id="result-recommendation" class="text-sm text-slate-500 leading-relaxed"></p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Wedge callout (conditional) -->
-                <div id="wedge-callout" class="hidden result-reveal result-reveal-2 bg-slate-800/50 rounded-xl border border-slate-700 p-6 mb-5">
+                <div id="wedge-callout" class="hidden result-reveal result-reveal-2 bg-surface-elev rounded-xl p-6 mb-5" style="border-top: 5px solid rgb(var(--accent-rgb));">
                     <div class="flex items-start gap-4">
                         <div class="flex-shrink-0 w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -562,28 +562,28 @@
                             </svg>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-slate-200 mb-2">The Wedge Play: Your Path to PLG</h4>
-                            <p class="text-sm text-slate-400 mb-3 leading-relaxed">
-                                Even complex enterprise products can find a PLG entry point. <strong class="text-slate-300">Datadog</strong> sells to DevOps (enterprise buyer), but started with a simple infrastructure monitoring agent that developers could install themselves. <strong class="text-slate-300">Slack</strong> started as a team tool before becoming enterprise software.
+                            <h4 class="font-semibold text-ink mb-2">The Wedge Play: Your Path to PLG</h4>
+                            <p class="text-sm text-slate-500 mb-3 leading-relaxed">
+                                Even complex enterprise products can find a PLG entry point. <strong class="text-slate-600">Datadog</strong> sells to DevOps (enterprise buyer), but started with a simple infrastructure monitoring agent that developers could install themselves. <strong class="text-slate-600">Slack</strong> started as a team tool before becoming enterprise software.
                             </p>
-                            <p class="text-sm text-slate-400 leading-relaxed">
-                                <strong class="text-slate-300">Your play:</strong> Find the simplest, most self-serve use case within your product. Let that be your wedge into the organization. Once users love it, sales can expand the relationship.
+                            <p class="text-sm text-slate-500 leading-relaxed">
+                                <strong class="text-slate-600">Your play:</strong> Find the simplest, most self-serve use case within your product. Let that be your wedge into the organization. Once users love it, sales can expand the relationship.
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Override notice (conditional) -->
-                <div id="override-notice" class="hidden result-reveal result-reveal-3 bg-slate-800/50 rounded-xl border border-slate-700 p-6 mb-5">
+                <div id="override-notice" class="hidden result-reveal result-reveal-3 bg-surface-elev rounded-xl p-6 mb-5" style="border-top: 5px solid rgb(var(--accent-rgb));">
                     <div class="flex items-start gap-4">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center" style="background:rgba(245,158,11,0.15);">
-                            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgb(var(--brand-secondary-rgb) / 0.15);">
+                            <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                             </svg>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-slate-200 mb-2">Why Your Product Characteristics Don't Override This</h4>
-                            <p class="text-sm text-slate-400 leading-relaxed" id="override-explanation"></p>
+                            <h4 class="font-semibold text-ink mb-2">Why Your Product Characteristics Don't Override This</h4>
+                            <p class="text-sm text-slate-500 leading-relaxed" id="override-explanation"></p>
                         </div>
                     </div>
                 </div>
@@ -591,15 +591,15 @@
                 <!-- Restart -->
                 <div class="mt-8 text-center">
                     <button onclick="restartQuiz()"
-                        class="text-sm text-slate-500 hover:text-slate-300 transition-colors underline underline-offset-4">
+                        class="text-sm text-slate-500 hover:text-slate-700 transition-colors underline underline-offset-4">
                         Start over
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Reference Matrix -->
-        <section class="bg-white border-t border-slate-200 py-16 md:py-24">
+        <!-- Reference Matrix (D-05b 4px orange top-rule divider) -->
+        <section class="bg-surface-warm border-t-[4px] border-accent py-16 md:py-24">
             <div class="max-w-[960px] mx-auto px-6">
                 <div class="mb-12">
                     <span class="phase-overline">Reference</span>
@@ -637,7 +637,7 @@
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">Manager / Team Lead</td>
                                 <td class="p-4 border border-slate-200">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-indigo-100 text-indigo-800">Product-Led Sales</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-yellow-100 text-ink">Product-Led Sales</span>
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">Notion, Slack, Asana, Linear</td>
                             </tr>
@@ -678,7 +678,7 @@
                         <p class="text-base text-slate-500">User and buyer are identical. No approval needed. Credit card swipe completes the sale. Focus on activation metrics and time-to-value.</p>
                     </div>
                     <div class="bg-slate-50 rounded-lg p-6 border border-slate-100">
-                        <div class="w-9 h-9 bg-indigo-50 rounded-md flex items-center justify-center mb-4">
+                        <div class="w-9 h-9 bg-yellow-100 rounded-md flex items-center justify-center mb-4">
                             <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
@@ -700,7 +700,7 @@
         </section>
 
         <!-- Footer -->
-        <footer class="bg-surface-dark border-t border-slate-800 py-10">
+        <footer class="bg-surface-warm border-t-[4px] border-accent py-10">
             <div class="max-w-[960px] mx-auto px-6 flex justify-between items-center text-sm text-slate-500">
                 <p>&copy; 2025 Senior GTM Strategy Architect.</p>
                 <p>The problem picks the motion.</p>
