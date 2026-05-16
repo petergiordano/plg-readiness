@@ -7,7 +7,7 @@
 ## Phases
 
 - [x] **Phase 1: Theming Architecture Foundation** — Scaffold the CSS-variable contract, Tailwind wiring, and theme switch mechanism in `index.html`. (completed 2026-05-15)
-- [ ] **Phase 2: Overdrive Default Theme Migration** — Convert the existing app end-to-end to the new theming architecture with Overdrive as the default identity. (verification gaps_found 2026-05-16 — see 02-VERIFICATION.md BL-01)
+- [x] **Phase 2: Overdrive Default Theme Migration** — Convert the existing app end-to-end to the new theming architecture with Overdrive as the default identity. (verification gaps_found 2026-05-16 — see 02-VERIFICATION.md BL-01) (completed 2026-05-16)
 - [ ] **Phase 3: Second Theme Stub & Pluggability Proof** — Add one stub second theme to prove the system supports per-client rebrand without touching markup.
 
 ## Phase Details
@@ -40,7 +40,7 @@
 - [x] 02-03-PLAN.md — Migrate 18 Cat B literal sites in component <style> to var-driven references (resting borders + text colors + hover-state alpha-derived per D-11 + selected-state per Phase 1 catalog). Block 5.
 - [x] 02-04-PLAN.md — Retire dark hero + migrate results page region (main result card on white with orange left-border, two callouts with orange top-strips, golden-yellow warning icon, PLS badge/icon Light Yellow, footer warm with orange top-rule, three D-05 orange section dividers). Block 6.
 - [x] 02-05-PLAN.md — Conditional D-13 typography decision (R-3 checkpoint, 0/1/2 markup edits) + V-9 6-path scoring regression + V-3/V-7 phase-end gates. Blocks 7+8.
-- [ ] 02-06-PLAN.md — Gap-closure for BL-01: re-anchor --neutral-50-rgb to 250 243 233 (#FAF3E9) so bg-slate-50 surfaces differentiate from bg-surface-warm parents; amend 02-VALIDATION.md V-11 to assert surface-differentiation (catches this regression class going forward). Per code-review Option A; user-scoped to BL-01 only (WR-01..06 deferred).
+- [x] 02-06-PLAN.md — Gap-closure for BL-01: re-anchor --neutral-50-rgb to 250 243 233 (#FAF3E9) so bg-slate-50 surfaces differentiate from bg-surface-warm parents; amend 02-VALIDATION.md V-11 to assert surface-differentiation (catches this regression class going forward). Per code-review Option A; user-scoped to BL-01 only (WR-01..06 deferred).
 **UI hint**: yes
 
 ### Phase 3: Second Theme Stub & Pluggability Proof
@@ -60,7 +60,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Theming Architecture Foundation | 1/1 | Complete   | 2026-05-15 |
-| 2. Overdrive Default Theme Migration | 5/6 plans, gap-closure planned | In Progress | — |
+| 2. Overdrive Default Theme Migration | 6/6 | Complete   | 2026-05-16 |
 | 3. Second Theme Stub & Pluggability Proof | 0/0 | Not started | - |
 
 ## Project-Wide Constraints
