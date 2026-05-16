@@ -139,7 +139,7 @@
         .slide {
             position: fixed;
             inset: 0;
-            background: #FAFAF8;
+            background: rgb(var(--surface-rgb));
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -171,7 +171,7 @@
             align-items: flex-start;
             gap: 14px;
             padding: 14px 16px;
-            border: 1.5px solid #E2E8F0;
+            border: 1.5px solid rgb(var(--border-rgb));
             border-radius: 10px;
             cursor: pointer;
             transition: border-color 0.14s, background 0.14s;
@@ -184,11 +184,11 @@
         .key-badge {
             flex-shrink: 0;
             width: 26px; height: 26px;
-            border: 1.5px solid #CBD5E1;
+            border: 1.5px solid rgb(var(--neutral-300-rgb));
             border-radius: 5px;
             display: flex; align-items: center; justify-content: center;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px; color: #94A3B8;
+            font-size: 11px; color: rgb(var(--neutral-400-rgb));
             margin-top: 1px;
             transition: border-color 0.14s, color 0.14s, background 0.14s;
         }
@@ -203,7 +203,7 @@
             align-items: flex-start;
             gap: 10px;
             padding: 12px 12px;
-            border: 1.5px solid #E2E8F0;
+            border: 1.5px solid rgb(var(--border-rgb));
             border-radius: 10px;
             cursor: pointer;
             transition: border-color 0.14s, background 0.14s;
@@ -217,7 +217,7 @@
         .check-box {
             flex-shrink: 0;
             width: 18px; height: 18px;
-            border: 1.5px solid #CBD5E1;
+            border: 1.5px solid rgb(var(--neutral-300-rgb));
             border-radius: 4px;
             display: flex; align-items: center; justify-content: center;
             margin-top: 2px;
@@ -242,25 +242,25 @@
         .result-overline {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px; letter-spacing: 0.12em;
-            text-transform: uppercase; color: #64748B;
+            text-transform: uppercase; color: rgb(var(--text-muted-rgb));
             display: block; margin-bottom: 12px;
         }
         .phase-overline {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px; letter-spacing: 0.12em;
-            text-transform: uppercase; color: #4F46E5;
+            text-transform: uppercase; color: rgb(var(--accent-rgb));
             display: block; margin-bottom: 8px;
         }
         .phase-rule {
             border: none;
-            border-top: 1px solid rgba(79,70,229,0.2);
+            border-top: 1px solid rgb(var(--accent-rgb) / 0.2);
             margin: 0 0 28px 0;
         }
 
         /* ── Keyboard hint ────────────────────────────── */
         .kbd-hint {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px; color: #94A3B8;
+            font-size: 11px; color: rgb(var(--neutral-400-rgb));
             display: flex; align-items: center; gap: 4px;
         }
         .kbd-hint span {
