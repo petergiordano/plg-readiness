@@ -19,17 +19,17 @@ progress:
 - **Project:** PLG Readiness Diagnostic
 - **Core value:** Show B2B SaaS founders which GTM motion their problem actually permits (Pure PLG, Product-Led Sales, Sales-Led, or Wedge) — six questions, one recommendation, reasoning shown.
 - **Current milestone:** Rebrand + Multi-Client Theming
-- **Current focus:** Phase 1 complete (theming contract shipped on rebrand-theming branch). Next: `/gsd-discuss-phase 2` to gather context for Phase 2 (Overdrive default theme migration).
+- **Current focus:** Phase 2 context gathered (02-CONTEXT.md + 02-DISCUSSION-LOG.md committed at d21fcd1). 14 decisions locked (D-01..D-14). Next: `/gsd-plan-phase 2` to research, pattern-map, plan, and verify-plan for Phase 2 (Overdrive default theme migration).
 
 ## Current Position
 
-Phase: 01 — COMPLETE
-Plan: 1 of 1
+Phase: 02 — DISCUSSED (ready to plan)
+Plan: 0 of TBD
 
-- **Phase:** 1 — Theming Architecture Foundation (planned, verified)
-- **Plan:** `01-01-PLAN.md` — single plan covering 3 structurally distinct `<head>` edits + 1 visual-regression gate
-- **Status:** Phase 1 complete — ready to plan Phase 2
-- **Progress:** [██████████] 100%
+- **Phase:** 2 — Overdrive Default Theme Migration (context gathered; not yet planned)
+- **Plan:** none yet
+- **Status:** Phase 2 CONTEXT.md ready — next is `/gsd-plan-phase 2` (research → pattern-map → plan → plan-check loop)
+- **Progress:** [███░░░░░░░] 33% (1/3 phases shipped)
 
 ## Performance Metrics
 
@@ -64,27 +64,30 @@ None.
 
 ### Todos
 
-- Run `/gsd-execute-phase 1` to execute Phase 1's plan. Plan-checker verified iteration 2 passed (all findings closed). Recommend `/clear` first for a fresh execution context.
+- Run `/gsd-plan-phase 2` to produce Phase 2 RESEARCH, PATTERNS, PLAN, VALIDATION. Per D-14, the research phase MUST browser-verify any proposed `<head>` ordering or `<script>`/`<link>` change BEFORE PLAN.md locks — grep-ordering checks alone are not sufficient (HANDOFF.json blocking_constraints_for_phase_2[0]). Recommend `/clear` first for a fresh planning context.
 
 ## Session Continuity
 
 ### Last session
 
-- Phase 1 fully executed + verified. 4 commits landed (0129cc6, c312693, 3e3ae57, 00a6b21) + 1 docs correction (a9e5b35) on `rebrand-theming`.
-- V-4 caught a runtime `ReferenceError: tailwind is not defined` — RESEARCH §5's "CDN is defer-equivalent" claim was structurally checked but never browser-verified. Fix: moved inline `tailwind.config = {...}` AFTER the CDN script (commit 00a6b21). Documented as Pitfall 2b in RESEARCH + correction in PATTERNS.
-- Branch pushed to `origin/rebrand-theming` (clean, ahead 0, behind 0). Working tree clean except pre-existing untracked `.planning/COACH-STATE.md`.
-- HANDOFF.json written by `/gsd-pause-work` (between_phases, status=`phase_complete_paused_before_next`).
-- Working directory: `/Users/petergiordano/Documents/GitHub/plg-readiness-rebrand` (worktree on `rebrand-theming`).
+- Phase 2 discuss complete. 4 gray areas covered (dark hero replacement & orange-as-structure, warm-neutral ramp, Cat D + hover-state literals, display-font swap depth). 14 decisions captured (D-01..D-14) in `02-CONTEXT.md`.
+- Key decisions: continuous warm off-white surface (D-01), 3px orange left-border on white result card (D-02), 4–6px orange top-strip on callouts (D-03), warm bg + orange top rule footer (D-04), three orange section dividers on results page (D-05), warm-gray 10-stop neutral ramp (D-06), keep slate-* utility name (D-08), Light Yellow + Golden Yellow secondary palette (D-09), Golden Yellow warning icon (D-10), hovers derive from --accent-rgb via alpha (D-11), +2 yellow tokens (D-12), Space Grotesk family swap + minimum-viable adjustments (D-13), strict browser-verify cadence before plan locks AND after every <head>-touching execute task (D-14).
+- Net contract growth: +2 tokens (--brand-soft-rgb, --brand-secondary-rgb). Retires --surface-dark-rgb + --surface-dark-card-rgb. Wires --surface-elev-rgb (Phase 1 declared, no consumer until now).
+- Three off-by-one line-range errors caught and corrected in CONTEXT.md before commit (token contract was 13–84 not 13–83; CDN at line 85 not 84; Tailwind config was 86–123 not 85–119). Lesson captured: re-grep both start AND end of every cited line range at write-time, never extrapolate endpoints.
+- Branch `rebrand-theming` (clean, ahead 2 commits vs origin: d21fcd1 + 75f8836). Worktree on `rebrand-theming` at `/Users/petergiordano/Documents/GitHub/plg-readiness-rebrand`.
 
 ### Next entry point
 
-`/gsd-discuss-phase 2` — Phase 2 (Overdrive Default Theme Migration). No CONTEXT.md exists yet. HANDOFF.json carries 1 blocking constraint into Phase 2: empirical browser verification BEFORE plan locks for any `<head>` reorder or script-tag change that touches globals — grep-ordering checks alone are not sufficient (lesson from V-4).
+`/gsd-plan-phase 2` — Phase 2 (Overdrive Default Theme Migration). CONTEXT.md ready at `.planning/phases/02-overdrive-default-theme-migration/02-CONTEXT.md`. Planner-implicit: Category B selected-state literals at lines 178/192/211/221 migrate to var-driven per Phase 1 SUMMARY catalog. D-14 mandates browser-verify gates at research-phase (before PLAN.md locks proposed `<head>` ordering) AND execute-phase (after every `<head>`-touching task) — encode as hard VALIDATION.md rows.
 
 ### Read-only references
 
-- `.planning/phases/01-theming-architecture-foundation/` — full Phase 1 artifact set (CONTEXT, RESEARCH, PATTERNS, VALIDATION, PLAN, DISCUSSION-LOG)
+- `.planning/phases/02-overdrive-default-theme-migration/02-CONTEXT.md` — Phase 2 decisions (D-01..D-14) + canonical refs + code context + deferred ideas
+- `.planning/phases/02-overdrive-default-theme-migration/02-DISCUSSION-LOG.md` — Phase 2 audit trail (alternatives considered per question)
+- `.planning/phases/01-theming-architecture-foundation/` — full Phase 1 artifact set (CONTEXT, RESEARCH, PATTERNS, VALIDATION, PLAN, DISCUSSION-LOG, SUMMARY) — Hand-off section in SUMMARY is load-bearing for Phase 2
+- `.planning/HANDOFF.json` — blocking_constraints_for_phase_2[0] (drives D-14) + advisory_constraints (codebase maps stale; line numbers shifted +78 in Phase 1)
 - `.planning/intel/` — synthesized ingest intel (requirements, decisions, constraints, context)
-- `.planning/codebase/` — codebase mapping from `/gsd-map-codebase`
+- `.planning/codebase/` — codebase mapping from `/gsd-map-codebase` (NOTE: dated 2026-03-05, pre-Phase-1; references stale `primary`/`primaryHover` and Inter — re-grep `index.html` directly)
 - `plan.md` — source PRD for this milestone
-- `README.md`, `HOW_IT_WORKS.md` — product framing and current architecture (on `main`)
-- `docs/design/design-system-alpha-overdrive.md` — target design system (Phase 2 reference; Phase 1 borrows slug names only)
+- `README.md`, `HOW_IT_WORKS.md` — product framing and current architecture (on `main`; HOW_IT_WORKS.md flagged stale by SessionStart hook — regenerate via `/how-it-works` after Phase 2 ships)
+- `docs/design/design-system-alpha-overdrive.md` — Overdrive design system. Critical sections for Phase 2: §3 Color Palette, §4 Typography, §5 Layout, §9 Brand Personality / Signature Move
