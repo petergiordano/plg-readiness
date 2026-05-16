@@ -35,7 +35,7 @@
   3. The entire app is internally coherent — no surface, control, badge, or card still carries the old indigo / slate / Fraunces identity.
   4. The quiz still behaves exactly as before: same six slides, same scoring, same result strings, same wedge-callout and override-notice logic. A scoring-regression check passes against the existing decision tree.
 **Plans**: 5 plans
-- [ ] 02-01-PLAN.md — Flip :root token values to Overdrive defaults + rewire Tailwind config (add surface.elev + yellow namespace, delete surface.dark/dark-card, flip display fontFamily fallback). Blocks 2+3 per RESEARCH.md.
+- [x] 02-01-PLAN.md — Flip :root token values to Overdrive defaults + rewire Tailwind config (add surface.elev + yellow namespace, delete surface.dark/dark-card, flip display fontFamily fallback). Blocks 2+3 per RESEARCH.md.
 - [ ] 02-02-PLAN.md — Swap Google Fonts <link> from Fraunces to Space Grotesk (single-line edit; high-stakes V-2c + V-7 verify). Block 4.
 - [ ] 02-03-PLAN.md — Migrate 18 Cat B literal sites in component <style> to var-driven references (resting borders + text colors + hover-state alpha-derived per D-11 + selected-state per Phase 1 catalog). Block 5.
 - [ ] 02-04-PLAN.md — Retire dark hero + migrate results page region (main result card on white with orange left-border, two callouts with orange top-strips, golden-yellow warning icon, PLS badge/icon Light Yellow, footer warm with orange top-rule, three D-05 orange section dividers). Block 6.
@@ -59,7 +59,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Theming Architecture Foundation | 1/1 | Complete   | 2026-05-15 |
-| 2. Overdrive Default Theme Migration | 0/5 | Planned    | - |
+| 2. Overdrive Default Theme Migration | 1/5 | In Progress|  |
 | 3. Second Theme Stub & Pluggability Proof | 0/0 | Not started | - |
 
 ## Project-Wide Constraints
