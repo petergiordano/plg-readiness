@@ -19,17 +19,17 @@ progress:
 - **Project:** PLG Readiness Diagnostic
 - **Core value:** Show B2B SaaS founders which GTM motion their problem actually permits (Pure PLG, Product-Led Sales, Sales-Led, or Wedge) — six questions, one recommendation, reasoning shown.
 - **Current milestone:** Rebrand + Multi-Client Theming
-- **Current focus:** Phase 3 — Second Theme Stub & Pluggability Proof (Phase 2 verified 2026-05-16; all 4 SCs confirmed; BL-01 closed; V-11 rig confirms strict inequality `rgb(250, 243, 233)` != `rgb(255, 248, 240)`)
+- **Current focus:** Phase 3 — Second Theme Stub & Pluggability Proof (03-CONTEXT.md captured 2026-05-16; 4 decisions D-01..D-04 locked: alchemist slug + placeholder values, full colors+fonts override, WR-01 pre-cursor as Plan 03-01, URL-load-only validation). Ready to plan.
 
 ## Current Position
 
 Phase: 3 (second-theme-stub-pluggability-proof) — READY TO PLAN
-Plan: 0 of TBD
+Plan: 0 of TBD (Plan 03-01 = WR-01 fix is locked first per D-03)
 
 - **Phase:** 3 — Second Theme Stub & Pluggability Proof
-- **Next action:** `/gsd-discuss-phase 3` (no CONTEXT.md exists yet for Phase 3)
-- **Status:** Phase 2 complete and verified; Phase 3 not yet planned
-- **Progress:** [██████████] 100% of Phase 2 (6/6 plans + verification PASS)
+- **Next action:** `/gsd-plan-phase 3` — context gathered; researcher + planner can proceed
+- **Status:** Phase 3 context captured; Phase 2 complete and verified
+- **Progress:** [██████████] 100% of Phase 2 (6/6 plans + verification PASS); Phase 3 plans TBD
 
 ## Performance Metrics
 
@@ -64,8 +64,9 @@ None.
 
 ### Todos
 
-- **Next workflow step:** `/gsd-discuss-phase 3` — no CONTEXT.md exists yet for Phase 3; discuss-phase must run before plan-phase.
-- **WR-01..06 deferred** (per locked scope decision on 02-06): warm-card fills (`background: white` hardcoded on `.answer-card` / `.check-card`), neutral-400/500 reanchors (WCAG AA contrast regressions), border-rgb reanchor, sticky-footer gradients, override-notice icon contrast. Candidates for a Phase 3 pre-planning decision or future gap-closure plan.
+- **Next workflow step:** `/gsd-plan-phase 3` — context gathered (03-CONTEXT.md, 4 decisions locked); researcher + planner can proceed. Recommend `/clear` first for fresh planning context.
+- **WR-01 now in scope** as Plan 03-01 per Phase 3 D-03 (1-task pre-cursor: flip `background: white` → `rgb(var(--surface-elev-rgb))` at index.html lines 180 + 210).
+- **WR-02..06 stay deferred** (Overdrive-internal contrast/cosmetic issues; not D-02 violations; confirmed NOT second-theme frankenstein risks per Phase 3 context scout). Candidates for a future polish phase.
 - **Line 548 warm-tint (optional visual confirm):** The `bg-slate-50` recommendation panel at index.html line 548 sits inside `bg-surface-elev` (white); after the 02-06 flip it renders `rgb(250, 243, 233)` against white. Documented acceptable in 02-06 plan and SUMMARY. No source action needed.
 - Push branch commits to origin when convenient (not blocking).
 
@@ -87,17 +88,17 @@ None.
 
 ### Next entry point
 
-**`/gsd-discuss-phase 3`** — Phase 3 has no CONTEXT.md yet. Run discuss-phase before planning.
+**`/gsd-plan-phase 3`** — Phase 3 context captured (03-CONTEXT.md). 4 decisions locked: alchemist slug + placeholder values (D-01), full colors+fonts override (D-02), WR-01 pre-cursor as Plan 03-01 (D-03), URL-load-only validation (D-04). Recommend `/clear` first.
 
-Phase 3 goal: A second client theme exists as a small override block, and switching to it produces a visibly distinct, internally coherent rendering — proving that a future client rebrand requires only a new theme block, not markup edits.
+Phase 3 plan structure (locked):
+- **Plan 03-01:** WR-01 fix — 1-task pre-cursor (flip `background: white` → `rgb(var(--surface-elev-rgb))` at index.html lines 180 + 210). Mirrors 02-06 atomic gap-closure pattern.
+- **Plan 03-02+:** Alchemist override block (`/* ========== ALCHEMIST ========== */`) inserted in theme contract `<style>` after `:root` close (line 85). Full 15-color + ≥2-font override. Adds one new Google Font to existing `<head>` `<link>` per Phase 1 D-16. VALIDATION rigs per D-04 (three URL-load scenarios: `?client=alchemist` render, bare URL render, switch-back restore). Exact plan count/split is planner discretion.
 
 Phase 3 success criteria (from ROADMAP.md):
 1. A second theme (e.g. Alchemist) exists as an override block on `data-theme="<client>"` with placeholder token values that are visibly distinct from Overdrive defaults.
 2. Activating the second theme re-skins all six slides + results + reference matrix coherently — no element falls back to Overdrive defaults mid-page.
 3. Switching back to default cleanly restores the Overdrive identity with no residual state.
 4. No markup was edited to add the second theme — the entire change is contained in token overrides at the top of `index.html`.
-
-Known Phase 3 input: WR-01 (`.answer-card` / `.check-card` hardcoded `background: white`) is a pre-existing D-02 contract violation that WILL surface as a real regression under a second theme — worth surfacing in discuss-phase.
 
 ### Read-only references
 
