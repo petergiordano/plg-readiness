@@ -83,6 +83,45 @@
             --font-body:    'Plus Jakarta Sans', sans-serif;
             --font-mono:    'JetBrains Mono', monospace;
         }
+
+        /* ========== ALCHEMIST ========== */
+        [data-theme="alchemist"] {
+            /* Accent colors (Alchemist deep teal) */
+            --accent-rgb:        15 118 110;       /* #0F766E deep teal */
+            --accent-hover-rgb:  13 99 93;         /* #0D635D ~10% darker */
+            --accent-muted-rgb:  204 238 237;      /* #CCEEED soft-teal tint */
+
+            /* Surfaces (cool off-white + white elevated card) */
+            --surface-rgb:           248 250 252;  /* #F8FAFC cool near-white */
+            --surface-elev-rgb:      255 255 255;  /* #FFFFFF white */
+
+            /* Text (deep slate) */
+            --text-rgb:        30 41 59;     /* #1E293B deep slate */
+            --text-muted-rgb:  100 116 139;  /* #64748B muted slate */
+
+            /* Border */
+            --border-rgb: 203 213 225;  /* #CBD5E1 slate-300 */
+
+            /* Neutral ramp (cool slate — visibly distinct from Overdrive warm) */
+            --neutral-50-rgb:  241 245 249;   /* #F1F5F9 MUST differ from --surface-rgb (V-11 guard) */
+            --neutral-100-rgb: 226 232 240;   /* #E2E8F0 */
+            --neutral-200-rgb: 203 213 225;   /* #CBD5E1 */
+            --neutral-300-rgb: 148 163 184;   /* #94A3B8 */
+            --neutral-400-rgb: 100 116 139;   /* #64748B */
+            --neutral-500-rgb: 71 85 105;     /* #475569 */
+            --neutral-600-rgb: 51 65 85;      /* #334155 */
+            --neutral-700-rgb: 30 41 59;      /* #1E293B */
+            --neutral-800-rgb: 15 23 42;      /* #0F172A */
+            --neutral-900-rgb: 7 15 30;       /* #070F1E */
+
+            /* Secondary palette (cool indigo tint) */
+            --brand-soft-rgb:      219 234 254;  /* #DBEAFE soft indigo tint */
+            --brand-secondary-rgb: 99 102 241;   /* #6366F1 indigo */
+
+            /* Fonts (IBM Plex Serif — transitional serif, distinct from Space Grotesk) */
+            --font-display: 'IBM Plex Serif', serif;
+            --font-body:    'IBM Plex Serif', serif;
+        }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
