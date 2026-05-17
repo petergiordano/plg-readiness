@@ -36,6 +36,61 @@ python3 -m http.server 8080
 open index.html
 ```
 
+## Themes
+
+The app's entire visual identity is swappable per client via a CSS-variable theme contract. Changing one override block re-skins everything — no markup edits.
+
+### Built-in themes
+
+- **Overdrive** (default, no flag) — `http://localhost:8080`
+  Orange accent on warm off-white. Space Grotesk display, Plus Jakarta Sans body, JetBrains Mono labels.
+- **Alchemist** (stub demo) — `http://localhost:8080/?client=alchemist`
+  Deep teal accent on cool near-white. IBM Plex Serif for both display and body. Placeholder values — not from real Alchemist brand specs.
+
+### How theme switching works
+
+The URL `?client=<slug>` is read by an inline FOUC `<script>` (first executable child of `<head>`, lines 7–12 of `index.html`) that sets `data-theme=<slug>` on `<html>` synchronously **before first paint** — no flash of unstyled content, no server-side rendering. Tailwind utilities then resolve through `var(--<token>-rgb)` lookups that match the active `data-theme` block (or fall through to `:root` if none is set).
+
+Unknown or missing slug silently falls through to the `:root` Overdrive defaults. No error, no broken state.
+
+**The `?client=` switch requires serving over HTTP.** Opening `index.html` directly via `file://` works but the query string isn't parsed by some browsers — you'll always see Overdrive. Run `python3 -m http.server 8080` (per "Running it" above) to use theme switching.
+
+### How to add a new theme
+
+The theme contract `<style>` block lives at lines 13–125 of `index.html`. Inside it:
+
+- The `:root` block (lines 48–85) is the Overdrive default — don't edit this unless you're changing Overdrive.
+- The `[data-theme="alchemist"]` block (lines 88–124) is the template to copy.
+
+Steps:
+
+1. Copy the entire `[data-theme="alchemist"]` block.
+2. Change the selector to your slug — e.g. `[data-theme="acme"]`. Slug is lowercase, dash-separated.
+3. Override the tokens you want to change. Anything you leave out inherits from `:root`.
+4. If your theme needs a new font, extend the combined Google Fonts `<link>` at line 168 — add `&family=Your+Font:wght@400;600;700` to the existing `href`. **Do not add a second `<link>` tag.**
+5. Visit `http://localhost:8080/?client=<your-slug>` to test.
+
+#### Critical: color tokens must be space-separated RGB triplets
+
+```css
+/* Correct — works with Tailwind alpha utilities */
+--accent-rgb:      13 148 136;
+--neutral-800-rgb: 30 41 59;
+
+/* Wrong — silently breaks every bg-accent/10, bg-slate-800/50, etc. */
+--accent-rgb: #0D9488;
+```
+
+Tailwind utilities like `bg-accent/10` expand to `rgb(var(--accent-rgb) / 0.1)`. The `var()` substitution only produces valid CSS if the value is three space-separated integers. Using hex strings silently breaks every alpha modifier in the app — the page still renders, but `/10`, `/50`, etc. produce no fill. Visual UAT won't necessarily catch this if the test page doesn't exercise an alpha-on-accent surface, so verify alpha modifiers explicitly when adding a new theme.
+
+For fonts, use full CSS font stacks — e.g. `'IBM Plex Serif', serif`.
+
+### Project-wide rules
+
+The theming system rests on a small set of load-bearing invariants (single-file no-build, no dark backgrounds, theming visual only, structure/skin separation, cascade-fallback for unknown slugs, single combined Google Fonts `<link>`). All of them live in [`.planning/PROJECT.md`](./.planning/PROJECT.md) under "Constraints" — that's the source of truth. Don't restate the rules in a theme; reference them from there.
+
+For depth on the original design decisions (16 decisions locked during Phase 1, covering token naming, RGB triplet rationale, cascade fallback, `<head>` ordering, font-link consolidation, etc.), see [`.planning/phases/01-theming-architecture-foundation/01-CONTEXT.md`](./.planning/phases/01-theming-architecture-foundation/01-CONTEXT.md).
+
 ## How it's built
 
 Everything lives in `index.html` — markup, styling (Tailwind via CDN), and logic (one inline `<script>`). This is intentional: no build system keeps the tool trivially deployable and editable.
