@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: complete
-last_updated: "2026-05-17T04:30:00.000Z"
+status: shipped
+last_updated: "2026-05-17T04:45:00.000Z"
 progress:
   total_phases: 3
   completed_phases: 3
@@ -19,16 +19,16 @@ progress:
 - **Project:** PLG Readiness Diagnostic
 - **Core value:** Show B2B SaaS founders which GTM motion their problem actually permits (Pure PLG, Product-Led Sales, Sales-Led, or Wedge) — six questions, one recommendation, reasoning shown.
 - **Current milestone:** Rebrand + Multi-Client Theming
-- **Current focus:** Milestone v1.0 Rebrand + Multi-Client Theming — VERIFIED. All 3 phases shipped + verified (Phase 1 + Phase 2 + Phase 3). Next: milestone close / next milestone.
+- **Current focus:** Milestone v1.0 SHIPPED — PR #1 open at https://github.com/petergiordano/plg-readiness/pull/1. Awaiting code review + merge.
 
 ## Current Position
 
-Milestone: v1.0 Rebrand + Multi-Client Theming — COMPLETE (3/3 phases VERIFIED)
+Milestone: v1.0 Rebrand + Multi-Client Theming — SHIPPED (PR #1)
 
-- **Phase:** 3 — Second Theme Stub & Pluggability Proof — VERIFIED 2026-05-17
-- **Next action:** Milestone-level work — recommend `/gsd-complete-milestone` to archive v1.0 and prepare for next milestone, OR `/gsd-ship` to create the PR for `rebrand-theming` → `main`
-- **Status:** Milestone v1.0 complete; rebrand-theming branch is 60 commits ahead of origin and ready to ship
-- **Progress:** [██████████] 100% milestone completion (3/3 phases VERIFIED; 9/9 plans complete)
+- **Phase:** 3 — Second Theme Stub & Pluggability Proof — VERIFIED 2026-05-17, shipped 2026-05-17
+- **Next action:** Review/approve PR #1, merge when ready. After merge: `/gsd-complete-milestone` to archive v1.0 artifacts.
+- **Status:** Milestone v1.0 shipped via PR #1 (rebrand-theming → main); 86 commits; +12,360/−68
+- **Progress:** [██████████] 100% milestone completion (3/3 phases VERIFIED; 9/9 plans complete; PR opened)
 
 ## Performance Metrics
 
