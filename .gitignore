@@ -1,0 +1,8 @@
+.scaffold-manifest
+.scaffold-version
+
+# cmux-relay runtime state (per cmux-relay/README.md install step 4)
+.cmux-relay.state
+.cmux-relay.state.lock
+.cmux-relay.state.lock.reclaim
+.cmux-relay.relay-markers
