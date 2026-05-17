@@ -695,7 +695,7 @@ console.log('card:', cardBg, '| parent:', parentBg, '| different:', cardBg !== p
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should `--accent-muted-rgb` be defined as a specific soft-teal tint?**
    - What we know: Overdrive uses `255 241 224` (soft orange tint) for selected-card background. Alchemist needs an analogous soft-teal for `.answer-card.selected` and `.check-card.selected` backgrounds.
