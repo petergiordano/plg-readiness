@@ -1,9 +1,10 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.0
-milestone_name: milestone
-status: shipped
-last_updated: "2026-05-17T04:45:00.000Z"
+milestone_name: Rebrand + Multi-Client Theming
+status: Awaiting next milestone
+last_updated: "2026-05-17T16:40:00.000Z"
+last_activity: 2026-05-17 — Milestone v1.0 archived; PR #1 merged (730da5d); awaiting /gsd-new-milestone
 progress:
   total_phases: 3
   completed_phases: 3
@@ -18,33 +19,27 @@ progress:
 
 - **Project:** PLG Readiness Diagnostic
 - **Core value:** Show B2B SaaS founders which GTM motion their problem actually permits (Pure PLG, Product-Led Sales, Sales-Led, or Wedge) — six questions, one recommendation, reasoning shown.
-- **Current milestone:** Rebrand + Multi-Client Theming
-- **Current focus:** Milestone v1.0 SHIPPED — PR #1 open at https://github.com/petergiordano/plg-readiness/pull/1. Awaiting code review + merge.
+- **Current milestone:** None active. v1.0 shipped and archived.
+- **Current focus:** Awaiting next milestone scope. Run `/gsd-new-milestone` to begin v1.1.
 
 ## Current Position
 
-Milestone: v1.0 Rebrand + Multi-Client Theming — SHIPPED (PR #1)
+- **Phase:** —
+- **Plan:** —
+- **Status:** Awaiting next milestone
+- **Last activity:** 2026-05-17 — v1.0 archived; PR #1 (rebrand-theming → main) merged at 730da5d; archive committed on branch `milestone-close-v1.0`
 
-- **Phase:** 3 — Second Theme Stub & Pluggability Proof — VERIFIED 2026-05-17, shipped 2026-05-17
-- **Next action:** Review/approve PR #1, merge when ready. After merge: `/gsd-complete-milestone` to archive v1.0 artifacts.
-- **Status:** Milestone v1.0 shipped via PR #1 (rebrand-theming → main); 86 commits; +12,360/−68
-- **Progress:** [██████████] 100% milestone completion (3/3 phases VERIFIED; 9/9 plans complete; PR opened)
+## Shipped Milestones
 
-## Performance Metrics
-
-| Metric | Value |
-|--------|-------|
-| v1 requirements | 3 |
-| Phases | 3 |
-| Coverage | 3/3 |
-| Plans complete | Phase 1: 1/1 verified; Phase 2: 6/6 verified; Phase 3: 2/2 verified |
-| Open questions | 0 (all 5 PRD-level resolved + 16 decisions locked in Phase 1 CONTEXT.md + 14 decisions locked in Phase 2 CONTEXT.md + 4 decisions locked in Phase 3 CONTEXT.md) |
+| Version | Name | Shipped | Archive |
+|---------|------|---------|---------|
+| v1.0 | Rebrand + Multi-Client Theming | 2026-05-17 | `.planning/milestones/v1.0-ROADMAP.md` |
 
 ## Accumulated Context
 
 ### Locked decisions (project-wide)
 
-Architectural rules — apply to every phase. Full text in `PROJECT.md`:
+Architectural rules — apply to every future phase. Full text in `PROJECT.md` "Constraints":
 
 - Single-file, no build step
 - No dark backgrounds (orange-as-structure on warm off-white)
@@ -52,62 +47,34 @@ Architectural rules — apply to every phase. Full text in `PROJECT.md`:
 - Tailwind utilities resolve through CSS vars (markup references tokens only)
 - Structure / skin separation — all brand tokens live in one place at the top of the file
 - Theming is visual only — scoring logic and copy are shared
+- `:root` IS the default theme; unknown `?client=` slugs cascade-fall-through (D-15)
+- Single combined Google Fonts `<link>`, extended per theme via `&family=` (D-16)
 
 ### Open questions
 
-All resolved. See `.planning/phases/01-theming-architecture-foundation/01-CONTEXT.md` `<decisions>` (D-01 through D-16) and `.planning/phases/02-overdrive-default-theme-migration/02-CONTEXT.md` `<decisions>` (D-01 through D-14).
+None at milestone boundary. Next milestone's discuss-phase will surface new ones.
 
 ### Blockers
 
 None.
 
-### Todos
+### Carry-forward todos
 
-- **Next workflow step:** `/gsd-plan-phase 3` — context gathered (03-CONTEXT.md, 4 decisions locked); researcher + planner can proceed. Recommend `/clear` first for fresh planning context.
-- **WR-01 now in scope** as Plan 03-01 per Phase 3 D-03 (1-task pre-cursor: flip `background: white` → `rgb(var(--surface-elev-rgb))` at index.html lines 180 + 210).
-- **WR-02..06 stay deferred** (Overdrive-internal contrast/cosmetic issues; not D-02 violations; confirmed NOT second-theme frankenstein risks per Phase 3 context scout). Candidates for a future polish phase.
-- **Line 548 warm-tint (optional visual confirm):** The `bg-slate-50` recommendation panel at index.html line 548 sits inside `bg-surface-elev` (white); after the 02-06 flip it renders `rgb(250, 243, 233)` against white. Documented acceptable in 02-06 plan and SUMMARY. No source action needed.
-- Push branch commits to origin when convenient (not blocking).
+- **WR-02..06** (Overdrive-internal contrast/cosmetic) — deferred during Phase 3. Not D-02 violations; not second-theme frankenstein risks (per Phase 3 context scout). Candidates for a future polish phase.
+- **Theme-switch runtime toggle** — Phase 3 D-04 validated URL-load only; runtime `setAttribute('data-theme', X)` was NOT validated. Revisit if a runtime toggle becomes a real use case.
+- **Real client themes** — Alchemist beyond stub, UC Berkeley SkyDeck, Scale VP — requires per-client brand-spec ingestion (EXCL-real-client-themes).
 
 ## Session Continuity
 
-### Last resumed
+### Next entry point
 
-- **2026-05-16 (verification round 2):** Re-ran Phase 2 verification after 02-06 BL-01 gap closure. All 4 SCs now VERIFIED. V-11 runtime evidence (orchestrator Chrome MCP): card `rgb(250, 243, 233)` strictly not-equal-to parent `rgb(255, 248, 240)`. 02-VERIFICATION.md updated to `status: verified`. STATE.md updated to `completed_phases: 2`, `percent: 67`. ROADMAP.md Phase 2 header updated to reflect verified status.
-
-- **2026-05-16 (planning):** `/gsd-plan-phase 2` end-to-end completed in this resume session. Sequence: research (ac384b4) → VALIDATION.md (60b6efe) → V-1 orchestrator-run + PASS (c620eb3) → pattern-map (e52230a) → planner produced 5 plans + ROADMAP update (b4898df) → plan-checker (0 BLOCKERS, 4 WARNINGS, 1 INFO) → orchestrator applied 2 plan-checker WARNINGs as edits (331fb6a). Branch ahead 13 vs origin. Worktree on `rebrand-theming` at `/Users/petergiordano/Documents/GitHub/plg-readiness-rebrand`. Peer worktree on `main` at `/Users/petergiordano/Documents/GitHub/plg-readiness`.
-
-- **2026-05-16 (resume):** `/gsd-resume-work` → user routed to `/gsd-plan-phase 2` (chose `/clear` first for fresh planning context). HANDOFF.json consumed and deleted (one-shot artifact per resume-project.md). `02-CONTEXT.md` + `02-DISCUSSION-LOG.md` were the canonical inputs for the planner. Branch was ahead 4 vs origin (d21fcd1, 75f8836, b2dd7e1, b1af5f7).
+**`/gsd-new-milestone`** — define v1.1 scope. Pre-flight: read `PROJECT.md` → "Next Milestone Goals" for candidate themes.
 
 ### Last session
 
-- Phase 2 re-verification complete. BL-01 closed by commit 36e0c29 (re-anchor `--neutral-50-rgb` from `255 248 240` to `250 243 233`). V-11 rig added (commit c0dbe64). Runtime proof gathered by orchestrator via Chrome MCP: card `rgb(250, 243, 233)` != parent `rgb(255, 248, 240)` — strict inequality confirmed.
-- Phase 2 SC #1 flipped PARTIAL-FAIL → VERIFIED. All 4 SCs now VERIFIED. No gaps remaining.
-- Phase 2 complete and verified. Ready to plan Phase 3.
+- 2026-05-17 — `/gsd-complete-milestone` v1.0 ran on branch `milestone-close-v1.0` (off main, post-PR-merge). Archived ROADMAP + REQUIREMENTS; rewrote MILESTONES; evolved PROJECT.md; created RETROSPECTIVE.md; tagged v1.0; opened follow-up PR to merge archive into main.
 
-### Next entry point
+## Operator Next Steps
 
-**`/gsd-plan-phase 3`** — Phase 3 context captured (03-CONTEXT.md). 4 decisions locked: alchemist slug + placeholder values (D-01), full colors+fonts override (D-02), WR-01 pre-cursor as Plan 03-01 (D-03), URL-load-only validation (D-04). Recommend `/clear` first.
-
-Phase 3 plan structure (locked):
-
-- **Plan 03-01:** WR-01 fix — 1-task pre-cursor (flip `background: white` → `rgb(var(--surface-elev-rgb))` at index.html lines 180 + 210). Mirrors 02-06 atomic gap-closure pattern.
-- **Plan 03-02+:** Alchemist override block (`/* ========== ALCHEMIST ========== */`) inserted in theme contract `<style>` after `:root` close (line 85). Full 15-color + ≥2-font override. Adds one new Google Font to existing `<head>` `<link>` per Phase 1 D-16. VALIDATION rigs per D-04 (three URL-load scenarios: `?client=alchemist` render, bare URL render, switch-back restore). Exact plan count/split is planner discretion.
-
-Phase 3 success criteria (from ROADMAP.md):
-
-1. A second theme (e.g. Alchemist) exists as an override block on `data-theme="<client>"` with placeholder token values that are visibly distinct from Overdrive defaults.
-2. Activating the second theme re-skins all six slides + results + reference matrix coherently — no element falls back to Overdrive defaults mid-page.
-3. Switching back to default cleanly restores the Overdrive identity with no residual state.
-4. No markup was edited to add the second theme — the entire change is contained in token overrides at the top of `index.html`.
-
-### Read-only references
-
-- `.planning/phases/02-overdrive-default-theme-migration/02-CONTEXT.md` — 14 locked decisions (D-01..D-14)
-- `.planning/phases/02-overdrive-default-theme-migration/02-VERIFICATION.md` — round 2 VERIFIED; full V-1..V-11 status table
-- `.planning/phases/02-overdrive-default-theme-migration/02-VALIDATION.md` — V-11 rig (surface-differentiation guard) now load-bearing for future `--neutral-50-rgb` / `--surface-rgb` changes
-- `.planning/phases/02-overdrive-default-theme-migration/02-REVIEW.md` — WR-01..06 deferred warnings; candidates for Phase 3 pre-planning
-- `.planning/phases/01-theming-architecture-foundation/` — full Phase 1 artifact set
-- `.planning/intel/` — synthesized ingest intel (requirements, decisions, constraints, context)
-- `plan.md` — source PRD for this milestone
-- `docs/design/design-system-alpha-overdrive.md` — Overdrive design system
+- Start the next milestone with `/gsd-new-milestone`.
+- After the milestone-close PR merges: optionally remove the `plg-readiness-rebrand/` worktree (`git worktree remove ../plg-readiness-rebrand`) and delete the `rebrand-theming` branch.
