@@ -78,9 +78,9 @@ None.
 
 - Start the next milestone with `/gsd-new-milestone`.
 
-### Queued for v1.1 kickoff (do NOT run during v1.0 close)
+### Completed during v1.0 close (2026-05-17)
 
-Tear down the rebrand-theming coach surface. This terminates the coach surface that produced v1.0 — that's why it's deferred to v1.1 kickoff, not the v1.0 close. **Run these from the main worktree** (`/Users/petergiordano/Documents/GitHub/plg-readiness`):
+Rebrand-theming coach surface torn down per coach sign-off:
 
 ```bash
 git push origin --delete rebrand-theming
@@ -88,4 +88,4 @@ git worktree remove /Users/petergiordano/Documents/GitHub/plg-readiness-rebrand
 git branch -D rebrand-theming
 ```
 
-Order matters — delete remote first (so the local-branch deletion doesn't repopulate from origin), then remove the worktree (which also frees the branch's working-tree lock), then force-delete the local branch ref.
+Prime is now solo on main worktree (`/Users/petergiordano/Documents/GitHub/plg-readiness`). No active coach surface.
