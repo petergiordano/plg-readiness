@@ -4,46 +4,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLG Readiness Diagnostic | GTM Strategy Tool</title>
+    <script>
+        (function () {
+            var p = new URLSearchParams(location.search).get('client');
+            if (p) document.documentElement.setAttribute('data-theme', p);
+        })();
+    </script>
+    <style>
+        /* =============================================================
+           THEME CONTRACT
+           -------------------------------------------------------------
+           This block holds every brandable token in the app. The
+           ":root" block below is the default (Overdrive). Each
+           "[data-theme=<slug>]" block below it is a client override.
+
+           HOW TO ADD A CLIENT THEME (for non-engineers):
+
+           1. Copy the entire ":root { ... }" block below.
+           2. Change ":root" to [data-theme="your-client-slug"].
+              Slug is lowercase, dash-separated, no spaces.
+              Example: [data-theme="alchemist"]
+           3. Edit the values you want different from Overdrive.
+              Leave the rest alone -- anything you don't override
+              will use Overdrive's value.
+           4. Save the file. Visit the app with
+              "?client=your-client-slug" in the URL to see it.
+
+           COLORS are written as three numbers separated by spaces
+           (the R, G, B channels of the color). To convert a hex
+           like "#FF9000" to this format:
+             #FF9000  ->  255 144 0
+           Online converters (Google "hex to rgb") do this in one step.
+
+           FONTS are written as full CSS font stacks, e.g.
+             'Space Grotesk', sans-serif
+           Add new font files to the Google Fonts <link> above so they
+           load with the page.
+
+           That is the whole system. There is nothing else to learn.
+           ============================================================= */
+
+        /* ========== :ROOT DEFAULTS (Overdrive — Phase 2 production values) ========== */
+        :root {
+            /* Accent colors (Overdrive orange) */
+            --accent-rgb:        255 144 0;        /* #FF9000 Overdrive Orange */
+            --accent-hover-rgb:  230 130 0;        /* #E68200 ~10% darker (R-1 — closes frankenstein-hover bug on CTAs at 324/479/515) */
+            --accent-muted-rgb:  255 241 224;      /* #FFF1E0 soft-orange tint (Claude's-Discretion per CONTEXT D-decisions) */
+
+            /* Surfaces (warm off-white + elevated white card; dark surfaces retired per D-01) */
+            --surface-rgb:           255 248 240;  /* #FFF8F0 warm off-white */
+            --surface-elev-rgb:      255 255 255;  /* #FFFFFF white — consumed by bg-surface-elev (D-02) */
+
+            /* Text (Overdrive Dark Gray + Gray 2) */
+            --text-rgb:        67 67 67;      /* #434343 Overdrive Dark Gray (D-06 anchor) */
+            --text-muted-rgb:  138 138 138;   /* #8A8A8A Overdrive Gray 2 (D-06 anchor) */
+
+            /* Border (dominant slate-200) */
+            --border-rgb: 229 229 229;  /* #E5E5E5 Overdrive Border Light (D-06 anchor) */
+
+            /* Neutral ramp (Tailwind v3 slate defaults) */
+            --neutral-50-rgb:  250 243 233;   /* #FAF3E9 one step warmer-deeper than --surface-rgb; bg-slate-50 consumers must differentiate from bg-surface-warm parents */
+            --neutral-100-rgb: 245 240 232;   /* #F5F0E8 warm-50 step */
+            --neutral-200-rgb: 229 229 229;   /* #E5E5E5 Border Light anchor */
+            --neutral-300-rgb: 209 209 209;   /* #D1D1D1 warm-300 step */
+            --neutral-400-rgb: 168 168 168;   /* #A8A8A8 warm-400 step */
+            --neutral-500-rgb: 138 138 138;   /* #8A8A8A Gray 2 anchor */
+            --neutral-600-rgb: 102 102 102;   /* #666666 Gray 1 anchor */
+            --neutral-700-rgb: 67 67 67;      /* #434343 Dark Gray anchor */
+            --neutral-800-rgb: 51 51 51;      /* #333333 extrapolation */
+            --neutral-900-rgb: 26 26 26;      /* #1A1A1A extrapolation (no current Tailwind consumer; declared per D-07 brandable-ramp) */
+
+            /* ========== Secondary palette ========== */
+            --brand-soft-rgb:      255 229 153;  /* #FFE599 Light Yellow (D-12) */
+            --brand-secondary-rgb: 241 194 50;   /* #F1C232 Golden Yellow (D-12) */
+
+            /* Fonts (Overdrive — Space Grotesk display) */
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body:    'Plus Jakarta Sans', sans-serif;
+            --font-mono:    'JetBrains Mono', monospace;
+        }
+
+        /* ========== ALCHEMIST ========== */
+        [data-theme="alchemist"] {
+            /* Accent colors (Alchemist deep teal) */
+            --accent-rgb:        15 118 110;       /* #0F766E deep teal */
+            --accent-hover-rgb:  13 99 93;         /* #0D635D ~10% darker */
+            --accent-muted-rgb:  204 238 237;      /* #CCEEED soft-teal tint */
+
+            /* Surfaces (cool off-white + white elevated card) */
+            --surface-rgb:           248 250 252;  /* #F8FAFC cool near-white */
+            --surface-elev-rgb:      255 255 255;  /* #FFFFFF white */
+
+            /* Text (deep slate) */
+            --text-rgb:        30 41 59;     /* #1E293B deep slate */
+            --text-muted-rgb:  100 116 139;  /* #64748B muted slate */
+
+            /* Border */
+            --border-rgb: 203 213 225;  /* #CBD5E1 slate-300 */
+
+            /* Neutral ramp (cool slate — visibly distinct from Overdrive warm) */
+            --neutral-50-rgb:  241 245 249;   /* #F1F5F9 MUST differ from --surface-rgb (V-11 guard) */
+            --neutral-100-rgb: 226 232 240;   /* #E2E8F0 */
+            --neutral-200-rgb: 203 213 225;   /* #CBD5E1 */
+            --neutral-300-rgb: 148 163 184;   /* #94A3B8 */
+            --neutral-400-rgb: 100 116 139;   /* #64748B */
+            --neutral-500-rgb: 71 85 105;     /* #475569 */
+            --neutral-600-rgb: 51 65 85;      /* #334155 */
+            --neutral-700-rgb: 30 41 59;      /* #1E293B */
+            --neutral-800-rgb: 15 23 42;      /* #0F172A */
+            --neutral-900-rgb: 7 15 30;       /* #070F1E */
+
+            /* Secondary palette (cool indigo tint) */
+            --brand-soft-rgb:      219 234 254;  /* #DBEAFE soft indigo tint */
+            --brand-secondary-rgb: 99 102 241;   /* #6366F1 indigo */
+
+            /* Fonts (IBM Plex Serif — transitional serif, distinct from Space Grotesk) */
+            --font-display: 'IBM Plex Serif', serif;
+            --font-body:    'IBM Plex Serif', serif;
+        }
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans:    ['Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Fraunces', 'serif'],
-                        mono:    ['JetBrains Mono', 'monospace'],
+                        sans:    ['var(--font-body)',    'sans-serif'],
+                        display: ['var(--font-display)', 'sans-serif'],
+                        mono:    ['var(--font-mono)',    'monospace'],
                     },
                     colors: {
                         accent: {
-                            DEFAULT: '#4F46E5',
-                            hover:   '#4338CA',
-                            muted:   '#EEF2FF',
+                            DEFAULT: 'rgb(var(--accent-rgb)       / <alpha-value>)',
+                            hover:   'rgb(var(--accent-hover-rgb) / <alpha-value>)',
+                            muted:   'rgb(var(--accent-muted-rgb) / <alpha-value>)',
                         },
                         surface: {
-                            warm:        '#FAFAF8',
-                            dark:        '#0F172A',
-                            'dark-card': '#1E293B',
+                            warm: 'rgb(var(--surface-rgb)      / <alpha-value>)',
+                            elev: 'rgb(var(--surface-elev-rgb) / <alpha-value>)',
                         },
-                        ink: '#1A1A2E',
+                        ink: 'rgb(var(--text-rgb) / <alpha-value>)',
                         slate: {
-                            50:  '#F8FAFC',
-                            100: '#F1F5F9',
-                            200: '#E2E8F0',
-                            300: '#CBD5E1',
-                            400: '#94A3B8',
-                            500: '#64748B',
-                            600: '#475569',
-                            700: '#334155',
-                            800: '#1E293B',
-                            900: '#0F172A',
+                            50:  'rgb(var(--neutral-50-rgb)  / <alpha-value>)',
+                            100: 'rgb(var(--neutral-100-rgb) / <alpha-value>)',
+                            200: 'rgb(var(--neutral-200-rgb) / <alpha-value>)',
+                            300: 'rgb(var(--neutral-300-rgb) / <alpha-value>)',
+                            400: 'rgb(var(--neutral-400-rgb) / <alpha-value>)',
+                            500: 'rgb(var(--neutral-500-rgb) / <alpha-value>)',
+                            600: 'rgb(var(--neutral-600-rgb) / <alpha-value>)',
+                            700: 'rgb(var(--neutral-700-rgb) / <alpha-value>)',
+                            800: 'rgb(var(--neutral-800-rgb) / <alpha-value>)',
+                            900: 'rgb(var(--neutral-900-rgb) / <alpha-value>)',
+                        },
+                        yellow: {
+                            100: 'rgb(var(--brand-soft-rgb)      / <alpha-value>)',
+                            400: 'rgb(var(--brand-secondary-rgb) / <alpha-value>)',
                         }
                     }
                 }
             }
         }
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             -webkit-font-smoothing: antialiased;
@@ -56,7 +178,7 @@
         .slide {
             position: fixed;
             inset: 0;
-            background: #FAFAF8;
+            background: rgb(var(--surface-rgb));
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -88,30 +210,30 @@
             align-items: flex-start;
             gap: 14px;
             padding: 14px 16px;
-            border: 1.5px solid #E2E8F0;
+            border: 1.5px solid rgb(var(--border-rgb));
             border-radius: 10px;
             cursor: pointer;
             transition: border-color 0.14s, background 0.14s;
             width: 100%;
             text-align: left;
-            background: white;
+            background: rgb(var(--surface-elev-rgb));
         }
-        .answer-card:hover             { border-color: #A5B4FC; background: #F8F7FF; }
-        .answer-card.selected          { border-color: #4F46E5; background: #EEF2FF; }
+        .answer-card:hover             { border-color: rgb(var(--accent-rgb) / 0.4); background: rgb(var(--accent-rgb) / 0.06); }
+        .answer-card.selected          { border-color: rgb(var(--accent-rgb)); background: rgb(var(--accent-muted-rgb)); }
         .key-badge {
             flex-shrink: 0;
             width: 26px; height: 26px;
-            border: 1.5px solid #CBD5E1;
+            border: 1.5px solid rgb(var(--neutral-300-rgb));
             border-radius: 5px;
             display: flex; align-items: center; justify-content: center;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px; color: #94A3B8;
+            font-size: 11px; color: rgb(var(--neutral-400-rgb));
             margin-top: 1px;
             transition: border-color 0.14s, color 0.14s, background 0.14s;
         }
-        .answer-card:hover .key-badge  { border-color: #818CF8; color: #818CF8; }
+        .answer-card:hover .key-badge  { border-color: rgb(var(--accent-rgb) / 0.4); color: rgb(var(--accent-rgb) / 0.4); }
         .answer-card.selected .key-badge {
-            border-color: #4F46E5; color: #4F46E5; background: white;
+            border-color: rgb(var(--accent-rgb)); color: rgb(var(--accent-rgb)); background: rgb(var(--surface-elev-rgb));
         }
 
         /* ── Check cards (multi-select) ───────────────── */
@@ -120,27 +242,27 @@
             align-items: flex-start;
             gap: 10px;
             padding: 12px 12px;
-            border: 1.5px solid #E2E8F0;
+            border: 1.5px solid rgb(var(--border-rgb));
             border-radius: 10px;
             cursor: pointer;
             transition: border-color 0.14s, background 0.14s;
-            background: white;
+            background: rgb(var(--surface-elev-rgb));
             width: 100%;
             text-align: left;
             height: 100%;
         }
-        .check-card:hover     { border-color: #A5B4FC; background: #F8F7FF; }
-        .check-card.selected  { border-color: #4F46E5; background: #EEF2FF; }
+        .check-card:hover     { border-color: rgb(var(--accent-rgb) / 0.4); background: rgb(var(--accent-rgb) / 0.06); }
+        .check-card.selected  { border-color: rgb(var(--accent-rgb)); background: rgb(var(--accent-muted-rgb)); }
         .check-box {
             flex-shrink: 0;
             width: 18px; height: 18px;
-            border: 1.5px solid #CBD5E1;
+            border: 1.5px solid rgb(var(--neutral-300-rgb));
             border-radius: 4px;
             display: flex; align-items: center; justify-content: center;
             margin-top: 2px;
             transition: border-color 0.14s, background 0.14s;
         }
-        .check-card.selected .check-box { border-color: #4F46E5; background: #4F46E5; }
+        .check-card.selected .check-box { border-color: rgb(var(--accent-rgb)); background: rgb(var(--accent-rgb)); }
         .check-icon-svg { display: none; }
         .check-card.selected .check-icon-svg { display: block; }
 
@@ -159,30 +281,30 @@
         .result-overline {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px; letter-spacing: 0.12em;
-            text-transform: uppercase; color: #64748B;
+            text-transform: uppercase; color: rgb(var(--text-muted-rgb));
             display: block; margin-bottom: 12px;
         }
         .phase-overline {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px; letter-spacing: 0.12em;
-            text-transform: uppercase; color: #4F46E5;
+            text-transform: uppercase; color: rgb(var(--accent-rgb));
             display: block; margin-bottom: 8px;
         }
         .phase-rule {
             border: none;
-            border-top: 1px solid rgba(79,70,229,0.2);
+            border-top: 1px solid rgb(var(--accent-rgb) / 0.2);
             margin: 0 0 28px 0;
         }
 
         /* ── Keyboard hint ────────────────────────────── */
         .kbd-hint {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px; color: #94A3B8;
+            font-size: 11px; color: rgb(var(--neutral-400-rgb));
             display: flex; align-items: center; gap: 4px;
         }
         .kbd-hint span {
-            border: 1px solid #CBD5E1; border-radius: 3px;
-            padding: 1px 5px; background: white;
+            border: 1px solid rgb(var(--neutral-300-rgb)); border-radius: 3px;
+            padding: 1px 5px; background: rgb(var(--surface-elev-rgb));
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -451,27 +573,27 @@
     ═══════════════════════════════════════ -->
     <div id="results-page">
 
-        <!-- Dark results hero -->
-        <div class="bg-surface-dark pt-20 pb-16 md:pb-24">
+        <!-- Results hero (D-05a orange top-rule divider above main card) -->
+        <section class="bg-surface-warm pt-20 pb-16 md:pb-24 border-t-[4px] border-accent">
             <div class="max-w-[680px] mx-auto px-6">
 
                 <!-- Main result card -->
                 <div class="result-reveal mb-5">
-                    <div class="bg-surface-dark-card rounded-xl border border-slate-700 overflow-hidden" style="border-left: 3px solid #4F46E5;">
+                    <div class="bg-surface-elev rounded-xl border border-slate-200 overflow-hidden" style="border-left: 3px solid rgb(var(--accent-rgb));">
                         <div class="p-8">
                             <span class="result-overline">Assessment Result</span>
-                            <h2 id="result-title" class="font-display text-3xl font-bold text-slate-100 mb-4 leading-tight"></h2>
-                            <p id="result-description" class="text-slate-400 mb-6 leading-relaxed"></p>
-                            <div class="rounded-lg p-5 border border-slate-700" style="background:rgba(15,23,42,0.5);">
-                                <h4 class="font-semibold text-slate-300 mb-2 text-sm">Recommendation</h4>
-                                <p id="result-recommendation" class="text-sm text-slate-400 leading-relaxed"></p>
+                            <h2 id="result-title" class="font-display text-3xl font-bold text-ink mb-4 leading-tight"></h2>
+                            <p id="result-description" class="text-slate-500 mb-6 leading-relaxed"></p>
+                            <div class="rounded-lg p-5 border border-slate-200 bg-slate-50">
+                                <h4 class="font-semibold text-ink mb-2 text-sm">Recommendation</h4>
+                                <p id="result-recommendation" class="text-sm text-slate-500 leading-relaxed"></p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Wedge callout (conditional) -->
-                <div id="wedge-callout" class="hidden result-reveal result-reveal-2 bg-slate-800/50 rounded-xl border border-slate-700 p-6 mb-5">
+                <div id="wedge-callout" class="hidden result-reveal result-reveal-2 bg-surface-elev rounded-xl p-6 mb-5" style="border-top: 5px solid rgb(var(--accent-rgb));">
                     <div class="flex items-start gap-4">
                         <div class="flex-shrink-0 w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -479,28 +601,28 @@
                             </svg>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-slate-200 mb-2">The Wedge Play: Your Path to PLG</h4>
-                            <p class="text-sm text-slate-400 mb-3 leading-relaxed">
-                                Even complex enterprise products can find a PLG entry point. <strong class="text-slate-300">Datadog</strong> sells to DevOps (enterprise buyer), but started with a simple infrastructure monitoring agent that developers could install themselves. <strong class="text-slate-300">Slack</strong> started as a team tool before becoming enterprise software.
+                            <h4 class="font-semibold text-ink mb-2">The Wedge Play: Your Path to PLG</h4>
+                            <p class="text-sm text-slate-500 mb-3 leading-relaxed">
+                                Even complex enterprise products can find a PLG entry point. <strong class="text-slate-600">Datadog</strong> sells to DevOps (enterprise buyer), but started with a simple infrastructure monitoring agent that developers could install themselves. <strong class="text-slate-600">Slack</strong> started as a team tool before becoming enterprise software.
                             </p>
-                            <p class="text-sm text-slate-400 leading-relaxed">
-                                <strong class="text-slate-300">Your play:</strong> Find the simplest, most self-serve use case within your product. Let that be your wedge into the organization. Once users love it, sales can expand the relationship.
+                            <p class="text-sm text-slate-500 leading-relaxed">
+                                <strong class="text-slate-600">Your play:</strong> Find the simplest, most self-serve use case within your product. Let that be your wedge into the organization. Once users love it, sales can expand the relationship.
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Override notice (conditional) -->
-                <div id="override-notice" class="hidden result-reveal result-reveal-3 bg-slate-800/50 rounded-xl border border-slate-700 p-6 mb-5">
+                <div id="override-notice" class="hidden result-reveal result-reveal-3 bg-surface-elev rounded-xl p-6 mb-5" style="border-top: 5px solid rgb(var(--accent-rgb));">
                     <div class="flex items-start gap-4">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center" style="background:rgba(245,158,11,0.15);">
-                            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgb(var(--brand-secondary-rgb) / 0.15);">
+                            <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                             </svg>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-slate-200 mb-2">Why Your Product Characteristics Don't Override This</h4>
-                            <p class="text-sm text-slate-400 leading-relaxed" id="override-explanation"></p>
+                            <h4 class="font-semibold text-ink mb-2">Why Your Product Characteristics Don't Override This</h4>
+                            <p class="text-sm text-slate-500 leading-relaxed" id="override-explanation"></p>
                         </div>
                     </div>
                 </div>
@@ -508,15 +630,15 @@
                 <!-- Restart -->
                 <div class="mt-8 text-center">
                     <button onclick="restartQuiz()"
-                        class="text-sm text-slate-500 hover:text-slate-300 transition-colors underline underline-offset-4">
+                        class="text-sm text-slate-500 hover:text-slate-700 transition-colors underline underline-offset-4">
                         Start over
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Reference Matrix -->
-        <section class="bg-white border-t border-slate-200 py-16 md:py-24">
+        <!-- Reference Matrix (D-05b 4px orange top-rule divider) -->
+        <section class="bg-surface-warm border-t-[4px] border-accent py-16 md:py-24">
             <div class="max-w-[960px] mx-auto px-6">
                 <div class="mb-12">
                     <span class="phase-overline">Reference</span>
@@ -554,7 +676,7 @@
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">Manager / Team Lead</td>
                                 <td class="p-4 border border-slate-200">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-indigo-100 text-indigo-800">Product-Led Sales</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-yellow-100 text-ink">Product-Led Sales</span>
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">Notion, Slack, Asana, Linear</td>
                             </tr>
@@ -595,7 +717,7 @@
                         <p class="text-base text-slate-500">User and buyer are identical. No approval needed. Credit card swipe completes the sale. Focus on activation metrics and time-to-value.</p>
                     </div>
                     <div class="bg-slate-50 rounded-lg p-6 border border-slate-100">
-                        <div class="w-9 h-9 bg-indigo-50 rounded-md flex items-center justify-center mb-4">
+                        <div class="w-9 h-9 bg-yellow-100 rounded-md flex items-center justify-center mb-4">
                             <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
@@ -617,7 +739,7 @@
         </section>
 
         <!-- Footer -->
-        <footer class="bg-surface-dark border-t border-slate-800 py-10">
+        <footer class="bg-surface-warm border-t-[4px] border-accent py-10">
             <div class="max-w-[960px] mx-auto px-6 flex justify-between items-center text-sm text-slate-500">
                 <p>&copy; 2025 Senior GTM Strategy Architect.</p>
                 <p>The problem picks the motion.</p>

@@ -1,0 +1,27 @@
+{
+  "source_path": "/Users/petergiordano/Documents/GitHub/plg-readiness-rebrand/plan.md",
+  "type": "PRD",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "Plan: Rebrand + Multi-Client Theming",
+  "summary": "Intent and architecture plan for rebranding the PLG Readiness Diagnostic to Overdrive defaults with a swappable per-client theme layer in single-file index.html.",
+  "scope": [
+    "index.html",
+    "Overdrive design system",
+    "multi-client theming",
+    "CSS custom properties theme contract",
+    "Tailwind config wiring",
+    "data-theme attribute switch",
+    "default Overdrive theme",
+    "stub second theme (Alchemist)"
+  ],
+  "cross_refs": [
+    "docs/design/design-system-alpha-overdrive.md",
+    "Overdrive_Brand-Identity-Design-and-Style-Guide.md",
+    "HOW_IT_WORKS.md",
+    "index.html"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": "Hybrid shape: PRD-style structure (Why/Goal/Scope/Out-of-scope/Open-questions) with an embedded '## Locked decisions' section containing ~6 settled constraints (single-file no build, no dark backgrounds, CSS-variable theme contract, Tailwind tokens, structure/skin separation, theming-visual-only). Not an ADR (no single Decision + Consequences pair; multiple distinct decisions bundled). Synthesizer should treat the 'Locked decisions' bullets as hard constraints despite type=PRD. Document self-describes as 'lightweight intent + architecture doc' for GSD ingest."
+}
