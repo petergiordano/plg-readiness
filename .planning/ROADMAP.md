@@ -8,7 +8,7 @@
 
 - [x] **Phase 1: Theming Architecture Foundation** — Scaffold the CSS-variable contract, Tailwind wiring, and theme switch mechanism in `index.html`. (completed 2026-05-15)
 - [x] **Phase 2: Overdrive Default Theme Migration** — Convert the existing app end-to-end to the new theming architecture with Overdrive as the default identity. (verified 2026-05-16 — BL-01 closed; all 4 SCs VERIFIED)
-- [ ] **Phase 3: Second Theme Stub & Pluggability Proof** — Add one stub second theme to prove the system supports per-client rebrand without touching markup.
+- [x] **Phase 3: Second Theme Stub & Pluggability Proof** — Add one stub second theme to prove the system supports per-client rebrand without touching markup. (completed 2026-05-17)
 
 ## Phase Details
 
@@ -54,7 +54,7 @@
   4. No markup was edited to add the second theme — the entire change is contained in token overrides at the top of `index.html`.
 **Plans**: 2 plans
 - [x] 03-01-PLAN.md — WR-01 fix pre-cursor: flip `background: white;` → `background: rgb(var(--surface-elev-rgb));` at index.html lines 180 + 210 (`.answer-card` + `.check-card` resting). Atomic single-task plan mirroring 02-06 gap-closure shape; eliminates the only known hardcoded-white card surface so the Alchemist theme renders without frankenstein white-on-teal cards. (Wave 1, autonomous)
-- [ ] 03-02-PLAN.md — Alchemist override block + Google Fonts `<link>` edit + three URL-load VALIDATION rigs. Insert `[data-theme="alchemist"]` block (full 15-color + 2-font override per CONTEXT D-02) after `:root` close at line 85. Prepend `IBM+Plex+Serif:wght@400;600;700` to the existing combined Google Fonts `<link>` per Phase 1 D-16. Three D-04 VALIDATION scenarios: (a) `?client=alchemist` Alchemist render, (b) bare URL Overdrive zero-regression, (c) switch-back restore. D-14 browser-verify gate after `<link>` edit. (Wave 2, depends on 03-01, has manual-browser-verify checkpoints)
+- [x] 03-02-PLAN.md — Alchemist override block + Google Fonts `<link>` edit + three URL-load VALIDATION rigs. Insert `[data-theme="alchemist"]` block (full 15-color + 2-font override per CONTEXT D-02) after `:root` close at line 85. Prepend `IBM+Plex+Serif:wght@400;600;700` to the existing combined Google Fonts `<link>` per Phase 1 D-16. Three D-04 VALIDATION scenarios: (a) `?client=alchemist` Alchemist render, (b) bare URL Overdrive zero-regression, (c) switch-back restore. D-14 browser-verify gate after `<link>` edit. (Wave 2, depends on 03-01, has manual-browser-verify checkpoints)
 **UI hint**: yes
 
 ## Progress
@@ -63,7 +63,7 @@
 |-------|----------------|--------|-----------|
 | 1. Theming Architecture Foundation | 1/1 | Complete   | 2026-05-15 |
 | 2. Overdrive Default Theme Migration | 6/6 | Verified   | 2026-05-16 |
-| 3. Second Theme Stub & Pluggability Proof | 1/2 | In Progress|  |
+| 3. Second Theme Stub & Pluggability Proof | 2/2 | Complete   | 2026-05-17 |
 
 ## Project-Wide Constraints
 
