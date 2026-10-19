@@ -22,14 +22,18 @@ The premise: founders treat product-led growth as a strategic choice, but it isn
 
 **Known carry-forward:** Overdrive-internal contrast/cosmetic warnings WR-02..06 logged in `.planning/milestones/v1.0-phases/`-equivalent Phase-2 `02-REVIEW.md` — deferred as not-D-02-violations + not-second-theme-frankenstein-risks. Candidates for a future polish phase.
 
-## Next Milestone Goals
+## Current Milestone: v1.1 Overdrive Light Reskin
 
-To be scoped via `/gsd-new-milestone`. Likely candidates pulled from carry-forward and natural extensions:
+**Goal:** Restyle the live six-question tool in Overdrive Light as the default identity, keep the v1.0 orange look as an opt-in theme, and fix the viral-question wording, with scoring unchanged.
 
-- Real client theme(s) — Alchemist beyond stub, UC Berkeley SkyDeck, Scale VP — sourced from each client's brand specs (requires brand spec ingestion as a separate data task per EXCL-real-client-themes)
-- WR-02..06 polish pass (Overdrive-internal contrast/cosmetic)
-- Theme-switch UX surface — runtime toggle vs URL-only (currently URL-only per Phase 3 D-04)
-- Theme registry / docs surface so non-engineers can add a client theme without touching `index.html` directly
+**Target features:**
+- Overdrive Light as the `:root` default: azure `#1F8EFF` as structure, `#F7F9FC` page, white surfaces, Instrument Sans body, Space Grotesk display, JetBrains Mono
+- v1.0 Overdrive Alpha preserved as `?client=alpha`; Alchemist stub unchanged
+- Viral question reworded: does usage create new **users** who can then be turned into customers
+- Six-path scoring regression byte-identical; WCAG AA contrast on the Light tokens
+- PROJECT.md, README, CLAUDE.md, and `docs/design/` updated for Light
+
+**Source:** `docs/plans/v2-overhaul-plan.md` §10 Phase 1 and §11 decisions. The v2.0 overhaul (sales-model diagnostic, plan Phases 2–6) is the next milestone, not this one.
 
 ## Requirements
 
@@ -41,7 +45,7 @@ To be scoped via `/gsd-new-milestone`. Likely candidates pulled from carry-forwa
 
 ### Active
 
-_None yet. Run `/gsd-new-milestone` to scope v1.1._
+v1.1 requirements with REQ-IDs live in `.planning/REQUIREMENTS.md` (THEME, COPY, QA, DOCS).
 
 ## Constraints
 
@@ -51,9 +55,11 @@ Project-wide architectural rules. These govern how this product is built from no
 
 The app stays a single `index.html` served as a static file. Theming and feature work must operate inside `index.html` + CDN dependencies only. No bundler, no package manager, no compilation. (Source: REQ-single-file-no-build)
 
+_Scheduled change:_ from v2.0 this relaxes to a handful of static files (`index.html`, `app.js`, `questions.js`, `scoring.js`, `styles.css`), still with no build step, and Tailwind is dropped for the Overdrive Light kit CSS (`docs/plans/v2-overhaul-plan.md` §11, decisions 3–4). Both still hold for v1.1.
+
 ### No dark backgrounds
 
-The dark results hero (`#0F172A`) is dropped. Contrast is carried by orange-as-structure (divider bars, orange-backed callouts) on warm off-white. Deliberate deviation from Overdrive's "dark sections for rhythm" guidance — applies to all future client themes too. (Source: REQ-no-dark-backgrounds)
+No dark section, card, footer, or hero in any theme. In the default Overdrive Light theme, contrast is carried by azure-as-structure (solid 2/4/8px rules, 4px accent rule across the top of cards, azure fills on primary actions) and the azure-tint band `#E8F2FF` on the `#F7F9FC` page. The `?client=alpha` theme keeps v1.0's orange-as-structure on warm off-white. (Source: REQ-no-dark-backgrounds; Overdrive Light guide "No dark surfaces")
 
 ### Theme contract = CSS custom properties
 
@@ -73,7 +79,7 @@ The theming layer is visual. Scoring logic, quiz flow, and copy are shared acros
 
 ### Cascade-fallback for unknown themes
 
-`:root` IS the default Overdrive theme. There is no placeholder `[data-theme="overdrive"]` block. Unknown `?client=` slugs silently fall through to `:root` defaults. (Source: v1.0 Phase 1 D-15)
+`:root` IS the default theme (Overdrive Light from v1.1; Overdrive Alpha before). There is no placeholder `[data-theme="overdrive"]` block. Unknown `?client=` slugs silently fall through to `:root` defaults. (Source: v1.0 Phase 1 D-15)
 
 ### Single combined Google Fonts `<link>`
 
@@ -99,11 +105,13 @@ Explicitly deferred. Do not pull into phase scope without an explicit re-scope d
 
 - **Real per-client themes for every client** — needs each client's brand specs as separate data tasks. Only one stub second theme proved the system in v1.0. (EXCL-real-client-themes)
 - **Per-client copy / content variation** — theming is visual only; copy stays shared across clients. (EXCL-per-client-copy)
-- **Any change to scoring logic or quiz flow** — the rebrand is a skin change. `calculateScore()`, slide structure, the answer model, and result text are not in scope. (EXCL-scoring-or-flow-changes)
+- **Any change to scoring logic or quiz flow** — the rebrand is a skin change. `calculateScore()`, slide structure, the answer model, and result text are not in scope. One exception in v1.1: COPY-01 rewords the viral question and its option labels; answer values and scoring stay identical. The v2.0 overhaul lifts this exclusion by explicit re-scope. (EXCL-scoring-or-flow-changes)
 
 ## Reference
 
-- Target design system: `docs/design/design-system-alpha-overdrive.md`
+- Target design system (v1.1+): Overdrive Light, `~/.claude/identity/overdrive-light-design-system.md` (Drive master `@APG1-Identity Stack/overdrive-light-design-system.md`); kit `~/.claude/skills/overdrive-light-design-system/`
+- v1.0 design system (now the `?client=alpha` theme): `docs/design/design-system-alpha-overdrive.md`
+- v2 overhaul plan and locked decisions: `docs/plans/v2-overhaul-plan.md`
 - Current architecture detail: `HOW_IT_WORKS.md`
 - Source PRD for v1.0: `plan.md`
 - Codebase intel (read-only): `.planning/codebase/`
@@ -112,4 +120,21 @@ Explicitly deferred. Do not pull into phase scope without an explicit re-scope d
 
 ---
 
-*Last updated: 2026-05-17 after v1.0 milestone close.*
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd-transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd-complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
+
+*Last updated: 2026-10-19 at v1.1 milestone start.*
