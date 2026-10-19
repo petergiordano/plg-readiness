@@ -49,13 +49,15 @@ relaxation, and dropping Tailwind.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| THEME-01 | — | Pending |
-| THEME-02 | — | Pending |
-| THEME-03 | — | Pending |
-| THEME-04 | — | Pending |
-| THEME-05 | — | Pending |
-| COPY-01 | — | Pending |
-| QA-01 | — | Pending |
-| QA-02 | — | Pending |
-| QA-03 | — | Pending |
-| DOCS-01 | — | Pending |
+| THEME-01 | Phase 4 | Pending |
+| THEME-02 | Phase 4 | Pending |
+| THEME-03 | Phase 4 | Pending |
+| THEME-04 | Phase 4 | Pending |
+| THEME-05 | Phase 4 | Pending |
+| COPY-01 | Phase 4 | Pending |
+| QA-01 | Phase 5 | Pending |
+| QA-02 | Phase 5 | Pending |
+| QA-03 | Phase 5 | Pending |
+| DOCS-01 | Phase 5 | Pending |
+
+Coverage: 10/10 v1.1 requirements mapped, each to exactly one phase (Phase 4: 6, Phase 5: 4).
