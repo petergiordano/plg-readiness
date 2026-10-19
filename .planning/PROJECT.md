@@ -43,9 +43,11 @@ The premise: founders treat product-led growth as a strategic choice, but it isn
 - ✓ REQ-overdrive-default-theme — v1.0 Phase 2. Default identity is Overdrive end-to-end across 6 slides + results + reference matrix; dark hero retired; Space Grotesk replaces Fraunces; `calculateScore()` byte-identical (V-9 scoring regression PASS).
 - ✓ REQ-stub-second-theme — v1.0 Phase 3. `[data-theme="alchemist"]` override block + IBM Plex Serif via combined Google Fonts `<link>`; three D-04 VALIDATION rigs PASS via Chrome MCP + prime UAT + coach D-NN audit.
 
+- ✓ v1.1 THEME-01..05, COPY-01, QA-01..03, DOCS-01 — Overdrive Light default, `?client=alpha` = v1.0 look, viral question reworded, scoring identical, AA contrast, 375px layout. Detail and verification record in `.planning/REQUIREMENTS.md`.
+
 ### Active
 
-v1.1 requirements with REQ-IDs live in `.planning/REQUIREMENTS.md` (THEME, COPY, QA, DOCS).
+None until v1.1 is merged and closed; v2.0 scope lives in `docs/plans/v2-overhaul-plan.md`.
 
 ## Constraints
 
@@ -97,7 +99,9 @@ Decisions made during milestone work that shape future phases. Outcomes: ✓ Goo
 | Single combined Google Fonts `<link>` per project, extended with `&family=` per theme | v1.0 Phase 1 D-16 | ✓ Good — kept through Phase 3 (IBM Plex Serif added cleanly) |
 | Theme switch is URL-load only (`?client=<slug>` via FOUC script); runtime `setAttribute('data-theme', X)` toggle NOT validated | v1.0 Phase 3 D-04 | — Pending — adequate for v1.0 stub; revisit if runtime toggle becomes a real use case |
 | Alchemist token values are deliberately placeholder/synthetic (no real brand specs sourced) | v1.0 Phase 3 D-01 | ✓ Good — honored EXCL-real-client-themes; real specs are a future data task |
-| Deferred WR-02..06 (Overdrive-internal contrast/cosmetic) | v1.0 Phase 3 context scout | — Pending — candidates for a future polish phase |
+| Deferred WR-02..06 (Overdrive-internal contrast/cosmetic) | v1.0 Phase 3 context scout | ✓ Closed in v1.1 for Light (fixed or not applicable); alpha keeps v1.0 behaviour by design |
+| Theme-specific layout goes through structure tokens; a `v1.0 STRUCTURE` block resets them for alpha + alchemist | v1.1 | ✓ Good — fingerprints prove both themes unchanged |
+| Primary buttons fill with Azure Ink `#0C6FD1`, not Signal Azure (white on `#1F8EFF` is 3.3:1) | v1.1 | ✓ Good — AA; deviation recorded in `docs/design/README.md` |
 
 ## Out of Scope
 

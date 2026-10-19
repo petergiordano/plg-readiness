@@ -18,10 +18,10 @@ Full phase details and success criteria in [`milestones/v1.0-ROADMAP.md`](milest
 
 </details>
 
-**🚧 v1.1 Overdrive Light Reskin (Phases 4–5) — IN PROGRESS.** Phase numbering continues from v1.0; it does not reset.
+**✅ v1.1 Overdrive Light Reskin (Phases 4–5) — BUILT AND VERIFIED 2026-10-19, not yet merged.** Phase numbering continues from v1.0; it does not reset.
 
-- [ ] **Phase 4: Overdrive Light Reskin** - Bare URL renders the whole tool in Overdrive Light (colours, fonts, structural rules); v1.0 orange look moves intact to `?client=alpha`; Alchemist and unknown-slug behaviour hold; viral question reworded
-- [ ] **Phase 5: Verification & Docs** - Six-path scoring regression across three themes, WCAG AA contrast, 375px/desktop layout check, and docs updated for Light
+- [x] **Phase 4: Overdrive Light Reskin** - Bare URL renders the whole tool in Overdrive Light (colours, fonts, structural rules); v1.0 orange look moves intact to `?client=alpha`; Alchemist and unknown-slug behaviour hold; viral question reworded
+- [x] **Phase 5: Verification & Docs** - Six-path scoring regression across three themes, WCAG AA contrast, 375px/desktop layout check, and docs updated for Light
 
 ## Phase Details
 
@@ -34,11 +34,11 @@ Full phase details and success criteria in [`milestones/v1.0-ROADMAP.md`](milest
   2. In that same default view, every card carries a 4px azure rule across its top edge and never a coloured left border; the progress bar and primary buttons are azure; a selected answer card shows an azure border on the `#E8F2FF` tint; at most two non-adjacent azure-tint bands appear per page; golden yellow `#F1C232` and Overdrive blue `#55BFFA` appear only in supporting roles and orange only in status chips; and there is no dark surface or gradient anywhere, including behind the sticky Continue and See Result bars on slides 4 and 5.
   3. A visitor opening `?client=alpha` sees the v1.0 Overdrive Alpha look (orange on warm off-white, Plus Jakarta Sans body) with no visible difference from v1.0 `main` side by side, including the structural edits above. A visitor opening `?client=alchemist` sees the Alchemist stub (teal, IBM Plex Serif) render as it did in v1.0, and an unknown slug such as `?client=nope` shows exactly what the bare URL shows (Overdrive Light).
   4. A visitor reaching slide 2 reads a question asking whether using the product naturally creates new users who can then be turned into customers, with answer option labels worded to match; choosing the same option as in v1.0 (with the same other answers) leads to the same recommendation, because the values stored in `answers.viral` have not changed.
-**Plans**: TBD
+**Plans**: none. Executed directly at Pete's direction (no discuss/plan step) on 2026-10-19; see commit log on `claude/plg-readiness-overhaul-58a567`.
 **Notes**:
 - **Sequencing is load-bearing.** Create `[data-theme="alpha"]` by moving today's `:root` values (index.html lines 47–85) into it verbatim BEFORE `:root` is repointed to Light, so `?client=alpha` stays byte-faithful to v1.0. Keep Plus Jakarta Sans in the combined Google Fonts `<link>` for Alpha. Natural internal order: Alpha block, then Light tokens and fonts (criterion 1), then structural rules (criterion 2), then copy (criterion 4). Verify Alpha and Alchemist after each step, not only at the end.
-- **Open question (new-token fall-through).** Alchemist overrides every token `:root` defines today (20 colour tokens, display and body fonts) but not `--font-mono`. Any NEW Light-only token (azure tint, status orange, etc.) needs a value that leaves Alchemist and Alpha unchanged. Settle in `/gsd-discuss-phase 4`.
-- **Open question (token-driven vs default-scoped structure).** THEME-03 bans gradients and adds 4px azure card rules, while THEME-04 requires Alpha to be indistinguishable from v1.0. Today the sticky bars on slides 4 and 5 use `bg-gradient-to-t` (index.html lines 520 and 556) and section top rules use `border-accent`. Decide whether each structural rule is expressed through a token that Alpha sets back to its v1.0 value, scoped to the default theme only, or confirmed visually identical in Alpha. Settle in `/gsd-discuss-phase 4`.
+- **Resolved: new-token fall-through.** Every Light-only token has an explicit value in a `v1.0 STRUCTURE` block whose selector is `[data-theme="alpha"], [data-theme="alchemist"]`. Colour aliases such as `--accent-ink-rgb` point back at that theme's `--accent-rgb`.
+- **Resolved: token-driven structure.** Every structural difference (card rules, sticky-footer background, chip shape, ref-card rules, footer band, motion) is a token in `:root`, and the v1.0 STRUCTURE block resets it for Alpha and Alchemist. Verified with computed-style fingerprints of 7 screen states, which match v1.0 exactly in both themes.
 - COPY-01 is wording only: `data-value` attributes and `calculateScore()` are not touched.
 **UI hint**: yes
 
@@ -51,7 +51,7 @@ Full phase details and success criteria in [`milestones/v1.0-ROADMAP.md`](milest
   2. Every text/background pair in the Light theme meets WCAG AA (4.5:1 for body text, 3:1 for large text and UI components), and each of the deferred v1.0 warnings WR-02..06 that still applies under Light is resolved, with the rest recorded as closed, not applicable.
   3. Each of the six slides and the results page shows no horizontal scroll at 375px width and at desktop width, in Light.
   4. A contributor reading `README.md` (themes section), `CLAUDE.md` (design guidelines), and `docs/design/` finds Overdrive Light documented as the default and `?client=alpha` documented as the v1.0 look, and the `PROJECT.md` constraint text matches what shipped.
-**Plans**: TBD
+**Plans**: none. Executed directly at Pete's direction (no discuss/plan step) on 2026-10-19; see commit log on `claude/plg-readiness-overhaul-58a567`.
 **Notes**: Verification-and-docs phase; it builds no new UI, so no `**UI hint**` annotation. Fixes found by QA-02 or QA-03 land here, not as a new phase.
 
 ## Progress
@@ -64,8 +64,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Theming Architecture Foundation | v1.0 | 1/1 | Complete | 2026-05-15 |
 | 2. Overdrive Default Theme Migration | v1.0 | 6/6 | Verified | 2026-05-16 |
 | 3. Second Theme Stub & Pluggability Proof | v1.0 | 2/2 | Verified | 2026-05-17 |
-| 4. Overdrive Light Reskin | v1.1 | 0/TBD | Not started | - |
-| 5. Verification & Docs | v1.1 | 0/TBD | Not started | - |
+| 4. Overdrive Light Reskin | v1.1 | direct | Complete | 2026-10-19 |
+| 5. Verification & Docs | v1.1 | direct | Verified | 2026-10-19 |
 
 ## Project-Wide Constraints
 

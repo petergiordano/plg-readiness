@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Overdrive Light Reskin
-status: planning
+status: complete
 last_updated: "2026-10-19T20:15:00.000Z"
 last_activity: 2026-10-19
 progress:
   total_phases: 2
-  completed_phases: 0
+  completed_phases: 2
   total_plans: 0
   completed_plans: 0
-  percent: 0
+  percent: 100
 ---
 
 # STATE — PLG Readiness Diagnostic
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-10-19)
 
 ## Current Position
 
-Phase: 4 of 5 (Overdrive Light Reskin) — first of 2 phases in v1.1
-Plan: —
-Status: Ready to discuss Phase 4 (no CONTEXT.md yet)
-Last activity: 2026-10-19 — v1.1 roadmap created (Phases 4–5)
+Phase: 5 of 5 — v1.1 complete
+Plan: — (executed directly, no PLAN files)
+Status: v1.1 built and verified on `claude/plg-readiness-overhaul-58a567`; not yet merged to `main` or deployed
+Last activity: 2026-10-19 — Overdrive Light reskin shipped to branch; all 10 requirements verified
 
-Progress: [░░░░░░░░░░] 0% (0/2 phases in v1.1)
+Progress: [██████████] 100% (2/2 phases in v1.1)
 
 ## Shipped Milestones
 
@@ -63,10 +63,11 @@ Architectural rules — apply to every phase. Full text in `PROJECT.md` "Constra
 
 User decision (2026-10-19): the originally drafted three-phase split (tokens / structure + copy / verification) was merged into one build phase. Mitigation for the larger Phase 4: build in order Alpha block, Light tokens and fonts, structural rules, copy, and check Alpha and Alchemist after each step.
 
-### Open questions (for `/gsd-discuss-phase 4`)
+### Resolved during build
 
-- **New-token fall-through:** how to give any NEW Light-only token (azure tint, status orange, etc.) a value that leaves Alchemist and Alpha unchanged. Alchemist overrides all 20 colour tokens plus display and body fonts today, but not `--font-mono`.
-- **Token-driven vs default-scoped structure:** THEME-03 bans gradients and adds 4px azure card rules, while THEME-04 requires Alpha to be visually identical to v1.0. The sticky bars on slides 4 and 5 use `bg-gradient-to-t` (index.html lines 520, 556). Decide whether structural rules go through tokens Alpha resets, are scoped to the default theme, or are confirmed visually identical.
+- New Light-only tokens get explicit values for alpha and alchemist in the `v1.0 STRUCTURE` block.
+- Structural differences are token-driven. Fingerprints prove alpha and alchemist are unchanged.
+- Primary button fill is Azure Ink `#0C6FD1` (AA), a deliberate deviation from the Light guide. It is recorded in `docs/design/README.md`.
 
 ### Blockers
 
@@ -74,7 +75,6 @@ None.
 
 ### Carry-forward todos
 
-- **WR-02..06** (Overdrive-internal contrast/cosmetic from v1.0 Phase 2 `02-REVIEW.md`) — now in scope via QA-02 (Phase 5): resolve or close as not applicable under Light.
 - **Theme-switch runtime toggle** — v1.0 Phase 3 D-04 validated URL-load only; runtime `setAttribute('data-theme', X)` was NOT validated. Revisit if a runtime toggle becomes a real use case.
 - **Real client themes** — Alchemist beyond stub, UC Berkeley SkyDeck, Scale VP — requires per-client brand-spec ingestion (EXCL-real-client-themes).
 - **v2.0 overhaul** — sales-model diagnostic (`docs/plans/v2-overhaul-plan.md` plan Phases 2–6) is the NEXT milestone after v1.1, not part of it.
@@ -83,9 +83,10 @@ None.
 
 ### Next entry point
 
-**`/gsd-discuss-phase 4`** — Phase 4 has no CONTEXT.md yet, so discuss before planning. Then `/gsd-plan-phase 4`.
+Merge `claude/plg-readiness-overhaul-58a567` to `main` (GitHub Pages deploys from it), then `/gsd-complete-milestone` for v1.1, then start the v2.0 overhaul from `docs/plans/v2-overhaul-plan.md`.
 
 ### Last session
 
+- 2026-10-19 — v1.1 built and verified directly (Pete skipped discuss/plan): Light reskin, alpha theme, viral-question copy, docs.
 - 2026-10-19 — `/gsd-new-milestone` v1.1: PROJECT.md and REQUIREMENTS.md written, ROADMAP.md created with Phases 4–5 (revised from three phases to two per user decision), traceability filled (10/10 requirements mapped).
 - 2026-05-17 — `/gsd-complete-milestone` v1.0 shipped and archived; tag v1.0 on merge commit 730da5d.

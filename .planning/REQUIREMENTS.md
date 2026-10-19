@@ -11,25 +11,25 @@ repeated here.
 
 ### Theme
 
-- [ ] **THEME-01**: A visitor opening the bare URL (no `?client=`) sees the whole tool (welcome, five question slides, results page, reference matrix) in Overdrive Light: page `#F7F9FC`, white card surfaces, Signal Azure `#1F8EFF` as the lead accent (hover `#0C79E8`, azure text `#0C6FD1`), ink scale `#16202B` / `#3B4A58` / `#4A5866` / `#5B6B7A`, borders `#E2E8F0` / `#D6DFEA`.
-- [ ] **THEME-02**: A visitor sees Instrument Sans (400/600) for body text, Space Grotesk 700 for display, and JetBrains Mono for overlines, labels, and keyboard hints, loaded through the single combined Google Fonts `<link>`. No weight 300, no italics.
-- [ ] **THEME-03**: A visitor sees Light's structural rules applied: cards carry a 4px azure rule across the top edge (never a coloured left border), the selected answer card shows an azure border on the azure tint `#E8F2FF`, the progress bar and primary buttons are azure, at most two non-adjacent azure-tint bands appear per page, golden yellow `#F1C232` and Overdrive blue `#55BFFA` appear only in supporting roles, orange appears only in status chips, and there is no dark surface or gradient anywhere.
-- [ ] **THEME-04**: A visitor opening `?client=alpha` sees the v1.0 Overdrive Alpha look (orange on warm off-white, Plus Jakarta Sans body) with no visible difference from v1.0 `main`.
-- [ ] **THEME-05**: A visitor opening `?client=alchemist` sees the Alchemist stub render as it did in v1.0, and an unknown `?client=` slug falls through to Overdrive Light.
+- [x] **THEME-01**: A visitor opening the bare URL (no `?client=`) sees the whole tool (welcome, five question slides, results page, reference matrix) in Overdrive Light: page `#F7F9FC`, white card surfaces, Signal Azure `#1F8EFF` as the lead accent (hover `#0C79E8`, azure text `#0C6FD1`), ink scale `#16202B` / `#3B4A58` / `#4A5866` / `#5B6B7A`, borders `#E2E8F0` / `#D6DFEA`.
+- [x] **THEME-02**: A visitor sees Instrument Sans (400/600) for body text, Space Grotesk 700 for display, and JetBrains Mono for overlines, labels, and keyboard hints, loaded through the single combined Google Fonts `<link>`. No weight 300, no italics.
+- [x] **THEME-03**: A visitor sees Light's structural rules applied: cards carry a 4px azure rule across the top edge (never a coloured left border), the selected answer card shows an azure border on the azure tint `#E8F2FF`, the progress bar and primary buttons are azure, at most two non-adjacent azure-tint bands appear per page, golden yellow `#F1C232` and Overdrive blue `#55BFFA` appear only in supporting roles, orange appears only in status chips, and there is no dark surface or gradient anywhere.
+- [x] **THEME-04**: A visitor opening `?client=alpha` sees the v1.0 Overdrive Alpha look (orange on warm off-white, Plus Jakarta Sans body) with no visible difference from v1.0 `main`.
+- [x] **THEME-05**: A visitor opening `?client=alchemist` sees the Alchemist stub render as it did in v1.0, and an unknown `?client=` slug falls through to Overdrive Light.
 
 ### Copy
 
-- [ ] **COPY-01**: A visitor reading the viral question (slide 2) sees it ask whether using the product naturally creates new users who can then be turned into customers, with answer option labels worded to match. Answer values stored in `answers.viral` do not change.
+- [x] **COPY-01**: A visitor reading the viral question (slide 2) sees it ask whether using the product naturally creates new users who can then be turned into customers, with answer option labels worded to match. Answer values stored in `answers.viral` do not change.
 
 ### Quality
 
-- [ ] **QA-01**: For each of the six v1.0 scoring paths, the result title, description, wedge callout, and override notice are identical to v1.0 `main` (V-9 regression, run against Light, `?client=alpha`, and `?client=alchemist`).
-- [ ] **QA-02**: Every text/background pair in the Light theme meets WCAG AA contrast (4.5:1 body, 3:1 large text and UI components). Any of the deferred v1.0 warnings WR-02..06 that still apply under Light are resolved or explicitly closed as not applicable.
-- [ ] **QA-03**: Each slide and the results page render with no horizontal scroll at 375px width and at desktop width, in Light.
+- [x] **QA-01**: For each of the six v1.0 scoring paths, the result title, description, wedge callout, and override notice are identical to v1.0 `main` (V-9 regression, run against Light, `?client=alpha`, and `?client=alchemist`).
+- [x] **QA-02**: Every text/background pair in the Light theme meets WCAG AA contrast (4.5:1 body, 3:1 large text and UI components). Any of the deferred v1.0 warnings WR-02..06 that still apply under Light are resolved or explicitly closed as not applicable.
+- [x] **QA-03**: Each slide and the results page render with no horizontal scroll at 375px width and at desktop width, in Light.
 
 ### Docs
 
-- [ ] **DOCS-01**: A contributor reading `README.md` (themes section), `CLAUDE.md` (design guidelines), and `docs/design/` finds Overdrive Light documented as the default, `?client=alpha` documented as the v1.0 look, and the PROJECT.md constraint text matching what shipped.
+- [x] **DOCS-01**: A contributor reading `README.md` (themes section), `CLAUDE.md` (design guidelines), and `docs/design/` finds Overdrive Light documented as the default, `?client=alpha` documented as the v1.0 look, and the PROJECT.md constraint text matching what shipped.
 
 ## Future Requirements (v2.0 overhaul)
 
@@ -49,15 +49,28 @@ relaxation, and dropping Tailwind.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| THEME-01 | Phase 4 | Pending |
-| THEME-02 | Phase 4 | Pending |
-| THEME-03 | Phase 4 | Pending |
-| THEME-04 | Phase 4 | Pending |
-| THEME-05 | Phase 4 | Pending |
-| COPY-01 | Phase 4 | Pending |
-| QA-01 | Phase 5 | Pending |
-| QA-02 | Phase 5 | Pending |
-| QA-03 | Phase 5 | Pending |
-| DOCS-01 | Phase 5 | Pending |
+| THEME-01 | Phase 4 | Complete |
+| THEME-02 | Phase 4 | Complete |
+| THEME-03 | Phase 4 | Complete |
+| THEME-04 | Phase 4 | Complete |
+| THEME-05 | Phase 4 | Complete |
+| COPY-01 | Phase 4 | Complete |
+| QA-01 | Phase 5 | Complete |
+| QA-02 | Phase 5 | Complete |
+| QA-03 | Phase 5 | Complete |
+| DOCS-01 | Phase 5 | Complete |
 
 Coverage: 10/10 v1.1 requirements mapped, each to exactly one phase (Phase 4: 6, Phase 5: 4).
+
+## Verification record (2026-10-19)
+
+- **THEME-04, THEME-05:** computed-style fingerprints (colour, background, borders, radius, fonts, shadow, opacity on every element) for 7 states (6 slides + results) match v1.0 `main` exactly for `?client=alpha` and `?client=alchemist`. Motion values for alpha match v1.0. `?client=nonexistent` matches the bare URL.
+- **QA-01:** 11 scoring scenarios covering all six result types, with the wedge and override toggles, give an identical hash (`2b2d0f97`) in v1.0, Light, alpha and alchemist.
+- **QA-02:** 165 Light text elements across all states meet AA. One failure (the Pure PLG chip, 4.41:1) was fixed.
+  - Primary buttons use Azure Ink `#0C6FD1`, because white on `#1F8EFF` is 3.3:1.
+  - WR-02 and WR-03 (text contrast) pass under Light.
+  - WR-05 (sticky gradient) is gone in Light.
+  - WR-06 (warning icon) is fixed with Golden Ink, now 6.84:1.
+  - WR-04 (hairline card borders under 3:1) is closed as not applicable. Light specifies `#E2E8F0` borders, and every card is identified by its text.
+  - Alpha keeps the v1.0 WR findings by design (THEME-04).
+- **QA-03:** no element overflows at 375px or at 1024px on any slide or the results page. One pre-existing overflow ("regulatory/compliance" on slide 5 at 375px) was fixed for every theme.
