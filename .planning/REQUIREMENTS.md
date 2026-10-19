@@ -1,0 +1,61 @@
+# Requirements: v1.1 Overdrive Light Reskin
+
+Source: `docs/plans/v2-overhaul-plan.md` §8, §10 (Phase 1), §11. Design spec:
+`~/.claude/identity/overdrive-light-design-system.md` (the "Light guide" below).
+
+Project-wide constraints (single file, no dark backgrounds, CSS-var theme contract, Tailwind
+through vars, structure/skin separation, theming visual only) live in `PROJECT.md` and are not
+repeated here.
+
+## v1.1 Requirements
+
+### Theme
+
+- [ ] **THEME-01**: A visitor opening the bare URL (no `?client=`) sees the whole tool (welcome, five question slides, results page, reference matrix) in Overdrive Light: page `#F7F9FC`, white card surfaces, Signal Azure `#1F8EFF` as the lead accent (hover `#0C79E8`, azure text `#0C6FD1`), ink scale `#16202B` / `#3B4A58` / `#4A5866` / `#5B6B7A`, borders `#E2E8F0` / `#D6DFEA`.
+- [ ] **THEME-02**: A visitor sees Instrument Sans (400/600) for body text, Space Grotesk 700 for display, and JetBrains Mono for overlines, labels, and keyboard hints, loaded through the single combined Google Fonts `<link>`. No weight 300, no italics.
+- [ ] **THEME-03**: A visitor sees Light's structural rules applied: cards carry a 4px azure rule across the top edge (never a coloured left border), the selected answer card shows an azure border on the azure tint `#E8F2FF`, the progress bar and primary buttons are azure, at most two non-adjacent azure-tint bands appear per page, golden yellow `#F1C232` and Overdrive blue `#55BFFA` appear only in supporting roles, orange appears only in status chips, and there is no dark surface or gradient anywhere.
+- [ ] **THEME-04**: A visitor opening `?client=alpha` sees the v1.0 Overdrive Alpha look (orange on warm off-white, Plus Jakarta Sans body) with no visible difference from v1.0 `main`.
+- [ ] **THEME-05**: A visitor opening `?client=alchemist` sees the Alchemist stub render as it did in v1.0, and an unknown `?client=` slug falls through to Overdrive Light.
+
+### Copy
+
+- [ ] **COPY-01**: A visitor reading the viral question (slide 2) sees it ask whether using the product naturally creates new users who can then be turned into customers, with answer option labels worded to match. Answer values stored in `answers.viral` do not change.
+
+### Quality
+
+- [ ] **QA-01**: For each of the six v1.0 scoring paths, the result title, description, wedge callout, and override notice are identical to v1.0 `main` (V-9 regression, run against Light, `?client=alpha`, and `?client=alchemist`).
+- [ ] **QA-02**: Every text/background pair in the Light theme meets WCAG AA contrast (4.5:1 body, 3:1 large text and UI components). Any of the deferred v1.0 warnings WR-02..06 that still apply under Light are resolved or explicitly closed as not applicable.
+- [ ] **QA-03**: Each slide and the results page render with no horizontal scroll at 375px width and at desktop width, in Light.
+
+### Docs
+
+- [ ] **DOCS-01**: A contributor reading `README.md` (themes section), `CLAUDE.md` (design guidelines), and `docs/design/` finds Overdrive Light documented as the default, `?client=alpha` documented as the v1.0 look, and the PROJECT.md constraint text matching what shipped.
+
+## Future Requirements (v2.0 overhaul)
+
+Tracked in `docs/plans/v2-overhaul-plan.md` §4–§10 (plan Phases 2–6): content and logic spec,
+question engine with tracks and branching, Quick Read, Full Diagnostic modules M0–M10, the ten
+outputs and export, the "close but different" Dual-Role answer option, the single-file
+relaxation, and dropping Tailwind.
+
+## Out of Scope
+
+- **New questions, answer options, or scoring changes.** These belong to v2.0. COPY-01 changes wording only.
+- **Dropping Tailwind or splitting files.** Decided for v2.0 (§11 decisions 3–4). The v1.1 reskin points the existing token contract at Light values so the markup is not rewritten twice.
+- **Real client themes beyond the stub.** Still needs brand specs (EXCL-real-client-themes).
+- **Self-hosting Instrument Sans.** The Light kit itself loads it from Google Fonts, and no binary is supplied.
+
+## Traceability
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| THEME-01 | — | Pending |
+| THEME-02 | — | Pending |
+| THEME-03 | — | Pending |
+| THEME-04 | — | Pending |
+| THEME-05 | — | Pending |
+| COPY-01 | — | Pending |
+| QA-01 | — | Pending |
+| QA-02 | — | Pending |
+| QA-03 | — | Pending |
+| DOCS-01 | — | Pending |
