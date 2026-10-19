@@ -1,10 +1,10 @@
 # How It Works: PLG Readiness Diagnostic
 
-> An interactive diagnostic tool that helps B2B SaaS founders determine the right go-to-market motion for their product. A founder answers six questions and gets a recommended motion — Pure PLG, Product-Led Sales, Sales-Led, or a Wedge strategy — with reasoning. The entire app is one self-contained HTML file with no build step.
+> An interactive diagnostic tool that helps B2B SaaS founders determine the right go-to-market motion for their product. A founder answers 21 quick questions and gets a recommended motion — Pure PLG, Product-Led Sales, Sales-Led, or a Wedge strategy — with reasoning. The entire app is one self-contained HTML file with no build step.
 
 ## In Plain Terms
 
-PLG stands for "product-led growth" — a strategy where the product itself, rather than a sales team, drives signups and revenue (think Slack or Figma, where you can just start using it). Not every company should go this route. This tool asks a founder six questions about who buys their product, how it spreads, and what its scope is. Based on the answers, it tells the founder which sales approach fits their situation. Some answers (like "the buyer is a C-suite executive") force a sales-led recommendation no matter what else is true. The result is a clear verdict plus an explanation of why, so a founder can stop guessing about their growth strategy. Running it successfully means a founder opens a web page, clicks through a short quiz, and walks away with a concrete recommendation.
+PLG stands for "product-led growth" — a strategy where the product itself, rather than a sales team, drives signups and revenue (think Slack or Figma, where you can just start using it). Not every company should go this route. This tool asks a founder 21 short questions about who buys their product, how it spreads, and what its scope is. Based on the answers, it tells the founder which sales approach fits their situation. Some answers (like "the buyer is a C-suite executive") force a sales-led recommendation no matter what else is true. The result is a clear verdict plus an explanation of why, so a founder can stop guessing about their growth strategy. Running it successfully means a founder opens a web page, clicks through a short quiz, and walks away with a concrete recommendation.
 
 ## What This Project Does
 
@@ -31,9 +31,9 @@ Guides early-stage B2B SaaS founders to the correct go-to-market motion through 
 
 1. Slide 0 shows a welcome screen with a CTA to start
 2. Slides 1–3 each ask one radio question; selecting an answer stores it in the `answers` object and auto-advances after 380ms
-3. Slides 4–5 present multi-select checkbox grids (accelerators, friction points); user selects any number and clicks a sticky Continue button
+3. Slides 4–21 ask one yes/no question each (9 accelerators, then 9 friction points), generated from JS arrays; a Yes checks a hidden checkbox that scoring counts
 4. `goTo(n)` drives all navigation, applying `.s-active / .s-above / .s-below` classes for slide transitions; `updateChrome()` syncs the progress bar and back button
-5. After slide 5, `showResults()` fades out the slides and reveals `#results-page` as a normal scroll page
+5. After the last slide, `showResults()` fades out the slides and reveals `#results-page` as a normal scroll page
 6. `calculateScore()` reads `answers` plus checked inputs, applies the scoring rules, and populates the result DOM (`#result-container`, `#wedge-callout`, `#override-notice`)
 
 ## Key Concepts & Patterns
@@ -42,7 +42,7 @@ Guides early-stage B2B SaaS founders to the correct go-to-market motion through 
 - **Fixed-slide navigation** — slides are `position: fixed; inset: 0` and animate via state classes, not DOM mounting/unmounting. New slides must follow the `#slide-N` + state-class pattern.
 - **Override rules in scoring** — certain answers (`buyerUser === 'csuite'`, `scope === 'enterprise'`) force Sales-Led regardless of Phase 2 input. Phase 2 checkbox counts only modify results within PLG-viable cases.
 - **Wedge detection** — a special case where Sales-Led is required but high accelerator count and low friction count signal a wedge opportunity; surfaced via `#wedge-callout`.
-- **Data-driven checkboxes** — Phase 2 options live in `accelerators` / `frictionPoints` JS arrays and render via `renderCheckboxes()`. Add options by editing the arrays, not the markup.
+- **Data-driven yes/no slides** — accelerators and friction points live in `accelerators` / `frictionPoints` JS arrays and render one slide each via `renderYesNoSlides()`. Add a question by editing the arrays, not the markup.
 
 ## How to Work on It
 
@@ -65,7 +65,7 @@ open index.html
 - **No build system is a feature, not a gap** — keep the app a single static `index.html`. Do not introduce bundlers, npm, or external asset files.
 - **CDN dependencies require network at load time** — Tailwind and Google Fonts load from CDNs; the app degrades without internet (unstyled, fallback fonts).
 - **Scoring override logic is order-sensitive** — Phase 1 forced-result rules run before Phase 2 modifiers. Changing the order changes recommendations silently.
-- **Slide count is wired into navigation** — `currentSlide` bounds, progress bar math, and `updateChrome()` assume 6 slides (0–5). Adding or removing a slide means updating these together.
+- **Slide count is derived** — `TOTAL_SLIDES` is counted from the DOM after the yes/no slides render, so the progress bar and counter follow the arrays. Slides 1–3 are still hand-written markup.
 - **Color palette is constrained** — the default Overdrive Light theme uses Signal Azure `#1F8EFF` as its single structural accent; selected card state is Azure Tint `#E8F2FF` bg + azure 1.5px border. All colors come from theme tokens. Do not introduce raw hex, dark surfaces, or gradients.
 
 <!-- agent-maintained: start -->
@@ -85,7 +85,7 @@ open index.html
 | Assumption | Where it matters | Risk if wrong |
 |---|---|---|
 | Network available at page load | Tailwind + Google Fonts CDN loads | App renders unstyled with fallback fonts |
-| Exactly 6 slides (0–5) | Navigation, progress bar, `updateChrome()` | Off-by-one in progress/bounds; broken nav |
+| Slide ids match DOM order (`slide-0`…`slide-21`) | Navigation, keyboard handler, progress bar | Wrong slide activated; broken nav |
 | Phase 1 answers can force a result before Phase 2 runs | `calculateScore()` override logic | Wrong GTM recommendation surfaced silently |
 
 ## Configurables

@@ -2,7 +2,7 @@
 
 ## What This Is
 
-An interactive single-file web diagnostic (`index.html`, no build step) that helps B2B SaaS founders pick the right go-to-market motion — Pure PLG, Product-Led Sales, Sales-Led, or Wedge. Six questions, one recommendation, reasoning shown. As of v1.0 the visual identity is **swappable per client** via a CSS-variable theme contract: changing one override block re-skins the whole app, no markup edits.
+An interactive single-file web diagnostic (`index.html`, no build step) that helps B2B SaaS founders pick the right go-to-market motion — Pure PLG, Product-Led Sales, Sales-Led, or Wedge. 21 one-at-a-time questions (v1.1; six screens in v1.0), one recommendation, reasoning shown. As of v1.0 the visual identity is **swappable per client** via a CSS-variable theme contract: changing one override block re-skins the whole app, no markup edits.
 
 ## Core Value
 
@@ -109,7 +109,7 @@ Explicitly deferred. Do not pull into phase scope without an explicit re-scope d
 
 - **Real per-client themes for every client** — needs each client's brand specs as separate data tasks. Only one stub second theme proved the system in v1.0. (EXCL-real-client-themes)
 - **Per-client copy / content variation** — theming is visual only; copy stays shared across clients. (EXCL-per-client-copy)
-- **Any change to scoring logic or quiz flow** — the rebrand is a skin change. `calculateScore()`, slide structure, the answer model, and result text are not in scope. One exception in v1.1: COPY-01 rewords the viral question and its option labels; answer values and scoring stay identical. The v2.0 overhaul lifts this exclusion by explicit re-scope. (EXCL-scoring-or-flow-changes)
+- **Any change to scoring logic or quiz flow** — the rebrand is a skin change. `calculateScore()`, slide structure, the answer model, and result text are not in scope. Exceptions in v1.1: COPY-01 rewords the viral question, and FLOW-01/02 (Pete's review) ask the 18 accelerators and friction points one yes/no question per screen. Answer values, item counts and scoring stay identical. The v2.0 overhaul lifts this exclusion by explicit re-scope. (EXCL-scoring-or-flow-changes)
 
 ## Reference
 

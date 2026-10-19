@@ -21,6 +21,11 @@ repeated here.
 
 - [x] **COPY-01**: A visitor reading the viral question (slide 2) sees it ask whether using the product naturally creates new users who can then be turned into customers, with answer option labels worded to match. Answer values stored in `answers.viral` do not change.
 
+### Flow (added 2026-10-19 after Pete's review)
+
+- [x] **FLOW-01**: A visitor answers the 9 accelerators and 9 friction points one yes/no question per screen (Y/N keys, auto-advance), instead of two checkbox grids.
+- [x] **FLOW-02**: A visitor sees, below every question, a segment bar and an "n of N · k to go" label for the current part. The top progress bar and the "n / 21" counter cover all 21 questions.
+
 ### Quality
 
 - [x] **QA-01**: For each of the six v1.0 scoring paths, the result title, description, wedge callout, and override notice are identical to v1.0 `main` (V-9 regression, run against Light, `?client=alpha`, and `?client=alchemist`).
@@ -40,7 +45,7 @@ relaxation, and dropping Tailwind.
 
 ## Out of Scope
 
-- **New questions, answer options, or scoring changes.** These belong to v2.0. COPY-01 changes wording only.
+- **New questions, answer options, or scoring changes.** These belong to v2.0. COPY-01 changes wording only. FLOW-01 changes how the existing 18 items are asked; the items, their count and the scoring are unchanged.
 - **Dropping Tailwind or splitting files.** Decided for v2.0 (§11 decisions 3–4). The v1.1 reskin points the existing token contract at Light values so the markup is not rewritten twice.
 - **Real client themes beyond the stub.** Still needs brand specs (EXCL-real-client-themes).
 - **Self-hosting Instrument Sans.** The Light kit itself loads it from Google Fonts, and no binary is supplied.
@@ -59,6 +64,8 @@ relaxation, and dropping Tailwind.
 | QA-02 | Phase 5 | Complete |
 | QA-03 | Phase 5 | Complete |
 | DOCS-01 | Phase 5 | Complete |
+| FLOW-01 | Phase 4 (added) | Complete |
+| FLOW-02 | Phase 4 (added) | Complete |
 
 Coverage: 10/10 v1.1 requirements mapped, each to exactly one phase (Phase 4: 6, Phase 5: 4).
 

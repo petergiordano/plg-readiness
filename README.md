@@ -1,6 +1,6 @@
 # PLG Readiness Diagnostic
 
-An interactive diagnostic that helps B2B SaaS founders determine the right go-to-market motion for their product — Pure PLG, Product-Led Sales, Sales-Led, or a Wedge strategy. Six questions, one recommendation, with the reasoning shown.
+An interactive diagnostic that helps B2B SaaS founders determine the right go-to-market motion for their product — Pure PLG, Product-Led Sales, Sales-Led, or a Wedge strategy. Twenty-one quick questions, one recommendation, with the reasoning shown.
 
 ## Abstract
 
@@ -16,10 +16,13 @@ The goal isn't to talk a founder into or out of PLG. It's to stop the guessing �
 
 ## What it does
 
-A founder answers six questions across two phases:
+A founder answers 21 questions, one per screen, in three parts:
 
-- **Phase 1 (three questions)** — who buys and uses the product, whether it spreads virally, and the scope of the problem. These answers can force a result on their own.
-- **Phase 2 (two questions)** — accelerators that favor PLG and friction points that resist it. These only refine the result within a PLG-viable range.
+- **Part 1, your problem (three questions)** — who buys and uses the product, whether using it creates new users, and the scope of the problem. These answers can force a result on their own.
+- **Part 2, what helps self-serve (nine yes/no questions)** — PLG accelerators.
+- **Part 3, what slows self-serve (nine yes/no questions)** — friction points. Parts 2 and 3 only refine the result within a PLG-viable range.
+
+A segment bar under each question shows where you are in the current part.
 
 The output is a recommended motion with reasoning, plus a callout when the answers signal a wedge opportunity — a case where the broader problem demands sales, but a narrow entry point could still be product-led.
 
