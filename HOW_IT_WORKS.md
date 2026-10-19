@@ -23,7 +23,7 @@ Guides early-stage B2B SaaS founders to the correct go-to-market motion through 
 
 - Entry point: `index.html` — opened directly in a browser or served as a static file
 - No runtime, no build system, no package manager
-- Dependencies are CDN-only, loaded at page load: Tailwind CSS (utility styling, configured via inline `tailwind.config` block in `<head>`) and Google Fonts (Fraunces, Plus Jakarta Sans, JetBrains Mono)
+- Dependencies are CDN-only, loaded at page load: Tailwind CSS (utility styling, configured via inline `tailwind.config` block in `<head>`) and Google Fonts (Space Grotesk, Instrument Sans, JetBrains Mono, plus Plus Jakarta Sans and IBM Plex Serif for the alpha and alchemist themes)
 - All state and logic live in a single inline `<script>` at the bottom of the file
 - No environment variables, no secrets, no server
 
@@ -66,7 +66,7 @@ open index.html
 - **CDN dependencies require network at load time** — Tailwind and Google Fonts load from CDNs; the app degrades without internet (unstyled, fallback fonts).
 - **Scoring override logic is order-sensitive** — Phase 1 forced-result rules run before Phase 2 modifiers. Changing the order changes recommendations silently.
 - **Slide count is wired into navigation** — `currentSlide` bounds, progress bar math, and `updateChrome()` assume 6 slides (0–5). Adding or removing a slide means updating these together.
-- **Color palette is constrained** — slate palette with `#4F46E5` as the single accent; selected card state is `#EEF2FF` bg + indigo 1.5px border. Do not introduce new accent colors or heavy shadows/gradients.
+- **Color palette is constrained** — the default Overdrive Light theme uses Signal Azure `#1F8EFF` as its single structural accent; selected card state is Azure Tint `#E8F2FF` bg + azure 1.5px border. All colors come from theme tokens. Do not introduce raw hex, dark surfaces, or gradients.
 
 <!-- agent-maintained: start -->
 ## Registry
@@ -76,7 +76,7 @@ open index.html
 | Component | Type | Status | What it provides |
 |---|---|---|---|
 | Tailwind CSS CDN (cdn.tailwindcss.com) | service | active | Utility-class styling, configured via inline `tailwind.config` |
-| Google Fonts | service | active | Fraunces, Plus Jakarta Sans, JetBrains Mono webfonts |
+| Google Fonts | service | active | Space Grotesk, Instrument Sans, JetBrains Mono (+ Plus Jakarta Sans, IBM Plex Serif for client themes) |
 
 ## Assumptions
 

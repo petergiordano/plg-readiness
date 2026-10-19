@@ -42,8 +42,10 @@ The app's entire visual identity is swappable per client via a CSS-variable them
 
 ### Built-in themes
 
-- **Overdrive** (default, no flag) — `http://localhost:8080`
-  Orange accent on warm off-white. Space Grotesk display, Plus Jakarta Sans body, JetBrains Mono labels.
+- **Overdrive Light** (default, no flag) — `http://localhost:8080`
+  Signal Azure `#1F8EFF` as structure on a cool `#F7F9FC` page, white cards with a 4px azure top rule, no dark surfaces or gradients. Space Grotesk display, Instrument Sans body, JetBrains Mono labels. Spec: `~/.claude/identity/overdrive-light-design-system.md`.
+- **Overdrive Alpha** (the v1.0 look) — `http://localhost:8080/?client=alpha`
+  Orange accent on warm off-white. Space Grotesk display, Plus Jakarta Sans body, JetBrains Mono labels. Identical to v1.0.
 - **Alchemist** (stub demo) — `http://localhost:8080/?client=alchemist`
   Deep teal accent on cool near-white. IBM Plex Serif for both display and body. Placeholder values — not from real Alchemist brand specs.
 
@@ -51,23 +53,24 @@ The app's entire visual identity is swappable per client via a CSS-variable them
 
 The URL `?client=<slug>` is read by an inline FOUC `<script>` (first executable child of `<head>`, lines 7–12 of `index.html`) that sets `data-theme=<slug>` on `<html>` synchronously **before first paint** — no flash of unstyled content, no server-side rendering. Tailwind utilities then resolve through `var(--<token>-rgb)` lookups that match the active `data-theme` block (or fall through to `:root` if none is set).
 
-Unknown or missing slug silently falls through to the `:root` Overdrive defaults. No error, no broken state.
+Unknown or missing slug silently falls through to the `:root` Overdrive Light defaults. No error, no broken state.
 
-**The `?client=` switch requires serving over HTTP.** Opening `index.html` directly via `file://` works but the query string isn't parsed by some browsers — you'll always see Overdrive. Run `python3 -m http.server 8080` (per "Running it" above) to use theme switching.
+**The `?client=` switch requires serving over HTTP.** Opening `index.html` directly via `file://` works but the query string isn't parsed by some browsers — you'll always see Overdrive Light. Run `python3 -m http.server 8080` (per "Running it" above) to use theme switching.
 
 ### How to add a new theme
 
-The theme contract `<style>` block lives at lines 13–125 of `index.html`. Inside it:
+The theme contract `<style>` block lives at lines 13–246 of `index.html`. Inside it:
 
-- The `:root` block (lines 48–85) is the Overdrive default — don't edit this unless you're changing Overdrive.
-- The `[data-theme="alchemist"]` block (lines 88–124) is the template to copy.
+- The `:root` block (from line 51) is the Overdrive Light default. Don't edit it unless you're changing the default. Its last section holds **structure tokens** (card rules, chip shape, sticky-footer background, motion).
+- The `[data-theme="alpha"]` and `[data-theme="alchemist"]` blocks are the templates to copy.
+- The `v1.0 STRUCTURE` block at the end lists the themes that keep the v1.0 layout rules (coloured left rule on the result card, gradient sticky footers, square chips, slower motion). A new theme inherits the Light structure unless you add its slug to that block's selector list.
 
 Steps:
 
 1. Copy the entire `[data-theme="alchemist"]` block.
 2. Change the selector to your slug — e.g. `[data-theme="acme"]`. Slug is lowercase, dash-separated.
 3. Override the tokens you want to change. Anything you leave out inherits from `:root`.
-4. If your theme needs a new font, extend the combined Google Fonts `<link>` at line 168 — add `&family=Your+Font:wght@400;600;700` to the existing `href`. **Do not add a second `<link>` tag.**
+4. If your theme needs a new font, extend the combined Google Fonts `<link>` at line 292 — add `&family=Your+Font:wght@400;600;700` to the existing `href`. **Do not add a second `<link>` tag.**
 5. Visit `http://localhost:8080/?client=<your-slug>` to test.
 
 #### Critical: color tokens must be space-separated RGB triplets

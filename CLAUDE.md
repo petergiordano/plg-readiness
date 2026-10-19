@@ -21,7 +21,7 @@ Everything lives in `index.html`. There is no build system, no package manager, 
 
 **Dependencies (CDN only):**
 - Tailwind CSS — loaded via CDN with an inline config block at the top of `<head>`
-- Fraunces (display/headings), Plus Jakarta Sans (body), JetBrains Mono (labels/overlines) — Google Fonts
+- Space Grotesk (display), Instrument Sans (body), JetBrains Mono (labels/overlines), plus Plus Jakarta Sans and IBM Plex Serif for the alpha and alchemist themes. One combined Google Fonts `<link>`
 
 **Structure inside `index.html`:**
 1. Tailwind config + custom CSS (`<head>`) — extends palette, defines `.slide` transition states, `.answer-card` / `.check-card` selection styles, and result reveal animations
@@ -56,12 +56,12 @@ Everything lives in `index.html`. There is no build system, no package manager, 
 
 ## Design Guidelines
 
-See `docs/design/Modern-Web-UI-Design-Guidelines.md` before making UI changes. Key rules:
-- Slate color palette with `#4F46E5` (primary indigo) as the single accent
-- Clean cards with `1.5px` borders, no heavy shadows or gradients; selected state uses `#EEF2FF` bg + indigo border
-- Spacing follows 4/8/16/24/32px scale via Tailwind utilities
-- Typography: Fraunces for display headings, Plus Jakarta Sans for body, JetBrains Mono for overlines/labels/keyboard hints
-- Slide background: `#FAFAF8` (`surface-warm`); results hero uses `#0F172A` (`surface-dark`)
+The default theme is **Overdrive Light**. Read `~/.claude/identity/overdrive-light-design-system.md` (and `docs/design/README.md`) before making UI changes. Key rules:
+- Signal Azure `#1F8EFF` is structural: rules, progress bar, selected borders. Azure text and button fills use Azure Ink `#0C6FD1`, because white on `#1F8EFF` is 3.3:1 and fails AA
+- Page `#F7F9FC`, white cards, Azure Tint `#E8F2FF` for selected cards and the footer band. No dark surfaces, no gradients
+- Cards carry a 4px accent rule across the top edge, never a coloured left border. Chips are pills
+- Typography: Space Grotesk 700 display, Instrument Sans 400/600 body (no 300, no italics), JetBrains Mono for overlines, labels, keyboard hints
+- Markup references tokens only (never raw hex). Theme-specific layout differences go through the structure tokens at the end of `:root`, so `?client=alpha` (the v1.0 look) and `?client=alchemist` stay unchanged
 
 ## Agents
 
