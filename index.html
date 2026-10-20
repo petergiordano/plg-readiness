@@ -805,61 +805,144 @@
         const accelerators = [
             { question: "Can a new user sign up and start using it without talking to anyone?",
               label: "Users can sign up and use without human contact",
-              example: "e.g., Notion lets you build a workspace in minutes — no demo, no sales call required" },
-            { question: "Does a new user get real value in under 15 minutes?",
+              example: "e.g., Notion lets you build a workspace in minutes, with no demo or sales call",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, they sign up and start on their own", counts: true },
+                  { key: 'N', alt: 'b', text: "No, they need a demo or a call first", counts: false },
+              ] },
+            { question: "How long until a new user gets real value?",
               label: "Time-to-value is < 15 minutes",
-              example: "e.g., Loom records and shares your first video in under 2 minutes" },
-            { question: "Is the value clear before someone signs up?",
+              example: "e.g., Loom records and shares your first video in under 2 minutes",
+              options: [
+                  { key: 'A', text: "Under 15 minutes", counts: true },
+                  { key: 'B', text: "Within a day", counts: false },
+                  { key: 'C', text: "Days or longer", counts: false },
+              ] },
+            { question: "Can someone see what the product does for them before they sign up?",
               label: "Clear, differentiated value proposition upfront",
-              example: "e.g., Grammarly shows corrections before you sign up" },
-            { question: "Do you offer a free tier or a free trial?",
+              example: "e.g., Grammarly shows corrections before you sign up",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, the value is clear up front", counts: true },
+                  { key: 'N', alt: 'b', text: "No, it takes a demo or a trial to see it", counts: false },
+              ] },
+            { question: "Can someone use it for free before they pay?",
               label: "Freemium or Free Trial model available",
-              example: "e.g., Slack's free tier lets any team get started; Dropbox hooked millions before asking for payment" },
-            { question: "Does the product guide new users to their first win, with tutorials or templates?",
+              example: "e.g., Slack's free tier lets any team get started; Dropbox hooked millions before asking for payment",
+              options: [
+                  { key: 'A', text: "Yes, there's a free tier", counts: true },
+                  { key: 'B', text: "Yes, there's a free trial", counts: true },
+                  { key: 'C', text: "No, they pay or sign a contract first", counts: false },
+              ] },
+            { question: "Does the product walk new users to their first win?",
               label: "Product guides user to activation (tutorials/templates)",
-              example: "e.g., Notion's template gallery reaches the 'aha moment' in one click" },
-            { question: "Does using the product put it in front of other people, through sharing or invites?",
+              example: "e.g., Notion's template gallery gets you to the 'aha' moment in one click",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, with built-in tutorials or templates", counts: true },
+                  { key: 'N', alt: 'b', text: "No, users figure it out or we onboard them", counts: false },
+              ] },
+            { question: "When someone uses the product, do other people start using it too?",
               label: "Built-in network effects / sharing capabilities",
-              example: "e.g., Zoom creates a new potential customer every time a user sends a meeting invite" },
-            { question: "Does your pricing grow with usage or seats?",
+              example: "e.g., every Zoom meeting invite puts Zoom in front of someone new",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, sharing or invites bring in new users", counts: true },
+                  { key: 'N', alt: 'b', text: "No, it stays with the person using it", counts: false },
+              ] },
+            { question: "How is your product priced?",
               label: "Scalable pricing (usage-based or per-seat)",
-              example: "e.g., Twilio charges per API call — revenue grows as customers grow" },
-            { question: "Does it plug into the tools your users already work in, without IT?",
+              example: "Pick the main way revenue grows with a customer.",
+              // Usage-based or per-seat counts as the accelerator; anything else doesn't
+              options: [
+                  { key: 'A', text: 'Usage-based',    sub: 'e.g., Twilio charges per API call',              counts: true },
+                  { key: 'B', text: 'Per seat',       sub: 'e.g., Slack charges per active user',            counts: true },
+                  { key: 'C', text: 'Something else', sub: 'e.g., flat fee, annual license, or custom quote', counts: false },
+              ] },
+            { question: "Does it plug into the tools your users already work with, without needing IT's help or permission?",
               label: "Product is flexible and integrates easily",
-              example: "e.g., Zapier connects to 5,000+ apps so users embed it in existing workflows without IT" },
-            { question: "Can users answer their own questions from your docs and help content?",
+              example: "e.g., Zapier connects to 5,000+ apps, so users add it to their workflows without IT",
+              options: [
+                  { key: 'A', text: "Yes, users connect it themselves", counts: true },
+                  { key: 'B', text: "No, IT has to approve or set it up", counts: false },
+                  { key: 'C', text: "It doesn't connect to other tools", counts: false },
+              ] },
+            { question: "When users get stuck, can they find the answer on their own?",
               label: "Robust self-serve support/docs available",
-              example: "e.g., Stripe's API docs are so good developers never call support" },
+              example: "e.g., Stripe's API docs are good enough that developers rarely call support",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, our docs and help content cover it", counts: true },
+                  { key: 'N', alt: 'b', text: "No, they usually contact us", counts: false },
+              ] },
         ];
 
         const frictionPoints = [
-            { question: "Does setup take days or weeks of technical work?",
+            { question: "How long does setup take?",
               label: "Significant technical implementation required (days/weeks)",
-              example: "e.g., Deploying an on-premise security tool requires IT and weeks of configuration" },
-            { question: "Does it take weeks or months of data before the product shows value?",
+              example: "e.g., deploying an on-premise security tool takes IT weeks of configuration",
+              options: [
+                  { key: 'A', text: "Minutes", counts: false },
+                  { key: 'B', text: "A few hours", counts: false },
+                  { key: 'C', text: "Days or weeks of technical work", counts: true },
+              ] },
+            { question: "How much data does the product need before it shows value?",
               label: "Value requires weeks/months of data collection",
-              example: "e.g., A churn prediction tool needs months of usage data before surfacing insights" },
-            { question: "Do several people have to be involved before anyone gets value?",
+              example: "e.g., a churn prediction tool needs months of usage data before it surfaces insights",
+              options: [
+                  { key: 'A', text: "None, it works from the first use", counts: false },
+                  { key: 'B', text: "A few days of data", counts: false },
+                  { key: 'C', text: "Weeks or months of data", counts: true },
+              ] },
+            { question: "How many people have to be involved before anyone gets value?",
               label: "Multiple stakeholders needed for initial value",
-              example: "e.g., A contract management tool needs legal, sales, and finance aligned before any workflow can run" },
-            { question: "Does someone need deep domain expertise to operate it?",
+              example: "e.g., a contract management tool needs legal, sales, and finance aligned before any workflow runs",
+              options: [
+                  { key: 'A', text: "One person can get value alone", counts: false },
+                  { key: 'B', text: "Several people have to be involved first", counts: true },
+              ] },
+            { question: "Does it take a specialist to operate it?",
               label: "High domain expertise required to operate",
-              example: "e.g., Quantitative trading platforms require finance expertise to configure" },
-            { question: "Do you customize the product for each customer?",
+              example: "e.g., quantitative trading platforms need finance expertise to configure",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, it takes deep domain expertise", counts: true },
+                  { key: 'N', alt: 'b', text: "No, a typical person in the role can run it", counts: false },
+              ] },
+            { question: "How much do you tailor the product for each customer?",
               label: "Highly customized solution per customer",
-              example: "e.g., Enterprise CPQ software requires months of configuration per deal" },
+              example: "e.g., enterprise CPQ software takes months of configuration per deal",
+              options: [
+                  { key: 'A', text: "Not at all, everyone gets the same product", counts: false },
+                  { key: 'B', text: "Some settings and configuration", counts: false },
+                  { key: 'C', text: "A custom build or months of work per customer", counts: true },
+              ] },
             { question: "Must a customer clear regulatory or compliance checks before using it?",
               label: "Heavy regulatory/compliance checks before use",
-              example: "e.g., Healthcare data platforms require HIPAA BAAs before any data flows" },
-            { question: "Does the value take a long explanation before it lands?",
+              example: "e.g., healthcare data platforms need a HIPAA BAA before any data flows",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, before any data flows", counts: true },
+                  { key: 'N', alt: 'b', text: "No, they can start right away", counts: false },
+              ] },
+            { question: "How long does it take to explain what the product does?",
               label: "Value proposition requires complex explanation",
-              example: "e.g., 'AI-powered supply chain optimization' needs a whiteboard session before the problem even lands" },
-            { question: "Is there a high upfront cost or setup fee?",
+              example: "e.g., 'AI-powered supply chain optimization' needs a whiteboard session before the problem lands",
+              options: [
+                  { key: 'A', text: "One sentence", counts: false },
+                  { key: 'B', text: "A short conversation", counts: false },
+                  { key: 'C', text: "A whiteboard session or a long call", counts: true },
+              ] },
+            { question: "What does a customer pay before they get any value?",
               label: "High upfront costs / Setup fees",
-              example: "e.g., Salesforce implementations often start at $50K+ in professional services before anyone logs in" },
-            { question: "Do customers use it only a few times a year?",
+              example: "e.g., Salesforce implementations often start at $50K+ in services before anyone logs in",
+              options: [
+                  { key: 'A', text: "Nothing, they can start free", counts: false },
+                  { key: 'B', text: "A normal monthly or annual subscription", counts: false },
+                  { key: 'C', text: "A large upfront cost or setup fee", counts: true },
+              ] },
+            { question: "How often do customers use it?",
               label: "Infrequent use cases (once a year usage)",
-              example: "e.g., Annual budget planning software gets used for 2 weeks a year" },
+              example: "e.g., annual budget planning software gets used for 2 weeks a year",
+              options: [
+                  { key: 'A', text: "Daily or weekly", counts: false },
+                  { key: 'B', text: "Monthly", counts: false },
+                  { key: 'C', text: "A few times a year", counts: true },
+              ] },
         ];
 
         // ── State ───────────────────────────────────────────
@@ -888,6 +971,22 @@
                     </div>`;
         }
 
+        // Most items are yes/no; an item can define its own options instead.
+        // An option with counts: true checks the item's hidden checkbox.
+        const YES_NO = [
+            { key: 'Y', alt: 'a', text: 'Yes', counts: true },
+            { key: 'N', alt: 'b', text: 'No',  counts: false },
+        ];
+
+        function optionCardHTML(o) {
+            const keys = [o.key.toLowerCase(), o.alt].filter(Boolean).join(' ');
+            const sub = o.sub ? `<span class="text-xs text-slate-400">${o.sub}</span>` : '';
+            return `<button class="answer-card" data-counts="${o.counts ? 1 : 0}" data-keys="${keys}" onclick="selectOption(this)">
+                        <span class="key-badge">${o.key}</span>
+                        <div><span class="text-sm font-semibold text-ink block">${o.text}</span>${sub}</div>
+                    </button>`;
+        }
+
         function renderYesNoSlides() {
             const anchor = document.getElementById('yesno-anchor');
             let n = 4;
@@ -898,6 +997,9 @@
                     slide.className = 'slide s-below';
                     slide.id = `slide-${n}`;
                     slide.dataset.kind = 'yesno';
+                    const options = item.options || YES_NO;
+                    const badges = options.map(o => `<span>${o.key}</span>`);
+                    const keyHint = badges.slice(0, -1).join(' ') + ' or ' + badges[badges.length - 1];
                     slide.innerHTML = `
         <div class="slide-inner">
             <div class="max-w-lg mx-auto px-6 pt-16 pb-10">
@@ -908,17 +1010,10 @@
                 </div>
                 <input type="checkbox" name="${part.input}" value="${item.label}" class="hidden">
                 <div class="space-y-3">
-                    <button class="answer-card" data-value="yes" onclick="selectYesNo(this)">
-                        <span class="key-badge">Y</span>
-                        <div><span class="text-sm font-semibold text-ink block">Yes</span></div>
-                    </button>
-                    <button class="answer-card" data-value="no" onclick="selectYesNo(this)">
-                        <span class="key-badge">N</span>
-                        <div><span class="text-sm font-semibold text-ink block">No</span></div>
-                    </button>
+                    ${options.map(optionCardHTML).join('')}
                 </div>
                 ${partProgressHTML(partIndex, i)}
-                <p class="mt-5 kbd-hint">press <span>Y</span> or <span>N</span></p>
+                <p class="mt-5 kbd-hint">press ${keyHint}</p>
             </div>
         </div>`;
                     anchor.before(slide);
@@ -996,12 +1091,12 @@
             if (autoAdvance) advanceSoon();
         }
 
-        // ── Answer selection (yes/no) ────────────────────────
-        function selectYesNo(btn) {
+        // ── Answer selection (yes/no and option slides) ──────
+        function selectOption(btn) {
             const slide = btn.closest('.slide');
             slide.querySelectorAll('.answer-card').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
-            slide.querySelector('input[type="checkbox"]').checked = btn.dataset.value === 'yes';
+            slide.querySelector('input[type="checkbox"]').checked = btn.dataset.counts === '1';
             advanceSoon();
         }
 
@@ -1027,10 +1122,11 @@
                 return;
             }
 
-            // Y/N (or A/B) for yes/no questions
+            // Letter keys for yes/no and option slides (Y/N, also A/B; A/B/C)
             if (slide && slide.dataset.kind === 'yesno') {
-                const idx = { y: 0, a: 0, n: 1, b: 1 }[e.key.toLowerCase()];
-                if (idx !== undefined) selectYesNo(slide.querySelectorAll('.answer-card')[idx]);
+                const k = e.key.toLowerCase();
+                const card = /^[a-z]$/.test(k) && slide.querySelector(`.answer-card[data-keys~="${k}"]`);
+                if (card) selectOption(card);
                 return;
             }
 
