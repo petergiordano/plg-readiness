@@ -33,7 +33,7 @@ Everything lives in `index.html`. There is no build system, no package manager, 
 **Slide flow:**
 - Slide 0: Welcome / CTA
 - Slides 1–3: One radio question each (auto-advance on selection after 380ms delay)
-- Slides 4–12: one yes/no question per accelerator; slides 13–21: one per friction point. Y/N keys, auto-advance on answer
+- Slides 4–12: one question per accelerator; slides 13–21: one per friction point. Answers mirror the question (Y/N or A/B/C keys), auto-advance on answer
 - `PARTS` defines the three sections; `partProgressHTML()` draws the segment bar under every question. `TOTAL_SLIDES` is counted from the DOM, so the top bar and the `n / 21` counter follow the question count
 - After the last slide: `showResults()` fades out slides, reveals `#results-page` as normal scroll
 
@@ -51,7 +51,7 @@ Everything lives in `index.html`. There is no build system, no package manager, 
 - Wedge potential triggers when Sales-Led is required but `accCount >= 4` and `fricCount <= 2`
 - Result states: "Pure PLG: Ideal Candidate", "PLG Motion with Optimization Needed", "Product-Led Sales (Hybrid)", "Sales-Led with Wedge Opportunity", "Sales-Led Growth Required", "Hybrid Approach Recommended"
 
-**Yes/no slide rendering** — `accelerators` and `frictionPoints` arrays (each item has `question`, `label`, `example`) are rendered into one slide per item by `renderYesNoSlides()`. Each slide holds a hidden `<input type="checkbox" name="accelerator|friction">`; `selectYesNo()` checks it on Yes. `calculateScore()` still counts checked inputs, so adding a question means adding an array item.
+**Yes/no slide rendering** — `accelerators` and `frictionPoints` arrays (each item has `question`, `label`, `example`, and optional `options`) are rendered into one slide per item by `renderYesNoSlides()`. Every item lists its own 2 or 3 answers, worded to mirror the question; each answer is marked `counts: true/false` (does the accelerator or friction point apply). Two-way answers use Y/N keys (A/B also work); three-way use A/B/C. Items without `options` fall back to plain Yes/No. Each slide holds a hidden `<input type="checkbox" name="accelerator|friction">`; `selectOption()` checks it when the chosen option has `counts: true`. `calculateScore()` still counts checked inputs, so adding a question means adding an array item.
 
 **Result display** — `#result-container`, `#wedge-callout`, `#override-notice` start hidden; `calculateScore()` populates text content and removes `hidden` as needed.
 

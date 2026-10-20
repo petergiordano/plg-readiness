@@ -23,7 +23,7 @@ repeated here.
 
 ### Flow (added 2026-10-19 after Pete's review)
 
-- [x] **FLOW-01**: A visitor answers the 9 accelerators and 9 friction points one yes/no question per screen (Y/N keys, auto-advance), instead of two checkbox grids.
+- [x] **FLOW-01**: A visitor answers the 9 accelerators and 9 friction points one question per screen, instead of two checkbox grids. The answers mirror each question: yes/no, or A/B/C where there's a real middle, such as pricing model, setup time and usage frequency. Keys Y/N or A/B/C; auto-advance. Each answer maps to the original accelerator or friction threshold, so scoring is unchanged.
 - [x] **FLOW-02**: A visitor sees, below every question, a segment bar and an "n of N · k to go" label for the current part. The top progress bar and the "n / 21" counter cover all 21 questions.
 
 ### Quality

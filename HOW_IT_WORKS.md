@@ -31,7 +31,7 @@ Guides early-stage B2B SaaS founders to the correct go-to-market motion through 
 
 1. Slide 0 shows a welcome screen with a CTA to start
 2. Slides 1–3 each ask one radio question; selecting an answer stores it in the `answers` object and auto-advances after 380ms
-3. Slides 4–21 ask one yes/no question each (9 accelerators, then 9 friction points), generated from JS arrays; a Yes checks a hidden checkbox that scoring counts
+3. Slides 4–21 ask one question each (9 accelerators, then 9 friction points), generated from JS arrays; each answer is marked as counting or not, and a counting answer checks a hidden checkbox that scoring counts
 4. `goTo(n)` drives all navigation, applying `.s-active / .s-above / .s-below` classes for slide transitions; `updateChrome()` syncs the progress bar and back button
 5. After the last slide, `showResults()` fades out the slides and reveals `#results-page` as a normal scroll page
 6. `calculateScore()` reads `answers` plus checked inputs, applies the scoring rules, and populates the result DOM (`#result-container`, `#wedge-callout`, `#override-notice`)
