@@ -6,3 +6,6 @@
 .cmux-relay.state.lock
 .cmux-relay.state.lock.reclaim
 .cmux-relay.relay-markers
+
+# Local-only source material (meeting transcripts, client notes). Never commit: public repo.
+archive/

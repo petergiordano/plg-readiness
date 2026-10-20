@@ -15,8 +15,9 @@
            THEME CONTRACT
            -------------------------------------------------------------
            This block holds every brandable token in the app. The
-           ":root" block below is the default (Overdrive). Each
+           ":root" block below is the default (Overdrive Light). Each
            "[data-theme=<slug>]" block below it is a client override.
+           "?client=alpha" restores the v1.0 Overdrive Alpha look.
 
            HOW TO ADD A CLIENT THEME (for non-engineers):
 
@@ -24,9 +25,9 @@
            2. Change ":root" to [data-theme="your-client-slug"].
               Slug is lowercase, dash-separated, no spaces.
               Example: [data-theme="alchemist"]
-           3. Edit the values you want different from Overdrive.
+           3. Edit the values you want different from the default.
               Leave the rest alone -- anything you don't override
-              will use Overdrive's value.
+              will use the default (Overdrive Light) value.
            4. Save the file. Visit the app with
               "?client=your-client-slug" in the URL to see it.
 
@@ -44,8 +45,88 @@
            That is the whole system. There is nothing else to learn.
            ============================================================= */
 
-        /* ========== :ROOT DEFAULTS (Overdrive — Phase 2 production values) ========== */
+        /* ========== :ROOT DEFAULTS (Overdrive Light — v1.1) ==========
+           Source: ~/.claude/identity/overdrive-light-design-system.md
+           Azure is structural: rules, selected states, progress, fills. */
         :root {
+            /* Accent colors (Signal Azure) */
+            --accent-rgb:        31 142 255;       /* #1F8EFF Signal Azure: rules, progress, selected borders */
+            --accent-hover-rgb:  12 121 232;       /* #0C79E8 Azure Press */
+            --accent-muted-rgb:  232 242 255;      /* #E8F2FF Azure Tint: selected cards, the rhythm band */
+            --accent-ink-rgb:    12 111 209;       /* #0C6FD1 Azure Ink: azure type on light surfaces (4.7:1 on page) */
+            --accent-fill-rgb:   12 111 209;       /* #0C6FD1 primary button fill. White on #1F8EFF is 3.3:1 and fails AA for button text; white on Azure Ink is 5.0:1 */
+            --accent-fill-hover-rgb: 10 93 176;    /* #0A5DB0 button hover/press. Never a scale change */
+
+            /* Surfaces (cool page + white surface) */
+            --surface-rgb:           247 249 252;  /* #F7F9FC Page */
+            --surface-elev-rgb:      255 255 255;  /* #FFFFFF Surface */
+
+            /* Text (Ink scale) */
+            --text-rgb:        22 32 43;      /* #16202B Ink */
+            --text-muted-rgb:  91 107 122;    /* #5B6B7A Ink 4 */
+
+            /* Border */
+            --border-rgb: 226 232 240;  /* #E2E8F0 Border */
+
+            /* Neutral ramp (consumed as Tailwind slate-*). Text steps map to the Ink scale so every pair meets AA */
+            --neutral-50-rgb:  241 245 249;   /* #F1F5F9 inset panels; differs from --surface-rgb */
+            --neutral-100-rgb: 226 232 240;   /* #E2E8F0 Border */
+            --neutral-200-rgb: 226 232 240;   /* #E2E8F0 Border */
+            --neutral-300-rgb: 214 223 234;   /* #D6DFEA Border Strong */
+            --neutral-400-rgb: 91 107 122;    /* #5B6B7A Ink 4: labels, captions */
+            --neutral-500-rgb: 74 88 102;     /* #4A5866 Ink 3: running text */
+            --neutral-600-rgb: 59 74 88;      /* #3B4A58 Ink 2 */
+            --neutral-700-rgb: 22 32 43;      /* #16202B Ink */
+            --neutral-800-rgb: 22 32 43;      /* #16202B Ink */
+            --neutral-900-rgb: 22 32 43;      /* #16202B Ink */
+
+            /* ========== Secondary palette (bridge colors shared with Overdrive Alpha) ========== */
+            --brand-soft-rgb:      252 240 200;  /* #FCF0C8 golden tint */
+            --brand-secondary-rgb: 241 194 50;   /* #F1C232 Golden Yellow */
+            --brand-tertiary-rgb:  85 191 250;   /* #55BFFA Overdrive Blue */
+
+            /* Fonts (Overdrive Light) */
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body:    'Instrument Sans', sans-serif;
+            --font-mono:    'JetBrains Mono', monospace;
+
+            /* ========== Structure (Overdrive Light rules) ==========
+               Light puts a 4px accent rule across the TOP of cards (never a
+               coloured left border), uses flat backgrounds (no gradients),
+               pill chips, and short 220ms motion. The v1.0 values for these
+               live in the "v1.0 STRUCTURE" block at the end. */
+            --card-rule-top:         4px solid rgb(var(--accent-rgb));
+            --card-rule-left:        1px solid rgb(var(--neutral-200-rgb));
+            --callout-rule-top:      4px solid rgb(var(--accent-rgb));
+            --callout-warn-rule-top: 4px solid rgb(var(--brand-secondary-rgb));
+            --ref-section-bg:        rgb(var(--surface-elev-rgb));
+            --ref-card-bg:           rgb(var(--surface-elev-rgb));
+            --ref-card-rule-1:       4px solid rgb(var(--accent-rgb));
+            --ref-card-rule-2:       4px solid rgb(var(--brand-tertiary-rgb));
+            --ref-card-rule-3:       4px solid rgb(var(--brand-secondary-rgb));
+            --table-bg:              rgb(var(--surface-elev-rgb));
+            --footer-bg:             rgb(var(--accent-muted-rgb));
+            --chip-radius:           999px;
+            --chip-plg-bg:           rgb(var(--accent-muted-rgb));
+            --chip-plg-fg:           rgb(var(--accent-fill-hover-rgb));  /* #0A5DB0: Azure Ink on the tint is 4.41:1, just under AA at 12px */
+            --chip-wedge-bg:         rgb(var(--brand-tertiary-rgb) / 0.2);
+            --sticky-footer-color:   rgb(var(--surface-rgb));
+            --sticky-footer-image:   none;
+            --phase-rule:            2px solid rgb(var(--accent-rgb));
+            --warn-icon-color:       rgb(107 82 16);  /* #6B5210 Golden Ink: golden yellow icon on its own tint is 1.7:1 (v1.0 WR-06) */
+            --phase-rule-width:      96px;
+            --motion-ease:           cubic-bezier(0.22, 1, 0.36, 1);
+            --slide-shift:           12px;
+            --slide-move-duration:   220ms;
+            --slide-fade-duration:   160ms;
+            --slide-fade-ease:       cubic-bezier(0.22, 1, 0.36, 1);
+            --reveal-shift:          8px;
+            --reveal-duration:       220ms;
+            --reveal-ease:           cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* ========== ALPHA (v1.0 Overdrive Alpha look, opt-in via ?client=alpha) ========== */
+        [data-theme="alpha"] {
             /* Accent colors (Overdrive orange) */
             --accent-rgb:        255 144 0;        /* #FF9000 Overdrive Orange */
             --accent-hover-rgb:  230 130 0;        /* #E68200 ~10% darker (R-1 — closes frankenstein-hover bug on CTAs at 324/479/515) */
@@ -122,6 +203,46 @@
             --font-display: 'IBM Plex Serif', serif;
             --font-body:    'IBM Plex Serif', serif;
         }
+
+        /* ========== v1.0 STRUCTURE (Alpha + Alchemist) ==========
+           Keeps the v1.0 layout rules for themes built before Overdrive
+           Light: coloured left rule on the result card, gradient sticky
+           footers, square chips, slower motion. A new theme can leave
+           itself out of this list and inherit the Light structure. */
+        [data-theme="alpha"],
+        [data-theme="alchemist"] {
+            --accent-ink-rgb:        var(--accent-rgb);
+            --accent-fill-rgb:       var(--accent-rgb);
+            --accent-fill-hover-rgb: var(--accent-hover-rgb);
+            --card-rule-top:         1px solid rgb(var(--neutral-200-rgb));
+            --card-rule-left:        3px solid rgb(var(--accent-rgb));
+            --callout-rule-top:      5px solid rgb(var(--accent-rgb));
+            --callout-warn-rule-top: 5px solid rgb(var(--accent-rgb));
+            --ref-section-bg:        rgb(var(--surface-rgb));
+            --ref-card-bg:           rgb(var(--neutral-50-rgb));
+            --ref-card-rule-1:       1px solid rgb(var(--neutral-100-rgb));
+            --ref-card-rule-2:       1px solid rgb(var(--neutral-100-rgb));
+            --ref-card-rule-3:       1px solid rgb(var(--neutral-100-rgb));
+            --table-bg:              transparent;
+            --footer-bg:             rgb(var(--surface-rgb));
+            --chip-radius:           0.375rem;
+            --chip-plg-bg:           rgb(var(--accent-rgb));
+            --chip-plg-fg:           rgb(255 255 255);
+            --chip-wedge-bg:         rgb(var(--neutral-200-rgb));
+            --sticky-footer-color:   transparent;
+            --sticky-footer-image:   linear-gradient(to top, rgb(var(--surface-rgb)), rgb(var(--surface-rgb)), rgb(var(--surface-rgb) / 0));
+            --phase-rule:            1px solid rgb(var(--accent-rgb) / 0.2);
+            --warn-icon-color:       rgb(var(--brand-secondary-rgb));
+            --phase-rule-width:      auto;
+            --motion-ease:           cubic-bezier(0.4, 0, 0.2, 1);
+            --slide-shift:           72px;
+            --slide-move-duration:   0.44s;
+            --slide-fade-duration:   0.34s;
+            --slide-fade-ease:       ease;
+            --reveal-shift:          18px;
+            --reveal-duration:       520ms;
+            --reveal-ease:           ease-out;
+        }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -138,6 +259,9 @@
                             DEFAULT: 'rgb(var(--accent-rgb)       / <alpha-value>)',
                             hover:   'rgb(var(--accent-hover-rgb) / <alpha-value>)',
                             muted:   'rgb(var(--accent-muted-rgb) / <alpha-value>)',
+                            ink:     'rgb(var(--accent-ink-rgb)   / <alpha-value>)',
+                            fill:    'rgb(var(--accent-fill-rgb)  / <alpha-value>)',
+                            'fill-hover': 'rgb(var(--accent-fill-hover-rgb) / <alpha-value>)',
                         },
                         surface: {
                             warm: 'rgb(var(--surface-rgb)      / <alpha-value>)',
@@ -165,7 +289,7 @@
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             -webkit-font-smoothing: antialiased;
@@ -182,12 +306,12 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            transition: transform 0.44s cubic-bezier(0.4, 0, 0.2, 1),
-                        opacity   0.34s ease;
+            transition: transform var(--slide-move-duration) var(--motion-ease),
+                        opacity   var(--slide-fade-duration) var(--slide-fade-ease);
         }
-        .slide.s-below   { transform: translateY(72px); opacity: 0; pointer-events: none; }
+        .slide.s-below   { transform: translateY(var(--slide-shift)); opacity: 0; pointer-events: none; }
         .slide.s-active  { transform: translateY(0);    opacity: 1; pointer-events: all;  }
-        .slide.s-above   { transform: translateY(-72px); opacity: 0; pointer-events: none; }
+        .slide.s-above   { transform: translateY(calc(var(--slide-shift) * -1)); opacity: 0; pointer-events: none; }
 
         /* ── Slide layout ─────────────────────────────── */
         .slide-inner {
@@ -201,7 +325,7 @@
         /* ── Progress bar ─────────────────────────────── */
         #progress-fill {
             height: 3px;
-            transition: width 0.44s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width var(--slide-move-duration) var(--motion-ease);
         }
 
         /* ── Answer cards (radio) ─────────────────────── */
@@ -233,48 +357,34 @@
         }
         .answer-card:hover .key-badge  { border-color: rgb(var(--accent-rgb) / 0.4); color: rgb(var(--accent-rgb) / 0.4); }
         .answer-card.selected .key-badge {
-            border-color: rgb(var(--accent-rgb)); color: rgb(var(--accent-rgb)); background: rgb(var(--surface-elev-rgb));
+            border-color: rgb(var(--accent-rgb)); color: rgb(var(--accent-ink-rgb)); background: rgb(var(--surface-elev-rgb));
         }
 
-        /* ── Check cards (multi-select) ───────────────── */
-        .check-card {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 12px 12px;
-            border: 1.5px solid rgb(var(--border-rgb));
-            border-radius: 10px;
-            cursor: pointer;
-            transition: border-color 0.14s, background 0.14s;
-            background: rgb(var(--surface-elev-rgb));
-            width: 100%;
-            text-align: left;
-            height: 100%;
+        /* ── Section progress (below each question) ──── */
+        .part-progress { margin-top: 40px; }
+        .part-progress-bar { display: flex; gap: 4px; max-width: 280px; }
+        .part-progress-seg {
+            flex: 1; height: 4px; border-radius: 2px;
+            background: rgb(var(--neutral-200-rgb));
         }
-        .check-card:hover     { border-color: rgb(var(--accent-rgb) / 0.4); background: rgb(var(--accent-rgb) / 0.06); }
-        .check-card.selected  { border-color: rgb(var(--accent-rgb)); background: rgb(var(--accent-muted-rgb)); }
-        .check-box {
-            flex-shrink: 0;
-            width: 18px; height: 18px;
-            border: 1.5px solid rgb(var(--neutral-300-rgb));
-            border-radius: 4px;
-            display: flex; align-items: center; justify-content: center;
-            margin-top: 2px;
-            transition: border-color 0.14s, background 0.14s;
+        .part-progress-seg.done    { background: rgb(var(--accent-rgb)); }
+        .part-progress-seg.current { background: rgb(var(--accent-rgb) / 0.45); }
+        .part-progress-label {
+            font-family: var(--font-mono);
+            font-size: 11px; letter-spacing: 0.04em;
+            color: rgb(var(--neutral-400-rgb));
+            margin-top: 10px;
         }
-        .check-card.selected .check-box { border-color: rgb(var(--accent-rgb)); background: rgb(var(--accent-rgb)); }
-        .check-icon-svg { display: none; }
-        .check-card.selected .check-icon-svg { display: block; }
 
         /* ── Results page ─────────────────────────────── */
         #results-page { display: none; position: relative; min-height: 100vh; }
         #results-page.visible { display: block; }
 
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(18px); }
+            from { opacity: 0; transform: translateY(var(--reveal-shift)); }
             to   { opacity: 1; transform: translateY(0); }
         }
-        .result-reveal { opacity: 0; animation: fadeUp 520ms ease-out forwards; }
+        .result-reveal { opacity: 0; animation: fadeUp var(--reveal-duration) var(--reveal-ease) forwards; }
         .result-reveal-2 { animation-delay: 100ms; }
         .result-reveal-3 { animation-delay: 200ms; }
 
@@ -287,13 +397,20 @@
         .phase-overline {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px; letter-spacing: 0.12em;
-            text-transform: uppercase; color: rgb(var(--accent-rgb));
+            text-transform: uppercase; color: rgb(var(--accent-ink-rgb));
             display: block; margin-bottom: 8px;
         }
         .phase-rule {
             border: none;
-            border-top: 1px solid rgb(var(--accent-rgb) / 0.2);
+            border-top: var(--phase-rule);
+            width: var(--phase-rule-width);
             margin: 0 0 28px 0;
+        }
+
+        /* ── Sticky footer (slides 4–5) ───────────────── */
+        .sticky-footer {
+            background-color: var(--sticky-footer-color);
+            background-image: var(--sticky-footer-image);
         }
 
         /* ── Keyboard hint ────────────────────────────── */
@@ -343,7 +460,7 @@
     <div class="slide s-active" id="slide-0">
         <div class="slide-inner">
             <div class="max-w-lg mx-auto px-6 pt-20 pb-10">
-                <span class="font-mono text-xs text-accent tracking-widest uppercase block mb-8">PLG Readiness Diagnostic</span>
+                <span class="font-mono text-xs text-accent-ink tracking-widest uppercase block mb-8">PLG Readiness Diagnostic</span>
                 <h1 class="font-display text-5xl md:text-[3.5rem] font-bold text-ink mb-5 leading-[1.06]">
                     Find your right<br>GTM motion.
                 </h1>
@@ -355,17 +472,17 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        5 questions
+                        21 questions, most yes or no
                     </span>
                     <span class="flex items-center gap-1.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        ~2 minutes
+                        ~3 minutes
                     </span>
                 </div>
                 <button onclick="goNext()"
-                    class="inline-flex items-center gap-3 px-7 py-3.5 bg-accent text-white font-semibold rounded-lg hover:bg-accent-hover transition-colors text-base">
+                    class="inline-flex items-center gap-3 px-7 py-3.5 bg-accent-fill text-white font-semibold rounded-lg hover:bg-accent-fill-hover transition-colors text-base">
                     Start Assessment
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -384,7 +501,7 @@
         <div class="slide-inner">
             <div class="max-w-lg mx-auto px-6 pt-16 pb-10">
                 <div class="mb-7">
-                    <span class="font-mono text-xs text-accent tracking-widest uppercase block mb-3">Question 1 of 5</span>
+                    <span class="font-mono text-xs text-accent-ink tracking-widest uppercase block mb-3">Part 1 · Your problem</span>
                     <h2 class="font-display text-3xl md:text-4xl font-bold text-ink mb-2 leading-tight">
                         Who feels the pain vs.<br>who writes the check?
                     </h2>
@@ -426,24 +543,24 @@
         <div class="slide-inner">
             <div class="max-w-lg mx-auto px-6 pt-16 pb-10">
                 <div class="mb-7">
-                    <span class="font-mono text-xs text-accent tracking-widest uppercase block mb-3">Question 2 of 5</span>
+                    <span class="font-mono text-xs text-accent-ink tracking-widest uppercase block mb-3">Part 1 · Your problem</span>
                     <h2 class="font-display text-3xl md:text-4xl font-bold text-ink mb-2 leading-tight">
-                        Does product usage naturally<br>create new customers?
+                        Does using the product<br>naturally create new users?
                     </h2>
-                    <p class="text-slate-500 text-base">Not through marketing — through the product itself.</p>
+                    <p class="text-slate-500 text-base">Users who can then be turned into customers. Not through marketing, through the product itself.</p>
                 </div>
                 <div class="space-y-3">
                     <button class="answer-card" data-name="viral" data-value="organic" onclick="selectAnswer(this, true)">
                         <span class="key-badge">A</span>
                         <div>
-                            <span class="text-sm font-semibold text-ink block">Yes — usage naturally creates new customers</span>
+                            <span class="text-sm font-semibold text-ink block">Yes, using it brings in new users</span>
                             <span class="text-xs text-slate-400">e.g., Zoom invite, Calendly link, Loom video, Figma share</span>
                         </div>
                     </button>
                     <button class="answer-card" data-name="viral" data-value="siloed" onclick="selectAnswer(this, true)">
                         <span class="key-badge">B</span>
                         <div>
-                            <span class="text-sm font-semibold text-ink block">No — usage is siloed; no organic spread</span>
+                            <span class="text-sm font-semibold text-ink block">No, usage stays with the person who bought it</span>
                             <span class="text-xs text-slate-400">e.g., Internal analytics, backend infrastructure, security monitoring</span>
                         </div>
                     </button>
@@ -461,7 +578,7 @@
         <div class="slide-inner">
             <div class="max-w-lg mx-auto px-6 pt-16 pb-10">
                 <div class="mb-7">
-                    <span class="font-mono text-xs text-accent tracking-widest uppercase block mb-3">Question 3 of 5</span>
+                    <span class="font-mono text-xs text-accent-ink tracking-widest uppercase block mb-3">Part 1 · Your problem</span>
                     <h2 class="font-display text-3xl md:text-4xl font-bold text-ink mb-2 leading-tight">
                         What level of the org does<br>your product address?
                     </h2>
@@ -496,76 +613,10 @@
     </div>
 
 
-    <!-- ═══════════════════════════════════════
-         SLIDE 4 — PLG Accelerators
-    ═══════════════════════════════════════ -->
-    <div class="slide s-below" id="slide-4">
-        <!-- Fixed header -->
-        <div class="flex-shrink-0 px-6 pt-14 pb-5 border-b border-slate-100 bg-surface-warm">
-            <div class="max-w-3xl mx-auto">
-                <span class="font-mono text-xs text-accent tracking-widest uppercase block mb-2">Question 4 of 5</span>
-                <h2 class="font-display text-2xl md:text-3xl font-bold text-ink mb-1 leading-tight">
-                    Which of these describe your product today?
-                </h2>
-                <p class="text-sm text-slate-500">Select all that apply — these are PLG accelerators.</p>
-            </div>
-        </div>
-        <!-- Scrollable list -->
-        <div class="slide-inner">
-            <div class="max-w-3xl mx-auto px-6 pt-4 pb-6">
-                <div class="grid grid-cols-2 gap-3" id="accelerators-list"></div>
-            </div>
-        </div>
-        <!-- Sticky footer -->
-        <div class="flex-shrink-0 px-6 pt-3 pb-5 bg-gradient-to-t from-surface-warm via-surface-warm border-t border-slate-100">
-            <div class="max-w-3xl mx-auto flex items-center gap-4">
-                <button onclick="goNext()"
-                    class="flex items-center gap-2 px-6 py-3 bg-accent text-white font-semibold rounded-lg hover:bg-accent-hover transition-colors text-sm">
-                    Continue
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
-                <p class="kbd-hint">press <span>Enter ↵</span></p>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- ═══════════════════════════════════════
-         SLIDE 5 — PLG Friction Points
-    ═══════════════════════════════════════ -->
-    <div class="slide s-below" id="slide-5">
-        <!-- Fixed header -->
-        <div class="flex-shrink-0 px-6 pt-14 pb-5 border-b border-slate-100 bg-surface-warm">
-            <div class="max-w-3xl mx-auto">
-                <span class="font-mono text-xs text-accent tracking-widest uppercase block mb-2">Question 5 of 5</span>
-                <h2 class="font-display text-2xl md:text-3xl font-bold text-ink mb-1 leading-tight">
-                    Which of these constrain your product?
-                </h2>
-                <p class="text-sm text-slate-500">Select all that apply — these are friction points against PLG.</p>
-            </div>
-        </div>
-        <!-- Scrollable list -->
-        <div class="slide-inner">
-            <div class="max-w-3xl mx-auto px-6 pt-4 pb-6">
-                <div class="grid grid-cols-2 gap-3" id="friction-list"></div>
-            </div>
-        </div>
-        <!-- Sticky footer -->
-        <div class="flex-shrink-0 px-6 pt-3 pb-5 bg-gradient-to-t from-surface-warm via-surface-warm border-t border-slate-100">
-            <div class="max-w-3xl mx-auto flex items-center gap-4">
-                <button onclick="showResults()"
-                    class="flex items-center gap-2 px-6 py-3 bg-accent text-white font-semibold rounded-lg hover:bg-accent-hover transition-colors text-sm">
-                    See My Result
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
-                <p class="kbd-hint">press <span>Enter ↵</span></p>
-            </div>
-        </div>
-    </div>
+    <!-- Slides 4–21 (one yes/no question each) are built from the
+         accelerators and frictionPoints arrays by renderYesNoSlides() and
+         inserted here, before the results page. -->
+    <div id="yesno-anchor" hidden></div>
 
 
     <!-- ═══════════════════════════════════════
@@ -579,7 +630,7 @@
 
                 <!-- Main result card -->
                 <div class="result-reveal mb-5">
-                    <div class="bg-surface-elev rounded-xl border border-slate-200 overflow-hidden" style="border-left: 3px solid rgb(var(--accent-rgb));">
+                    <div class="bg-surface-elev rounded-xl border border-slate-200 overflow-hidden" style="border-top: var(--card-rule-top); border-left: var(--card-rule-left);">
                         <div class="p-8">
                             <span class="result-overline">Assessment Result</span>
                             <h2 id="result-title" class="font-display text-3xl font-bold text-ink mb-4 leading-tight"></h2>
@@ -593,7 +644,7 @@
                 </div>
 
                 <!-- Wedge callout (conditional) -->
-                <div id="wedge-callout" class="hidden result-reveal result-reveal-2 bg-surface-elev rounded-xl p-6 mb-5" style="border-top: 5px solid rgb(var(--accent-rgb));">
+                <div id="wedge-callout" class="hidden result-reveal result-reveal-2 bg-surface-elev rounded-xl p-6 mb-5" style="border-top: var(--callout-rule-top);">
                     <div class="flex items-start gap-4">
                         <div class="flex-shrink-0 w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -613,10 +664,10 @@
                 </div>
 
                 <!-- Override notice (conditional) -->
-                <div id="override-notice" class="hidden result-reveal result-reveal-3 bg-surface-elev rounded-xl p-6 mb-5" style="border-top: 5px solid rgb(var(--accent-rgb));">
+                <div id="override-notice" class="hidden result-reveal result-reveal-3 bg-surface-elev rounded-xl p-6 mb-5" style="border-top: var(--callout-warn-rule-top);">
                     <div class="flex items-start gap-4">
                         <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgb(var(--brand-secondary-rgb) / 0.15);">
-                            <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 text-yellow-400" style="color: var(--warn-icon-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                             </svg>
                         </div>
@@ -638,7 +689,7 @@
         </section>
 
         <!-- Reference Matrix (D-05b 4px orange top-rule divider) -->
-        <section class="bg-surface-warm border-t-[4px] border-accent py-16 md:py-24">
+        <section class="bg-surface-warm border-t-[4px] border-accent py-16 md:py-24" style="background-color: var(--ref-section-bg);">
             <div class="max-w-[960px] mx-auto px-6">
                 <div class="mb-12">
                     <span class="phase-overline">Reference</span>
@@ -648,7 +699,7 @@
                 </div>
 
                 <div class="overflow-x-auto">
-                    <table class="w-full border-collapse">
+                    <table class="w-full border-collapse" style="background-color: var(--table-bg);">
                         <thead>
                             <tr>
                                 <th class="p-4 bg-slate-50 border border-slate-200 text-left text-sm font-semibold text-ink">Problem Scope</th>
@@ -665,7 +716,7 @@
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">User = Decider</td>
                                 <td class="p-4 border border-slate-200">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-accent text-white">Pure PLG</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium" style="background-color: var(--chip-plg-bg); color: var(--chip-plg-fg); border-radius: var(--chip-radius);">Pure PLG</span>
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">Loom, Calendly, Grammarly, Figma (freelancer)</td>
                             </tr>
@@ -676,7 +727,7 @@
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">Manager / Team Lead</td>
                                 <td class="p-4 border border-slate-200">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-yellow-100 text-ink">Product-Led Sales</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-yellow-100 text-ink" style="border-radius: var(--chip-radius);">Product-Led Sales</span>
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">Notion, Slack, Asana, Linear</td>
                             </tr>
@@ -687,7 +738,7 @@
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">C-Suite / IT / Procurement</td>
                                 <td class="p-4 border border-slate-200">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-700">Sales-Led</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-700" style="border-radius: var(--chip-radius);">Sales-Led</span>
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">Workday, Salesforce, ServiceNow</td>
                             </tr>
@@ -698,7 +749,7 @@
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">Developer / Practitioner first</td>
                                 <td class="p-4 border border-slate-200">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-200 text-slate-800">Wedge + Expand</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium text-slate-800" style="background-color: var(--chip-wedge-bg); border-radius: var(--chip-radius);">Wedge + Expand</span>
                                 </td>
                                 <td class="p-4 border border-slate-200 text-sm text-slate-500">Datadog, Snowflake, MongoDB</td>
                             </tr>
@@ -707,7 +758,7 @@
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-6 mt-12">
-                    <div class="bg-slate-50 rounded-lg p-6 border border-slate-100">
+                    <div class="bg-slate-50 rounded-lg p-6 border border-slate-100" style="background-color: var(--ref-card-bg); border-top: var(--ref-card-rule-1);">
                         <div class="w-9 h-9 bg-slate-100 rounded-md flex items-center justify-center mb-4">
                             <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
@@ -716,16 +767,16 @@
                         <h4 class="font-semibold text-ink mb-2 text-sm">Pure PLG</h4>
                         <p class="text-base text-slate-500">User and buyer are identical. No approval needed. Credit card swipe completes the sale. Focus on activation metrics and time-to-value.</p>
                     </div>
-                    <div class="bg-slate-50 rounded-lg p-6 border border-slate-100">
+                    <div class="bg-slate-50 rounded-lg p-6 border border-slate-100" style="background-color: var(--ref-card-bg); border-top: var(--ref-card-rule-2);">
                         <div class="w-9 h-9 bg-yellow-100 rounded-md flex items-center justify-center mb-4">
-                            <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 text-accent-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
                         </div>
                         <h4 class="font-semibold text-ink mb-2 text-sm">Product-Led Sales</h4>
                         <p class="text-base text-slate-500">Let users experience value, then sales assists with team/department expansion. PQLs (Product Qualified Leads) matter more than MQLs.</p>
                     </div>
-                    <div class="bg-slate-50 rounded-lg p-6 border border-slate-100">
+                    <div class="bg-slate-50 rounded-lg p-6 border border-slate-100" style="background-color: var(--ref-card-bg); border-top: var(--ref-card-rule-3);">
                         <div class="w-9 h-9 bg-slate-100 rounded-md flex items-center justify-center mb-4">
                             <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
@@ -739,7 +790,7 @@
         </section>
 
         <!-- Footer -->
-        <footer class="bg-surface-warm border-t-[4px] border-accent py-10">
+        <footer class="bg-surface-warm border-t-[4px] border-accent py-10" style="background-color: var(--footer-bg);">
             <div class="max-w-[960px] mx-auto px-6 flex justify-between items-center text-sm text-slate-500">
                 <p>&copy; 2025 Senior GTM Strategy Architect.</p>
                 <p>The problem picks the motion.</p>
@@ -752,81 +803,233 @@
     <script>
         // ── Data ────────────────────────────────────────────
         const accelerators = [
-            { label: "Users can sign up and use without human contact",
-              example: "e.g., Notion lets you build a workspace in minutes — no demo, no sales call required" },
-            { label: "Time-to-value is < 15 minutes",
-              example: "e.g., Loom records and shares your first video in under 2 minutes" },
-            { label: "Clear, differentiated value proposition upfront",
-              example: "e.g., Grammarly shows corrections before you sign up" },
-            { label: "Freemium or Free Trial model available",
-              example: "e.g., Slack's free tier lets any team get started; Dropbox hooked millions before asking for payment" },
-            { label: "Product guides user to activation (tutorials/templates)",
-              example: "e.g., Notion's template gallery reaches the 'aha moment' in one click" },
-            { label: "Built-in network effects / sharing capabilities",
-              example: "e.g., Zoom creates a new potential customer every time a user sends a meeting invite" },
-            { label: "Scalable pricing (usage-based or per-seat)",
-              example: "e.g., Twilio charges per API call — revenue grows as customers grow" },
-            { label: "Product is flexible and integrates easily",
-              example: "e.g., Zapier connects to 5,000+ apps so users embed it in existing workflows without IT" },
-            { label: "Robust self-serve support/docs available",
-              example: "e.g., Stripe's API docs are so good developers never call support" },
+            { question: "Can a new user sign up and start using it without talking to anyone?",
+              label: "Users can sign up and use without human contact",
+              example: "e.g., Notion lets you build a workspace in minutes, with no demo or sales call",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, they sign up and start on their own", counts: true },
+                  { key: 'N', alt: 'b', text: "No, they need a demo or a call first", counts: false },
+              ] },
+            { question: "How long until a new user gets real value?",
+              label: "Time-to-value is < 15 minutes",
+              example: "e.g., Loom records and shares your first video in under 2 minutes",
+              options: [
+                  { key: 'A', text: "Under 15 minutes", counts: true },
+                  { key: 'B', text: "Within a day", counts: false },
+                  { key: 'C', text: "Days or longer", counts: false },
+              ] },
+            { question: "Can someone see what the product does for them before they sign up?",
+              label: "Clear, differentiated value proposition upfront",
+              example: "e.g., Grammarly shows corrections before you sign up",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, the value is clear up front", counts: true },
+                  { key: 'N', alt: 'b', text: "No, it takes a demo or a trial to see it", counts: false },
+              ] },
+            { question: "Can someone use it for free before they pay?",
+              label: "Freemium or Free Trial model available",
+              example: "e.g., Slack's free tier lets any team get started; Dropbox hooked millions before asking for payment",
+              options: [
+                  { key: 'A', text: "Yes, there's a free tier", counts: true },
+                  { key: 'B', text: "Yes, there's a free trial", counts: true },
+                  { key: 'C', text: "No, they pay or sign a contract first", counts: false },
+              ] },
+            { question: "Does the product walk new users to their first win?",
+              label: "Product guides user to activation (tutorials/templates)",
+              example: "e.g., Notion's template gallery gets you to the 'aha' moment in one click",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, with built-in tutorials or templates", counts: true },
+                  { key: 'N', alt: 'b', text: "No, users figure it out or we onboard them", counts: false },
+              ] },
+            { question: "When someone uses the product, do other people start using it too?",
+              label: "Built-in network effects / sharing capabilities",
+              example: "e.g., every Zoom meeting invite puts Zoom in front of someone new",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, sharing or invites bring in new users", counts: true },
+                  { key: 'N', alt: 'b', text: "No, it stays with the person using it", counts: false },
+              ] },
+            { question: "How is your product priced?",
+              label: "Scalable pricing (usage-based or per-seat)",
+              example: "Pick the main way revenue grows with a customer.",
+              // Usage-based or per-seat counts as the accelerator; anything else doesn't
+              options: [
+                  { key: 'A', text: 'Usage-based',    sub: 'e.g., Twilio charges per API call',              counts: true },
+                  { key: 'B', text: 'Per seat',       sub: 'e.g., Slack charges per active user',            counts: true },
+                  { key: 'C', text: 'Something else', sub: 'e.g., flat fee, annual license, or custom quote', counts: false },
+              ] },
+            { question: "Does it plug into the tools your users already work with, without needing IT's help or permission?",
+              label: "Product is flexible and integrates easily",
+              example: "e.g., Zapier connects to 5,000+ apps, so users add it to their workflows without IT",
+              options: [
+                  { key: 'A', text: "Yes, users connect it themselves", counts: true },
+                  { key: 'B', text: "No, IT has to approve or set it up", counts: false },
+                  { key: 'C', text: "It doesn't connect to other tools", counts: false },
+              ] },
+            { question: "When users get stuck, can they find the answer on their own?",
+              label: "Robust self-serve support/docs available",
+              example: "e.g., Stripe's API docs are good enough that developers rarely call support",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, our docs and help content cover it", counts: true },
+                  { key: 'N', alt: 'b', text: "No, they usually contact us", counts: false },
+              ] },
         ];
 
         const frictionPoints = [
-            { label: "Significant technical implementation required (days/weeks)",
-              example: "e.g., Deploying an on-premise security tool requires IT and weeks of configuration" },
-            { label: "Value requires weeks/months of data collection",
-              example: "e.g., A churn prediction tool needs months of usage data before surfacing insights" },
-            { label: "Multiple stakeholders needed for initial value",
-              example: "e.g., A contract management tool needs legal, sales, and finance aligned before any workflow can run" },
-            { label: "High domain expertise required to operate",
-              example: "e.g., Quantitative trading platforms require finance expertise to configure" },
-            { label: "Highly customized solution per customer",
-              example: "e.g., Enterprise CPQ software requires months of configuration per deal" },
-            { label: "Heavy regulatory/compliance checks before use",
-              example: "e.g., Healthcare data platforms require HIPAA BAAs before any data flows" },
-            { label: "Value proposition requires complex explanation",
-              example: "e.g., 'AI-powered supply chain optimization' needs a whiteboard session before the problem even lands" },
-            { label: "High upfront costs / Setup fees",
-              example: "e.g., Salesforce implementations often start at $50K+ in professional services before anyone logs in" },
-            { label: "Infrequent use cases (once a year usage)",
-              example: "e.g., Annual budget planning software gets used for 2 weeks a year" },
+            { question: "How long does setup take?",
+              label: "Significant technical implementation required (days/weeks)",
+              example: "e.g., deploying an on-premise security tool takes IT weeks of configuration",
+              options: [
+                  { key: 'A', text: "Minutes", counts: false },
+                  { key: 'B', text: "A few hours", counts: false },
+                  { key: 'C', text: "Days or weeks of technical work", counts: true },
+              ] },
+            { question: "How much data does the product need before it shows value?",
+              label: "Value requires weeks/months of data collection",
+              example: "e.g., a churn prediction tool needs months of usage data before it surfaces insights",
+              options: [
+                  { key: 'A', text: "None, it works from the first use", counts: false },
+                  { key: 'B', text: "A few days of data", counts: false },
+                  { key: 'C', text: "Weeks or months of data", counts: true },
+              ] },
+            { question: "How many people have to be involved before anyone gets value?",
+              label: "Multiple stakeholders needed for initial value",
+              example: "e.g., a contract management tool needs legal, sales, and finance aligned before any workflow runs",
+              options: [
+                  { key: 'A', text: "One person can get value alone", counts: false },
+                  { key: 'B', text: "Several people have to be involved first", counts: true },
+              ] },
+            { question: "Does it take a specialist to operate it?",
+              label: "High domain expertise required to operate",
+              example: "e.g., quantitative trading platforms need finance expertise to configure",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, it takes deep domain expertise", counts: true },
+                  { key: 'N', alt: 'b', text: "No, a typical person in the role can run it", counts: false },
+              ] },
+            { question: "How much do you tailor the product for each customer?",
+              label: "Highly customized solution per customer",
+              example: "e.g., enterprise CPQ software takes months of configuration per deal",
+              options: [
+                  { key: 'A', text: "Not at all, everyone gets the same product", counts: false },
+                  { key: 'B', text: "Some settings and configuration", counts: false },
+                  { key: 'C', text: "A custom build or months of work per customer", counts: true },
+              ] },
+            { question: "Must a customer clear regulatory or compliance checks before using it?",
+              label: "Heavy regulatory/compliance checks before use",
+              example: "e.g., healthcare data platforms need a HIPAA BAA before any data flows",
+              options: [
+                  { key: 'Y', alt: 'a', text: "Yes, before any data flows", counts: true },
+                  { key: 'N', alt: 'b', text: "No, they can start right away", counts: false },
+              ] },
+            { question: "How long does it take to explain what the product does?",
+              label: "Value proposition requires complex explanation",
+              example: "e.g., 'AI-powered supply chain optimization' needs a whiteboard session before the problem lands",
+              options: [
+                  { key: 'A', text: "One sentence", counts: false },
+                  { key: 'B', text: "A short conversation", counts: false },
+                  { key: 'C', text: "A whiteboard session or a long call", counts: true },
+              ] },
+            { question: "What does a customer pay before they get any value?",
+              label: "High upfront costs / Setup fees",
+              example: "e.g., Salesforce implementations often start at $50K+ in services before anyone logs in",
+              options: [
+                  { key: 'A', text: "Nothing, they can start free", counts: false },
+                  { key: 'B', text: "A normal monthly or annual subscription", counts: false },
+                  { key: 'C', text: "A large upfront cost or setup fee", counts: true },
+              ] },
+            { question: "How often do customers use it?",
+              label: "Infrequent use cases (once a year usage)",
+              example: "e.g., annual budget planning software gets used for 2 weeks a year",
+              options: [
+                  { key: 'A', text: "Daily or weekly", counts: false },
+                  { key: 'B', text: "Monthly", counts: false },
+                  { key: 'C', text: "A few times a year", counts: true },
+              ] },
         ];
 
         // ── State ───────────────────────────────────────────
         let currentSlide = 0;
-        const TOTAL_SLIDES = 6; // 0 = welcome, 1–3 = radio, 4–5 = multi-select
         const answers = {};     // { buyerUser, viral, scope }
 
-        // ── Render checkboxes ───────────────────────────────
-        function renderCheckboxes(list, containerId, inputName) {
-            const container = document.getElementById(containerId);
-            list.forEach(item => {
-                const card = document.createElement('button');
-                card.className = 'check-card';
-                card.type = 'button';
-                card.innerHTML = `
-                    <input type="checkbox" name="${inputName}" value="${item.label}" class="hidden">
-                    <div class="check-box flex-shrink-0 mt-0.5">
-                        <svg class="check-icon-svg w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <span class="text-sm font-medium text-ink leading-snug block">${item.label}</span>
-                        <span class="text-xs text-slate-400 leading-snug mt-0.5 block">${item.example}</span>
-                    </div>
-                `;
-                card.addEventListener('click', () => {
-                    card.classList.toggle('selected');
-                    card.querySelector('input').checked = card.classList.contains('selected');
+        // ── Parts (sections) of the quiz ─────────────────────
+        // Slides 1–3 are Part 1. Each accelerator and friction point gets its
+        // own yes/no slide. A "yes" checks a hidden checkbox named
+        // "accelerator" or "friction", which is what calculateScore() counts.
+        const PARTS = [
+            { name: 'Your problem',          count: 3 },
+            { name: 'What helps self-serve', count: accelerators.length,   list: accelerators,   input: 'accelerator' },
+            { name: 'What slows self-serve', count: frictionPoints.length, list: frictionPoints, input: 'friction' },
+        ];
+
+        function partProgressHTML(partIndex, pos) {
+            const part = PARTS[partIndex];
+            const segs = Array.from({ length: part.count }, (_, i) =>
+                `<span class="part-progress-seg${i < pos ? ' done' : i === pos ? ' current' : ''}"></span>`).join('');
+            const left = part.count - pos - 1;
+            const tail = left === 0 ? 'last one in this part' : `${left} to go`;
+            return `<div class="part-progress" aria-label="Question ${pos + 1} of ${part.count} in this part">
+                        <div class="part-progress-bar">${segs}</div>
+                        <p class="part-progress-label">${pos + 1} of ${part.count} · ${tail}</p>
+                    </div>`;
+        }
+
+        // Most items are yes/no; an item can define its own options instead.
+        // An option with counts: true checks the item's hidden checkbox.
+        const YES_NO = [
+            { key: 'Y', alt: 'a', text: 'Yes', counts: true },
+            { key: 'N', alt: 'b', text: 'No',  counts: false },
+        ];
+
+        function optionCardHTML(o) {
+            const keys = [o.key.toLowerCase(), o.alt].filter(Boolean).join(' ');
+            const sub = o.sub ? `<span class="text-xs text-slate-400">${o.sub}</span>` : '';
+            return `<button class="answer-card" data-counts="${o.counts ? 1 : 0}" data-keys="${keys}" onclick="selectOption(this)">
+                        <span class="key-badge">${o.key}</span>
+                        <div><span class="text-sm font-semibold text-ink block">${o.text}</span>${sub}</div>
+                    </button>`;
+        }
+
+        function renderYesNoSlides() {
+            const anchor = document.getElementById('yesno-anchor');
+            let n = 4;
+            [1, 2].forEach(partIndex => {
+                const part = PARTS[partIndex];
+                part.list.forEach((item, i) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'slide s-below';
+                    slide.id = `slide-${n}`;
+                    slide.dataset.kind = 'yesno';
+                    const options = item.options || YES_NO;
+                    const badges = options.map(o => `<span>${o.key}</span>`);
+                    const keyHint = badges.slice(0, -1).join(' ') + ' or ' + badges[badges.length - 1];
+                    slide.innerHTML = `
+        <div class="slide-inner">
+            <div class="max-w-lg mx-auto px-6 pt-16 pb-10">
+                <div class="mb-7">
+                    <span class="font-mono text-xs text-accent-ink tracking-widest uppercase block mb-3">Part ${partIndex + 1} · ${part.name}</span>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold text-ink mb-2 leading-tight">${item.question}</h2>
+                    <p class="text-slate-500 text-base">${item.example}</p>
+                </div>
+                <input type="checkbox" name="${part.input}" value="${item.label}" class="hidden">
+                <div class="space-y-3">
+                    ${options.map(optionCardHTML).join('')}
+                </div>
+                ${partProgressHTML(partIndex, i)}
+                <p class="mt-5 kbd-hint">press ${keyHint}</p>
+            </div>
+        </div>`;
+                    anchor.before(slide);
+                    n++;
                 });
-                container.appendChild(card);
+            });
+            // Part 1 progress rows on slides 1–3
+            [1, 2, 3].forEach(k => {
+                const hint = document.querySelector(`#slide-${k} .kbd-hint`);
+                hint.insertAdjacentHTML('beforebegin', partProgressHTML(0, k - 1));
             });
         }
 
-        renderCheckboxes(accelerators, 'accelerators-list', 'accelerator');
-        renderCheckboxes(frictionPoints, 'friction-list', 'friction');
+        renderYesNoSlides();
+        const TOTAL_SLIDES = document.querySelectorAll('.slide').length; // welcome + 21 questions
+        const TOTAL_QUESTIONS = TOTAL_SLIDES - 1;
 
         // ── Navigation ──────────────────────────────────────
         function goTo(n) {
@@ -866,8 +1069,8 @@
             }
 
             // Step counter (only during questions)
-            if (currentSlide >= 1 && currentSlide <= 5) {
-                counter.textContent = `${currentSlide} / 5`;
+            if (currentSlide >= 1) {
+                counter.textContent = `${currentSlide} / ${TOTAL_QUESTIONS}`;
                 counter.classList.remove('hidden');
             } else {
                 counter.classList.add('hidden');
@@ -885,7 +1088,25 @@
                 .forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
             answers[name] = btn.dataset.value;
-            if (autoAdvance) setTimeout(goNext, 380);
+            if (autoAdvance) advanceSoon();
+        }
+
+        // ── Answer selection (yes/no and option slides) ──────
+        function selectOption(btn) {
+            const slide = btn.closest('.slide');
+            slide.querySelectorAll('.answer-card').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            slide.querySelector('input[type="checkbox"]').checked = btn.dataset.counts === '1';
+            advanceSoon();
+        }
+
+        // Auto-advance after a short pause. One shared timer, so a double
+        // key press or a change of answer can't skip the next question.
+        let advanceTimer;
+        function advanceSoon() {
+            clearTimeout(advanceTimer);
+            const from = currentSlide;
+            advanceTimer = setTimeout(() => { if (currentSlide === from) goNext(); }, 380);
         }
 
         // ── Keyboard shortcuts ──────────────────────────────
@@ -893,18 +1114,19 @@
             // Ignore when results page is showing
             if (document.getElementById('results-page').classList.contains('visible')) return;
 
+            const slide = document.getElementById(`slide-${currentSlide}`);
+
             if (e.key === 'Enter') {
-                if (currentSlide === 0) {
-                    goNext();
-                } else if (currentSlide >= 1 && currentSlide <= 3) {
-                    // Advance only if an answer is selected
-                    const slide = document.getElementById(`slide-${currentSlide}`);
-                    if (slide && slide.querySelector('.answer-card.selected')) goNext();
-                } else {
-                    // Slides 4, 5 — continue / see result
-                    if (currentSlide === 5) showResults();
-                    else goNext();
-                }
+                // Welcome advances; question slides advance only once answered
+                if (currentSlide === 0 || (slide && slide.querySelector('.answer-card.selected'))) goNext();
+                return;
+            }
+
+            // Letter keys for yes/no and option slides (Y/N, also A/B; A/B/C)
+            if (slide && slide.dataset.kind === 'yesno') {
+                const k = e.key.toLowerCase();
+                const card = /^[a-z]$/.test(k) && slide.querySelector(`.answer-card[data-keys~="${k}"]`);
+                if (card) selectOption(card);
                 return;
             }
 
@@ -951,10 +1173,7 @@
             // Clear state
             answers.buyerUser = answers.viral = answers.scope = undefined;
             document.querySelectorAll('.answer-card').forEach(c => c.classList.remove('selected'));
-            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-                cb.checked = false;
-                cb.closest('.check-card')?.classList.remove('selected');
-            });
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; });
 
             // Hide results
             document.getElementById('results-page').classList.remove('visible');

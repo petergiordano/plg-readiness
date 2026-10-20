@@ -1,7 +1,7 @@
 {
   "workspace": "PLG Readiness",
   "roles": {
-    "prime": "plg-readiness-prime",
+    "player": "plg-readiness-player",
     "coach": "plg-readiness-coach"
   },
   "relay": { "cap_round_trips": 2 }
