@@ -123,6 +123,17 @@
             --reveal-shift:          8px;
             --reveal-duration:       220ms;
             --reveal-ease:           cubic-bezier(0.22, 1, 0.36, 1);
+
+            /* ========== Brand (Overdrive Alpha lockup) ==========
+               The mark is the shipped logo-mark-azure.svg, inlined as a data
+               URI so the app stays one file. The wordmark is set as type
+               (Space Grotesk 700, 0.62x the mark height), per the Light guide.
+               A theme that should not carry Overdrive branding sets
+               --brand-od-display: none and gets the generic text instead. */
+            --brand-od-display:      flex;
+            --brand-generic-display: none;
+            --logo-mark:             url("data:image/svg+xml,%3Csvg id='overdrive-alpha-mark-azure' xmlns='http://www.w3.org/2000/svg' viewBox='-77.50 -97.30 424.00 424.00'%3E%3Ccircle cx='134.5' cy='114.7' r='185' fill='none' stroke='%231F8EFF' stroke-width='42'%3E%3C/circle%3E%3Cg transform='translate(134.5 114.7) scale(0.9049) translate(-134.5 -114.7)'%3E%3Cpath fill='none' stroke='%2355BFFA' stroke-width='16' stroke-linecap='round' d='M90.58,161.68s11.21.58,14.14.62c12.94.21,25.49-1.29,38.12-3.9,35.18-7.28,64.91-26.82,85.86-56.17,28.59-40.05,28.27-89.19,28.27-89.19'%3E%3C/path%3E%3Cpath fill='%231F8EFF' d='M56.31,228.8c-9.95-.04-47.09-.18-56.31-.3C-.53,226.32,101.9,2.57,102.34.45c1.56-.19,50.64-.41,53.68-.45l42.61,94.5c-11.15,13.17-24.57,24.37-40.65,31.41l-29.24-72.31'%3E%3C/path%3E%3Cpath fill='%2355BFFA' d='M256.81,229.24h-23.56s-25.54-.23-25.54-.23l-23.63-56.11c16.06-7.18,29.51-17.19,42.54-29.22l38.25,84.44c-2.48,1.25-5.22,1.53-8.06,1.12Z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+            --logo-mark-ratio:       1;        /* width / height */
         }
 
         /* ========== ALPHA (v1.0 Overdrive Alpha look, opt-in via ?client=alpha) ========== */
@@ -163,6 +174,10 @@
             --font-display: 'Space Grotesk', sans-serif;
             --font-body:    'Plus Jakarta Sans', sans-serif;
             --font-mono:    'JetBrains Mono', monospace;
+
+            /* Brand: the original orange A-swoosh (logo-mark.svg), as v1.0 */
+            --logo-mark:       url("data:image/svg+xml,%3Csvg id='overdrive-alpha-mark' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 269.03 229.42'%3E%3Cpath fill='none' stroke='%23FF9000' stroke-width='16' stroke-linecap='round' d='M90.58,161.68s11.21.58,14.14.62c12.94.21,25.49-1.29,38.12-3.9,35.18-7.28,64.91-26.82,85.86-56.17,28.59-40.05,28.27-89.19,28.27-89.19'%3E%3C/path%3E%3Cpath fill='%23434343' d='M56.31,228.8c-9.95-.04-47.09-.18-56.31-.3C-.53,226.32,101.9,2.57,102.34.45c1.56-.19,50.64-.41,53.68-.45l42.61,94.5c-11.15,13.17-24.57,24.37-40.65,31.41l-29.24-72.31'%3E%3C/path%3E%3Cpath fill='%23FF9000' d='M256.81,229.24h-23.56s-25.54-.23-25.54-.23l-23.63-56.11c16.06-7.18,29.51-17.19,42.54-29.22l38.25,84.44c-2.48,1.25-5.22,1.53-8.06,1.12Z'%3E%3C/path%3E%3C/svg%3E");
+            --logo-mark-ratio: 1.1727;   /* 269.03 / 229.42 */
         }
 
         /* ========== ALCHEMIST ========== */
@@ -202,6 +217,10 @@
             /* Fonts (IBM Plex Serif — transitional serif, distinct from Space Grotesk) */
             --font-display: 'IBM Plex Serif', serif;
             --font-body:    'IBM Plex Serif', serif;
+
+            /* Brand: no Overdrive branding on a client's page */
+            --brand-od-display:      none;
+            --brand-generic-display: block;
         }
 
         /* ========== v1.0 STRUCTURE (Alpha + Alchemist) ==========
@@ -424,6 +443,115 @@
             padding: 1px 5px; background: rgb(var(--surface-elev-rgb));
         }
 
+        /* ── Brand lockup ─────────────────────────────── */
+        .brand-od      { display: var(--brand-od-display); align-items: center; }
+        .brand-generic { display: var(--brand-generic-display); }
+        .od-lockup { gap: 8px; color: rgb(var(--text-rgb)); text-decoration: none; }
+        .od-mark {
+            --mark-h: 24px;
+            flex-shrink: 0;
+            display: inline-block;
+            height: var(--mark-h);
+            width: calc(var(--mark-h) * var(--logo-mark-ratio));
+            background: var(--logo-mark) center / contain no-repeat;
+        }
+        .od-wordmark {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: calc(var(--mark-h, 24px) * 0.62);
+            letter-spacing: -0.01em;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        /* ── Sales-motion matrix (welcome + results) ──── */
+        .motion-matrix { width: 100%; border-collapse: collapse; background: var(--table-bg); }
+        .motion-matrix th,
+        .motion-matrix td {
+            padding: 14px 16px;
+            border: 1px solid rgb(var(--neutral-200-rgb));
+            text-align: left;
+            vertical-align: top;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+        .motion-matrix thead th {
+            background: rgb(var(--neutral-50-rgb));
+            color: rgb(var(--text-rgb));
+            font-weight: 600;
+        }
+        .motion-matrix td { color: rgb(var(--neutral-500-rgb)); }
+        .motion-chip {
+            display: inline-flex; align-items: center;
+            padding: 2px 10px;
+            border-radius: var(--chip-radius);
+            font-size: 12px; font-weight: 600;
+            white-space: nowrap;
+        }
+        .chip-plg   { background: var(--chip-plg-bg); color: var(--chip-plg-fg); }
+        .chip-pls   { background: rgb(var(--brand-soft-rgb)); color: rgb(var(--text-rgb)); }
+        .chip-wedge { background: var(--chip-wedge-bg); color: rgb(var(--neutral-800-rgb)); }
+        .chip-sales { background: rgb(var(--neutral-100-rgb)); color: rgb(var(--neutral-700-rgb)); }
+        .motion-scope    { display: block; color: rgb(var(--text-rgb)); font-weight: 600; margin-top: 8px; }
+        .motion-examples { display: block; font-size: 12px; margin-top: 2px; }
+        .you-tag {
+            display: none;
+            font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
+            color: rgb(var(--text-rgb));   /* Azure Ink on the tint is 4.41:1 */
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .motion-matrix tr.is-you td {
+            background: rgb(var(--accent-muted-rgb));
+            border-top: 2px solid rgb(var(--accent-rgb));
+            border-bottom: 2px solid rgb(var(--accent-rgb));
+        }
+        .motion-matrix tr.is-you td:first-child { border-left: 2px solid rgb(var(--accent-rgb)); }
+        .motion-matrix tr.is-you td:last-child  { border-right: 2px solid rgb(var(--accent-rgb)); }
+        .motion-matrix tr.is-you .you-tag { display: block; }
+
+        /* Phones: each row becomes a card, each cell labelled */
+        @media (max-width: 767px) {
+            .motion-matrix thead { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+            .motion-matrix, .motion-matrix tbody, .motion-matrix tr, .motion-matrix td { display: block; width: 100%; }
+            .motion-matrix { background: none; }
+            .motion-matrix tr {
+                background: rgb(var(--surface-elev-rgb));
+                border: 1px solid rgb(var(--neutral-200-rgb));
+                border-top: var(--card-rule-top);
+                border-radius: 10px;
+                margin-bottom: 12px;
+                overflow: hidden;
+            }
+            .motion-matrix td { border: none; padding: 6px 16px; }
+            .motion-matrix td:first-child { padding-top: 16px; }
+            .motion-matrix td:last-child  { padding-bottom: 16px; }
+            .motion-matrix td[data-label]::before {
+                content: attr(data-label);
+                display: block;
+                font-family: var(--font-mono); font-size: 11px;
+                color: rgb(var(--neutral-400-rgb));
+            }
+            .motion-matrix tr.is-you { border: 2px solid rgb(var(--accent-rgb)); background: rgb(var(--accent-muted-rgb)); }
+            .motion-matrix tr.is-you td { border: none; }
+        }
+
+        /* ── "Why this row" list (results) ───────────── */
+        .why-list li {
+            display: grid;
+            grid-template-columns: 180px 1fr auto;
+            gap: 4px 16px;
+            align-items: baseline;
+            padding: 14px 0;
+            border-top: 1px solid rgb(var(--neutral-200-rgb));
+        }
+        .why-label  { font-family: var(--font-mono); font-size: 11px; color: rgb(var(--neutral-400-rgb)); }
+        .why-answer { font-size: 14px; font-weight: 600; color: rgb(var(--text-rgb)); }
+        @media (max-width: 767px) {
+            .why-list li { grid-template-columns: 1fr; }
+            .why-list .motion-chip { justify-self: start; }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -450,7 +578,11 @@
         </button>
         <div class="w-12"></div>
         <span id="step-counter" class="hidden font-mono text-xs text-slate-400"></span>
-        <span class="font-sans text-sm font-semibold text-slate-400 tracking-tight">GTM Strategy Architect</span>
+        <a href="https://overdrivealpha.com" target="_blank" rel="noopener" class="brand-od od-lockup" aria-label="Overdrive Alpha (opens in a new tab)">
+            <span class="od-mark" aria-hidden="true"></span>
+            <span class="od-wordmark">Overdrive Alpha</span>
+        </a>
+        <span class="brand-generic font-sans text-sm font-semibold text-slate-400 tracking-tight">GTM Strategy Architect</span>
     </div>
 
 
@@ -459,15 +591,16 @@
     ═══════════════════════════════════════ -->
     <div class="slide s-active" id="slide-0">
         <div class="slide-inner">
-            <div class="max-w-lg mx-auto px-6 pt-20 pb-10">
-                <span class="font-mono text-xs text-accent-ink tracking-widest uppercase block mb-8">PLG Readiness Diagnostic</span>
-                <h1 class="font-display text-5xl md:text-[3.5rem] font-bold text-ink mb-5 leading-[1.06]">
-                    Find your right<br>GTM motion.
+            <div class="max-w-[1040px] mx-auto px-6 pt-20 pb-12">
+                <span class="font-mono text-xs text-accent-ink tracking-widest uppercase block mb-6">PLG Readiness Diagnostic</span>
+                <h1 class="font-display text-5xl md:text-[3.5rem] font-bold text-ink mb-5 leading-[1.06] max-w-2xl">
+                    Which sales motion fits your product?
                 </h1>
-                <p class="text-lg text-slate-500 mb-8 leading-relaxed">
-                    Your problem's nature — not your product features — determines whether PLG, Sales-Led, or a hybrid is the right motion.
+                <p class="text-lg text-slate-500 mb-10 leading-relaxed max-w-2xl">
+                    Product-led growth works when the user decides, value arrives in minutes, and using the product brings in new users. Each one you lose moves you down this table, toward a sales-led motion.
                 </p>
-                <div class="flex items-center gap-5 mb-10 text-sm text-slate-400">
+                <div id="matrix-intro" class="mb-10"></div>
+                <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mb-8 text-sm text-slate-400">
                     <span class="flex items-center gap-1.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -483,7 +616,7 @@
                 </div>
                 <button onclick="goNext()"
                     class="inline-flex items-center gap-3 px-7 py-3.5 bg-accent-fill text-white font-semibold rounded-lg hover:bg-accent-fill-hover transition-colors text-base">
-                    Start Assessment
+                    Find your row
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
@@ -688,73 +821,22 @@
             </div>
         </section>
 
-        <!-- Reference Matrix (D-05b 4px orange top-rule divider) -->
+        <!-- Where you sit: the sales-motion matrix from the welcome screen,
+             with the founder's row highlighted and the answers behind it -->
         <section class="bg-surface-warm border-t-[4px] border-accent py-16 md:py-24" style="background-color: var(--ref-section-bg);">
             <div class="max-w-[960px] mx-auto px-6">
-                <div class="mb-12">
-                    <span class="phase-overline">Reference</span>
+                <div class="mb-10">
+                    <span class="phase-overline">Your sales motion</span>
                     <hr class="phase-rule">
-                    <h2 class="font-display text-3xl font-bold text-ink mb-4">The Problem Scope Matrix</h2>
-                    <p class="text-base text-slate-500 max-w-2xl">Your go-to-market motion is determined by the intersection of problem scope and buying authority. Here's how to read your situation.</p>
+                    <h2 class="font-display text-3xl font-bold text-ink mb-4">Where your answers put you</h2>
+                    <p class="text-base text-slate-500 max-w-2xl">The same table you started with. The highlighted row is the motion your answers point to.</p>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="w-full border-collapse" style="background-color: var(--table-bg);">
-                        <thead>
-                            <tr>
-                                <th class="p-4 bg-slate-50 border border-slate-200 text-left text-sm font-semibold text-ink">Problem Scope</th>
-                                <th class="p-4 bg-slate-50 border border-slate-200 text-left text-sm font-semibold text-ink">Typical Buyer</th>
-                                <th class="p-4 bg-slate-50 border border-slate-200 text-left text-sm font-semibold text-ink">GTM Motion</th>
-                                <th class="p-4 bg-slate-50 border border-slate-200 text-left text-sm font-semibold text-ink">Examples</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="p-4 border border-slate-200">
-                                    <div class="text-sm font-medium text-ink">Individual</div>
-                                    <div class="text-xs text-slate-400 mt-0.5">Single person, single task</div>
-                                </td>
-                                <td class="p-4 border border-slate-200 text-sm text-slate-500">User = Decider</td>
-                                <td class="p-4 border border-slate-200">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium" style="background-color: var(--chip-plg-bg); color: var(--chip-plg-fg); border-radius: var(--chip-radius);">Pure PLG</span>
-                                </td>
-                                <td class="p-4 border border-slate-200 text-sm text-slate-500">Loom, Calendly, Grammarly, Figma (freelancer)</td>
-                            </tr>
-                            <tr>
-                                <td class="p-4 border border-slate-200">
-                                    <div class="text-sm font-medium text-ink">Team / Department</div>
-                                    <div class="text-xs text-slate-400 mt-0.5">Collaborative workflows</div>
-                                </td>
-                                <td class="p-4 border border-slate-200 text-sm text-slate-500">Manager / Team Lead</td>
-                                <td class="p-4 border border-slate-200">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-yellow-100 text-ink" style="border-radius: var(--chip-radius);">Product-Led Sales</span>
-                                </td>
-                                <td class="p-4 border border-slate-200 text-sm text-slate-500">Notion, Slack, Asana, Linear</td>
-                            </tr>
-                            <tr>
-                                <td class="p-4 border border-slate-200">
-                                    <div class="text-sm font-medium text-ink">Enterprise System</div>
-                                    <div class="text-xs text-slate-400 mt-0.5">System of record, org-wide</div>
-                                </td>
-                                <td class="p-4 border border-slate-200 text-sm text-slate-500">C-Suite / IT / Procurement</td>
-                                <td class="p-4 border border-slate-200">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-700" style="border-radius: var(--chip-radius);">Sales-Led</span>
-                                </td>
-                                <td class="p-4 border border-slate-200 text-sm text-slate-500">Workday, Salesforce, ServiceNow</td>
-                            </tr>
-                            <tr>
-                                <td class="p-4 border border-slate-200">
-                                    <div class="text-sm font-medium text-ink">Enterprise (with Wedge)</div>
-                                    <div class="text-xs text-slate-400 mt-0.5">Complex product, simple entry</div>
-                                </td>
-                                <td class="p-4 border border-slate-200 text-sm text-slate-500">Developer / Practitioner first</td>
-                                <td class="p-4 border border-slate-200">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium text-slate-800" style="background-color: var(--chip-wedge-bg); border-radius: var(--chip-radius);">Wedge + Expand</span>
-                                </td>
-                                <td class="p-4 border border-slate-200 text-sm text-slate-500">Datadog, Snowflake, MongoDB</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div id="matrix-results"></div>
+
+                <div id="why-row" class="mt-12">
+                    <h3 class="font-display text-xl font-bold text-ink mb-4">The answers behind it</h3>
+                    <ul id="why-list" class="why-list"></ul>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-6 mt-12">
@@ -791,8 +873,12 @@
 
         <!-- Footer -->
         <footer class="bg-surface-warm border-t-[4px] border-accent py-10" style="background-color: var(--footer-bg);">
-            <div class="max-w-[960px] mx-auto px-6 flex justify-between items-center text-sm text-slate-500">
-                <p>&copy; 2025 Senior GTM Strategy Architect.</p>
+            <div class="max-w-[960px] mx-auto px-6 flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center text-sm text-slate-500">
+                <p class="brand-od gap-2">
+                    <span class="od-mark" style="--mark-h: 20px;" aria-hidden="true"></span>
+                    <span>&copy; 2026 <a href="https://overdrivealpha.com" target="_blank" rel="noopener" class="text-ink font-semibold underline underline-offset-4 hover:no-underline">Overdrive Alpha</a></span>
+                </p>
+                <p class="brand-generic">&copy; 2026 Senior GTM Strategy Architect.</p>
                 <p>The problem picks the motion.</p>
             </div>
         </footer>
@@ -1028,6 +1114,107 @@
         }
 
         renderYesNoSlides();
+
+        // ── Sales-motion matrix ─────────────────────────────
+        // One table, shown twice: on the welcome screen as the frame for the
+        // whole tool, and on the results page with the founder's row
+        // highlighted. Rows run from self-serve to sales-led.
+        const MATRIX_COLS = ['Who decides', 'Time to value', 'Does usage bring in new users?', 'Permission to start'];
+        const MOTIONS = [
+            { id: 'plg',   motion: 'Pure PLG',          chip: 'chip-plg',
+              scope: 'Individual problem',               examples: 'Loom, Calendly, Grammarly',
+              cells: ['The user', 'Minutes', 'Yes, through shares and invites', 'None. A credit card is enough'] },
+            { id: 'pls',   motion: 'Product-Led Sales', chip: 'chip-pls',
+              scope: 'Team or department problem',       examples: 'Notion, Slack, Asana, Linear',
+              cells: ['A manager or team lead', 'Hours to days', 'Yes, within the team', "A team lead's budget"] },
+            { id: 'wedge', motion: 'Wedge + Expand',    chip: 'chip-wedge',
+              scope: 'Enterprise problem, simple entry', examples: 'Datadog, Snowflake, MongoDB',
+              cells: ['A practitioner first, then the company', 'Minutes, for the entry product', 'Yes, among practitioners', 'None to start. Procurement to expand'] },
+            { id: 'sales', motion: 'Sales-Led',         chip: 'chip-sales',
+              scope: 'Enterprise system of record',      examples: 'Workday, Salesforce, ServiceNow',
+              cells: ['C-suite, IT and procurement', 'Weeks to months, after rollout', 'Rarely', 'Security, legal and procurement sign-off'] },
+        ];
+
+        function matrixHTML(youId) {
+            const head = ['Motion', ...MATRIX_COLS].map(c => `<th scope="col">${c}</th>`).join('');
+            const rows = MOTIONS.map(m => `
+                <tr${m.id === youId ? ' class="is-you"' : ''}>
+                    <td>
+                        <span class="you-tag">Your row</span><span class="motion-chip ${m.chip}">${m.motion}</span>
+                        <span class="motion-scope">${m.scope}</span>
+                        <span class="motion-examples">e.g., ${m.examples}</span>
+                    </td>
+                    ${m.cells.map((c, i) => `<td data-label="${MATRIX_COLS[i]}">${c}</td>`).join('')}
+                </tr>`).join('');
+            return `<table class="motion-matrix">
+                        <caption class="sr-only">Sales motions and the conditions that decide them</caption>
+                        <thead><tr>${head}</tr></thead>
+                        <tbody>${rows}</tbody>
+                    </table>`;
+        }
+
+        document.getElementById('matrix-intro').innerHTML = matrixHTML();
+
+        // Which row each result lands on. Read from the title calculateScore()
+        // sets, so the scoring logic stays the single source of truth.
+        const ROW_FOR_RESULT = {
+            'Pure PLG: Ideal Candidate':          'plg',
+            'PLG Motion with Optimization Needed': 'plg',
+            'Product-Led Sales (Hybrid)':          'pls',
+            'Sales-Led with Wedge Opportunity':    'wedge',
+            'Sales-Led Growth Required':           'sales',
+        };
+
+        // The answer the founder picked on a question slide: its text and position
+        function picked(slide) {
+            const cards = [...slide.querySelectorAll('.answer-card')];
+            const card = cards.find(c => c.classList.contains('selected'));
+            return card ? { text: card.querySelector('.font-semibold').textContent, index: cards.indexOf(card) }
+                        : { text: 'Not answered', index: -1 };
+        }
+        const radioSlide = name => document.querySelector(`.answer-card[data-name="${name}"]`).closest('.slide');
+        const itemSlide = (input, labelStart) => {
+            const box = [...document.querySelectorAll(`input[name="${input}"]`)].find(i => i.value.startsWith(labelStart));
+            return box.closest('.slide');
+        };
+
+        const VERDICT = {
+            plg:   { text: 'Points to Pure PLG',          chip: 'chip-plg' },
+            mixed: { text: 'Points to Product-Led Sales', chip: 'chip-pls' },
+            sales: { text: 'Points to Sales-Led',         chip: 'chip-sales' },
+        };
+        const BY_POSITION = ['plg', 'mixed', 'sales'];
+
+        function renderWhereYouSit() {
+            const youId = ROW_FOR_RESULT[document.getElementById('result-title').textContent];
+            document.getElementById('matrix-results').innerHTML = matrixHTML(youId);
+
+            const scope  = picked(radioSlide('scope'));
+            const buyer  = picked(radioSlide('buyerUser'));
+            const viral  = picked(radioSlide('viral'));
+            const ttv    = picked(itemSlide('accelerator', 'Time-to-value'));
+            const signup = picked(itemSlide('accelerator', 'Users can sign up'));
+            const plugIn = picked(itemSlide('accelerator', 'Product is flexible'));
+            const comply = picked(itemSlide('friction', 'Heavy regulatory'));
+
+            // Permission to start: a compliance gate or IT sign-off favours
+            // sales; self sign-up with neither favours PLG
+            const permission = comply.index === 0 || plugIn.index === 1 ? 'sales'
+                             : signup.index === 0 ? 'plg' : 'mixed';
+
+            const rows = [
+                ['Problem scope',      scope.text, BY_POSITION[scope.index]],
+                [MATRIX_COLS[0],       buyer.text, BY_POSITION[buyer.index]],
+                [MATRIX_COLS[1],       ttv.text,   BY_POSITION[ttv.index]],
+                [MATRIX_COLS[2],       viral.text, viral.index === 0 ? 'plg' : 'sales'],
+                [MATRIX_COLS[3],       [signup.text, plugIn.text, comply.text].join(' · '), permission],
+            ];
+            document.getElementById('why-list').innerHTML = rows.map(([label, answer, v]) => {
+                const chip = VERDICT[v] ? `<span class="motion-chip ${VERDICT[v].chip}">${VERDICT[v].text}</span>` : '';
+                return `<li><span class="why-label">${label}</span><span class="why-answer">${answer}</span>${chip}</li>`;
+            }).join('');
+        }
+
         const TOTAL_SLIDES = document.querySelectorAll('.slide').length; // welcome + 21 questions
         const TOTAL_QUESTIONS = TOTAL_SLIDES - 1;
 
@@ -1146,6 +1333,7 @@
         // ── Show Results ─────────────────────────────────────
         function showResults() {
             calculateScore();
+            renderWhereYouSit();
 
             // Fade out all slides + chrome
             document.querySelectorAll('.slide').forEach(s => {
